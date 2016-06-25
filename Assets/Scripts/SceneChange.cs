@@ -3,10 +3,13 @@ using System.Collections;
 
 public class SceneChange : MonoBehaviour {
 
-	public string sceneName;
+	public string clickerSceneName;
+	public Canvas optionMenu;
+
 	// Use this for initialization
 	void Start () {
-	
+		optionMenu = optionMenu.GetComponent<Canvas> ();
+		optionMenu.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -14,7 +17,15 @@ public class SceneChange : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown(){
-		UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+	public void ChangeClicker(){
+		UnityEngine.SceneManagement.SceneManager.LoadScene(clickerSceneName);
+	}
+
+	public void OpenOptionMenu(){
+		optionMenu.enabled = true;
+	}
+
+	public void CloseOptionMenu(){
+		optionMenu.enabled = false;
 	}
 }
