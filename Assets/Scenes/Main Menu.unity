@@ -116,12 +116,12 @@ RectTransform:
   - {fileID: 1610703661}
   - {fileID: 891521810}
   - {fileID: 687575969}
-  m_Father: {fileID: 1891168106}
-  m_RootOrder: 0
+  m_Father: {fileID: 259905342}
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -113.60002}
-  m_SizeDelta: {x: -90, y: 23.199951}
+  m_AnchoredPosition: {x: 0, y: -17.000015}
+  m_SizeDelta: {x: -197, y: -300.80005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &16636504
 MonoBehaviour:
@@ -278,7 +278,7 @@ RectTransform:
   - {fileID: 620977782}
   - {fileID: 1102162851}
   m_Father: {fileID: 259905342}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -24}
@@ -572,7 +572,6 @@ GameObject:
   - 222: {fileID: 259905338}
   - 114: {fileID: 259905337}
   - 114: {fileID: 259905343}
-  - 114: {fileID: 259905344}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -681,6 +680,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1891168106}
+  - {fileID: 16636503}
+  - {fileID: 421500209}
   - {fileID: 130848621}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -700,20 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 716f113b9360f4917bddb33d545d72d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickerSceneName: clicker
-  optionMenu: {fileID: 130848626}
---- !u!114 &259905344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 259905336}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4d73dff23484b83b9bea85f3e8bbc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickerSceneName: 636c69636b6572
+  clickerSceneName: sampleGame
   optionMenu: {fileID: 130848626}
 --- !u!1 &421500208
 GameObject:
@@ -745,11 +733,11 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1513386403}
-  m_Father: {fileID: 1891168106}
-  m_RootOrder: 1
+  m_Father: {fileID: 259905342}
+  m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -207.20001}
+  m_AnchoredPosition: {x: 0, y: -110.60001}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &421500210
@@ -791,7 +779,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 259905344}
+      - m_Target: {fileID: 259905343}
         m_MethodName: ChangeClicker
         m_Mode: 1
         m_Arguments:
@@ -1024,7 +1012,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 259905344}
+      - m_Target: {fileID: 0}
         m_MethodName: OpenOptionMenu
         m_Mode: 1
         m_Arguments:
@@ -1257,7 +1245,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 259905344}
+      - m_Target: {fileID: 0}
         m_MethodName: CloseOptionMenu
         m_Mode: 1
         m_Arguments:
@@ -1727,9 +1715,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children:
-  - {fileID: 16636503}
-  - {fileID: 421500209}
+  m_Children: []
   m_Father: {fileID: 259905342}
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
