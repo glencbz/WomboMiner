@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SceneChange : MonoBehaviour {
+public class MenuButtons : MonoBehaviour {
 
 	public string clickerSceneName;
 	public Canvas optionMenu;

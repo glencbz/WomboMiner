@@ -697,21 +697,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 259905336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bfbd9d15d0b4c33916303e61c9f6fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 716f113b9360f4917bddb33d545d72d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickerSceneName: clicker
+  optionMenu: {fileID: 130848626}
 --- !u!114 &259905344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259905336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e4d73dff23484b83b9bea85f3e8bbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickerSceneName: clicker
+  clickerSceneName: 636c69636b6572
   optionMenu: {fileID: 130848626}
 --- !u!1 &421500208
 GameObject:
