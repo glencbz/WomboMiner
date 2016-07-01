@@ -12,9 +12,9 @@ public class HUD_HP : MonoBehaviour {
 	public GameObject heartContainer;
 	// Use this for initialization
 	void Start () {
-		//Init hearts equivalent to maxHP
+		//Init hearts equivalent to maxHP (1 heart = 2 HP)
 		hearts = new List<GameObject>();
-		for (int i=0;i<maxHP;i++) {
+		for (int i=0;i<(maxHP / 2);i++) {
 			GameObject heart = Instantiate(heartContainer);
 			hearts.Add(heart);
 			heart.transform.SetParent(this.gameObject.transform);
@@ -29,6 +29,12 @@ public class HUD_HP : MonoBehaviour {
 	
 	public void setHP(int newHP) {
 		hp = newHP;
+		for (int i=0; i<(maxHP / 2);i++) {
+			if ((i+1)*2 <= newHP) {
+				hearts[i].GetComponent<Image>()
+			}
+		}
+
 	}
 
 	public void takeDamage(int dmg) {
