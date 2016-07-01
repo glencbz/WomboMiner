@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: e59a5aeaf8b94f6468bfbe9a8525ab20
-timeCreated: 1467352962
+guid: b06b2b6c4e7e0574786f776c4fc8ffa7
+timeCreated: 1467355123
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: heart_0
-    21300002: heart_1
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,7 +30,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -51,43 +49,7 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites:
-    - name: heart_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -29, y: 29}
-        - {x: -31, y: 22}
-        - {x: -31, y: -10}
-        - {x: -11, y: -29}
-        - {x: 20, y: -29}
-        - {x: 31, y: -13}
-        - {x: 31, y: 29}
-    - name: heart_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -29, y: 29}
-        - {x: -31, y: 22}
-        - {x: -31, y: -10}
-        - {x: -11, y: -29}
-        - {x: 20, y: -29}
-        - {x: 31, y: -13}
-        - {x: 31, y: 29}
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 

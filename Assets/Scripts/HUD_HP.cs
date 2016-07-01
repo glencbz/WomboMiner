@@ -24,20 +24,29 @@ public class HUD_HP : MonoBehaviour {
 			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, this.GetComponent<RectTransform>().rect.height / 4,rt.rect.height);
 		}
 
-		hp = maxHP;
+		setHP(hp);
 	}
 	
 	public void setHP(int newHP) {
-		hp = newHP;
-		for (int i=0; i<(maxHP / 2);i++) {
-			if ((i+1)*2 <= newHP) {
-				hearts[i].GetComponent<Image>()
+		//Sets HP value to newHP and changes the HUD display
+		//Clamp to maxHP
+		if (newHP > maxHP) {
+			hp = maxHP;
+		} else {
+			hp = newHP;
+		}
+		
+		//Display the new HP
+		for (int i=0; i<hearts.Count;i++) {
+			if ((i+1)*2 <= hp) {
+				hearts[i].GetComponent<heartFillScript>().fill(1);
+			} else if ((i+1)*2-1 == hp) {
+				hearts[i].GetComponent<heartFillScript>().fill(0.5f);
+			} else {
+				hearts[i].GetComponent<heartFillScript>().fill(0.0f);
 			}
 		}
 
 	}
 
-	public void takeDamage(int dmg) {
-
-	}
 }
