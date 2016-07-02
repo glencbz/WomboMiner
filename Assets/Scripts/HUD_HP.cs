@@ -23,19 +23,13 @@ public class HUD_HP : MonoBehaviour {
 			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 15+30*i,rt.rect.width);
 			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, this.GetComponent<RectTransform>().rect.height / 4,rt.rect.height);
 		}
-
-		setHP(hp);
 	}
-	
-	public void setHP(int newHP) {
-		//Sets HP value to newHP and changes the HUD display
+
+	public void FixedUpdate() {
 		//Clamp to maxHP
-		if (newHP > maxHP) {
+		if (hp > maxHP) {
 			hp = maxHP;
-		} else {
-			hp = newHP;
 		}
-		
 		//Display the new HP
 		for (int i=0; i<hearts.Count;i++) {
 			if ((i+1)*2 <= hp) {
@@ -46,7 +40,6 @@ public class HUD_HP : MonoBehaviour {
 				hearts[i].GetComponent<heartFillScript>().fill(0.0f);
 			}
 		}
-
 	}
 
 }
