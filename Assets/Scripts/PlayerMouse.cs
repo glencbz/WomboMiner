@@ -9,15 +9,17 @@ public class PlayerMouse : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
 	private GameObject weaponUnderfoot;
+	private SpriteRenderer spriteRenderer;
 
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D>();
 		collider2D = GetComponent<Collider2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		RotatePlayer(mousePos);
+		FlipPlayer(mousePos);
 
 		if (Input.GetMouseButtonDown(0)){
 			FireBullet(mousePos);
@@ -39,11 +41,11 @@ public class PlayerMouse : MonoBehaviour {
 		weaponUnderfoot = null;
 	}
 
-	private void RotatePlayer(Vector3 mousePos){
-		Quaternion rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position) ;
-		rotation *= Quaternion.Euler(0, 0, 90);
-
-		transform.rotation = rotation;
+	private void FlipPlayer(Vector3 mousePos){
+		if (mousePos.x < transform.position.x)
+			spriteRenderer.flipX = true;
+		else
+			spriteRenderer.flipX = false;
 	}
 
 	private void FireBullet(Vector3 mousePos){
@@ -52,7 +54,8 @@ public class PlayerMouse : MonoBehaviour {
 		//TODO: create bullets that are hidden by default and then clone those instead
 		if (!weapon)
 			return;
-		
+
+
 		GameObject newThing = Instantiate(weapon, transform.position, Quaternion.identity) as GameObject;
 		Collider2D newThingCollider = newThing.GetComponent<Collider2D>();
 		Physics2D.IgnoreCollision(collider2D, newThingCollider);
