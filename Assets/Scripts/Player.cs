@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
 	public float maxMoveForce = 1;
 	public float moveScale = 50;
 	public float bulletScale = 200;
+
+	public float maxVelocity = 10;
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
 	private SpriteRenderer spriteRenderer;
@@ -21,7 +23,9 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		spriteRenderer = this.GetComponent<SpriteRenderer>();
+		rigidBody = this.GetComponent<Rigidbody2D>();
+		collider2D = this.GetComponent<Collider2D>();
 	}
 
 	void Update () {
@@ -68,6 +72,10 @@ public class Player : MonoBehaviour {
 
 		sumForces.Normalize();
 		rigidBody.AddForce(sumForces * moveScale);
+		if (rigidBody.velocity.sqrMagnitude > maxVelocity*maxVelocity) {
+			float diff = rigidBody.velocity.magnitude - maxVelocity;
+			rigidBody.AddForce(rigidBody.velocity.normalized * diff);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
