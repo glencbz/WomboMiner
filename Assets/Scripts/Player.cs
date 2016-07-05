@@ -61,17 +61,19 @@ public class Player : MonoBehaviour {
 	private void MovePlayer(){
 		Vector2 sumForces = Vector2.zero;
 
-		if ( Input.GetKey(KeyCode.UpArrow) )
-			sumForces += Vector2.up;
-		if ( Input.GetKey(KeyCode.DownArrow) )
-			sumForces += Vector2.down;
-		if ( Input.GetKey(KeyCode.RightArrow) )
-			sumForces += Vector2.right;
-		if ( Input.GetKey(KeyCode.LeftArrow) )
-			sumForces += Vector2.left;
+		// if ( Input.GetKey(KeyCode.UpArrow) )
+		// 	sumForces += Vector2.up;
+		// if ( Input.GetKey(KeyCode.DownArrow) )
+		// 	sumForces += Vector2.down;
+		// if ( Input.GetKey(KeyCode.RightArrow) )
+		// 	sumForces += Vector2.right;
+		// if ( Input.GetKey(KeyCode.LeftArrow) )
+		// 	sumForces += Vector2.left;
+
+		sumForces = Input.GetAxis("Vertical") * Vector2.up + Input.GetAxis("Horizontal") * Vector2.right;
 
 		sumForces.Normalize();
-		rigidBody.AddForce(sumForces * moveScale);
+		rigidBody.AddForce(sumForces * moveScale, ForceMode2D.Impulse);
 		if (rigidBody.velocity.sqrMagnitude > maxVelocity*maxVelocity) {
 			float diff = rigidBody.velocity.magnitude - maxVelocity;
 			rigidBody.AddForce(rigidBody.velocity.normalized * diff);
