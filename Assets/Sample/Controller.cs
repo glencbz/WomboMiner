@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour {
     private Text Timetext;
     private Button scoreButton;
 	private Button resetButton;
+	private Button resetAllButton;
 
 	private int timeLeft;
     private float secondCount;
@@ -23,7 +24,7 @@ public class Controller : MonoBehaviour {
 		Timetext = GameObject.Find("Timer Text").GetComponent<Text>();
 		scoreButton = GameObject.Find("ScoreButton").GetComponent<Button>();
 		resetButton = GameObject.Find("Reset Button").GetComponent<Button>();
-
+		resetAllButton = GameObject.Find("Reset All Button").GetComponent<Button>();
 		//Init data and load
 		data = new Score();
 		data.LoadScore();
@@ -37,6 +38,7 @@ public class Controller : MonoBehaviour {
 
 		//Hide reset Button
 		resetButton.gameObject.SetActive(false);
+		resetAllButton.gameObject.SetActive(false);
 	}
 
 	void Update () {
@@ -86,6 +88,7 @@ public class Controller : MonoBehaviour {
         saveScore();
     	scoreButton.enabled = false;
 		resetButton.gameObject.SetActive(true);
+		resetAllButton.gameObject.SetActive(true);
     }
 
 	public void resetGame() {
@@ -97,6 +100,14 @@ public class Controller : MonoBehaviour {
 		updateScore();
 		scoreButton.enabled = true;
 		resetButton.gameObject.SetActive(false);
+		resetAllButton.gameObject.SetActive(false);
+	}
+
+	public void resetAll() {
+		data.highScore = 0;
+		data.score = 0;
+		saveScore();
+		resetGame();
 
 	}
 }
