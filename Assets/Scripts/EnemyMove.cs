@@ -5,14 +5,13 @@ using System.Collections.Generic;
 public class EnemyMove : MonoBehaviour {
 
 	public GameObject player;
-	public float moveSpeed = 0.05f;
-	public float enemyAggroThreshold = 3f;
-
-	private float wallDistance = 1f;
+	public float MOVE_SPEED = 0.05f;
+	public float ENEMY_AGGRO_THRESHOLD = 7.0f;
 
 	// set to BlockingLayer in the inspector plz
 	public LayerMask layerMask;
 
+	// how deep to do graph search
 	private int GRAPH_SEARCH_LIMIT = 10;
 
 	void Start () {
@@ -20,18 +19,7 @@ public class EnemyMove : MonoBehaviour {
 
 	bool PlayerIsNear() {
 		float distance = Vector2.Distance (this.transform.position, this.player.transform.position);
-		return distance <= enemyAggroThreshold;
-	}
-
-	void FollowObject(GameObject otherObject) {
-
-		Vector2 dirToObject = otherObject.transform.position - this.transform.position;
-		RaycastHit2D hit = Physics2D.Raycast (this.transform.position, dirToObject, wallDistance, layerMask.value);
-		if (hit.collider == null) {
-			// hit wall
-			this.transform.position = Vector2.MoveTowards(this.transform.position, otherObject.transform.position, moveSpeed);
-			return;
-		}
+		return distance <= ENEMY_AGGRO_THRESHOLD;
 	}
 
 	bool ClearPathToPlayer() {
@@ -51,7 +39,7 @@ public class EnemyMove : MonoBehaviour {
 	}
 
 	void MoveTowards(Vector2 position) {
-		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.moveSpeed);
+		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.MOVE_SPEED);
 	}
 
 	void MoveToPlayer() {
