@@ -17,7 +17,7 @@ public class PlayerMouse : MonoBehaviour {
 
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		RotatePlayer(mousePos);
+		//RotatePlayer(mousePos);
 
 		if (Input.GetMouseButtonDown(0)){
 			FireBullet(mousePos);

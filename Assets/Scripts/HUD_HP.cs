@@ -5,24 +5,17 @@ using System.Collections.Generic;
 
 public class HUD_HP : MonoBehaviour {
 
-	public int maxHP;
-	public int hp;
+	public int HP_per_heart = 2;
+	public int maxHP = 10;
+	public int hp = 10;
 
 	private List<GameObject> hearts;
 	public GameObject heartContainer;
 	// Use this for initialization
 	void Start () {
-		//Init hearts equivalent to maxHP (1 heart = 2 HP)
+		//Init hearts equivalent to maxHP 
 		hearts = new List<GameObject>();
-		for (int i=0;i<(maxHP / 2);i++) {
-			GameObject heart = Instantiate(heartContainer);
-			hearts.Add(heart);
-			heart.transform.SetParent(this.gameObject.transform);
-			//heart.GetComponent<RectTransform>().localPosition = new Vector3(30*i,0,0);
-			RectTransform rt = heart.GetComponent<RectTransform>();
-			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 15+30*i,rt.rect.width);
-			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, this.GetComponent<RectTransform>().rect.height / 4,rt.rect.height);
-		}
+		initContainers();
 	}
 
 	public void FixedUpdate() {
@@ -31,15 +24,35 @@ public class HUD_HP : MonoBehaviour {
 			hp = maxHP;
 		}
 		//Display the new HP
+		float fillPoint = hp;
 		for (int i=0; i<hearts.Count;i++) {
-			if ((i+1)*2 <= hp) {
+			fillPoint -= HP_per_heart;
+			if (fillPoint >= 0) {
 				hearts[i].GetComponent<heartFillScript>().fill(1);
-			} else if ((i+1)*2-1 == hp) {
-				hearts[i].GetComponent<heartFillScript>().fill(0.5f);
-			} else {
+			} else if (fillPoint <= -HP_per_heart) {
 				hearts[i].GetComponent<heartFillScript>().fill(0.0f);
+			} else {
+				hearts[i].GetComponent<heartFillScript>().fill(1 + (fillPoint / HP_per_heart));
 			}
 		}
+	}
+
+	public void initContainers() {
+		//Clear all existing hearts first
+		foreach(GameObject heart in hearts) {
+				Destroy(heart);
+		}
+		for (int i=0;i<(maxHP / HP_per_heart);i++) {
+			GameObject heart = Instantiate(heartContainer);
+			hearts.Add(heart);
+			heart.transform.SetParent(this.gameObject.transform);
+			//heart.GetComponent<RectTransform>().localPosition = new Vector3(30*i,0,0);
+			//Set heart position
+			RectTransform rt = heart.GetComponent<RectTransform>();
+			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 15+30*i,rt.rect.width);
+			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, this.GetComponent<RectTransform>().rect.height / 4,rt.rect.height);
+		}
+
 	}
 
 }
