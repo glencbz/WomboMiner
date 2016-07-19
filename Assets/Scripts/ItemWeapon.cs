@@ -7,8 +7,7 @@ public class ItemWeapon : Item {
 
 	public override void Pickup () {
 		Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-		player.heldWeapons[player.weaponToReplace] = weapon;
-
+		player.heldWeapons[0] = Instantiate(weapon);
 		gameObject.SetActive(false);
 	}
 }

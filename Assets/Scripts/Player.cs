@@ -25,12 +25,14 @@ public class Player : MonoBehaviour {
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		collider2D = this.GetComponent<Collider2D>();
+		itemsUnderfoot = new HashSet<Item>();
+		heldWeapons = new Weapon[2];
 	}
 
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		FlipPlayer(mousePos);
-
+		MovePlayer();
 		if (Input.GetMouseButtonDown(0)){
 			FireWeapon(heldWeapons[0], mousePos);
 		}
@@ -39,15 +41,14 @@ public class Player : MonoBehaviour {
 			FireWeapon(heldWeapons[1], mousePos);
 		}
 
-		MovePlayer();
+		if(Input.GetKeyDown(KeyCode.Space))
+			PickupItems();
 	}
 
 	private void FireWeapon(Weapon weapon, Vector3 mousePos){
 		if (!weapon)
 			return;
-
-		Vector2 fireDirection = (Vector2) (mousePos - transform.position);
-		weapon.FireBullet(fireDirection);
+		weapon.FireBullet(mousePos);
 	}
 
 	private void FlipPlayer(Vector3 mousePos){
@@ -59,7 +60,10 @@ public class Player : MonoBehaviour {
 
 	private void MovePlayer(){
 		Vector2 sumForces = Vector2.zero;
+
+		sumForces = Input.GetAxis("Vertical") * Vector2.up + Input.GetAxis("Horizontal") * Vector2.right;
 		sumForces.Normalize();
+
 		rigidBody.AddForce(sumForces * moveScale, ForceMode2D.Impulse);
 		if (rigidBody.velocity.sqrMagnitude > maxVelocity*maxVelocity) {
 			float diff = rigidBody.velocity.magnitude - maxVelocity;
@@ -69,6 +73,7 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		Item itemUnder = other.gameObject.GetComponent<Item>();
+//		Debug.Log(itemUnder);
 		itemsUnderfoot.Add(itemUnder);
 	}
 
@@ -76,7 +81,7 @@ public class Player : MonoBehaviour {
 		itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
 	}
 
-	private void PickupWeapon(){
+	private void PickupItems(){
 		foreach (Item item in itemsUnderfoot)
 			item.Pickup();
 	}
