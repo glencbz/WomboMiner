@@ -9,6 +9,9 @@ public class Weapon : MonoBehaviour {
 	public Vector2 offset;
 	private Quaternion rotation;
 
+	public Sprite horizontalImage;
+	public Sprite verticalImage;
+
 	[HideInInspector]
 	public float cooldownStatus = 0;
 
