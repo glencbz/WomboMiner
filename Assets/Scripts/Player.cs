@@ -21,10 +21,10 @@ public class Player : MonoBehaviour {
 	int SpriteLeftHash = Animator.StringToHash("left");
 	int SpriteRightHash = Animator.StringToHash("right");
 
-	int SpriteStateUp = Animator.StringToHash("player_move_back");
+	int SpriteStateUp = Animator.StringToHash("Base.player_move_back");
 	int SpriteStateDown = Animator.StringToHash("Base.player_move_front");
-	int SpriteStateLeft = Animator.StringToHash("player_move_left");
-	int SpriteStateRight = Animator.StringToHash("player_move_right");
+	int SpriteStateLeft = Animator.StringToHash("Base.player_move_left");
+	int SpriteStateRight = Animator.StringToHash("Base.player_move_right");
 	public Weapon[] heldWeapons;
 	public int weaponToReplace = 0;
 
@@ -40,7 +40,6 @@ public class Player : MonoBehaviour {
 		heldWeapons = new Weapon[2];
 		anim = GetComponent<Animator>();
 		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-		Debug.Log(stateInfo.nameHash);
 	}
 
 	void Update () {
@@ -66,39 +65,39 @@ public class Player : MonoBehaviour {
 	}
 
 	private void UpdateSprite(Vector3 mousePos){
-		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+		//AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 		float angle = Vector2.Angle(Vector2.up, transform.position - mousePos);
 
+		//Update Sprite according to facing direction
 		if (angle < 45) {
 			//Face Down
-			if (stateInfo.fullPathHash != SpriteStateDown) {anim.SetTrigger (SpriteDownHash);}
+			anim.SetFloat("direction", 2);
+			//if (stateInfo.fullPathHash != SpriteStateDown) {anim.SetTrigger (SpriteDownHash); }
 			
 		} else if (angle > 135) {
 			//Face Up
-			if (stateInfo.fullPathHash != SpriteStateUp) {anim.SetTrigger (SpriteUpHash); };
+			anim.SetFloat("direction", 0);
+			//if (stateInfo.fullPathHash != SpriteStateUp) {anim.SetTrigger (SpriteUpHash); }
 		} else if (mousePos.x < transform.position.x) {
 			//Face Left
-			anim.SetTrigger(SpriteLeftHash);
+			anim.SetFloat("direction", 3);
+			//if (stateInfo.fullPathHash != SpriteStateLeft) {anim.SetTrigger(SpriteLeftHash); }
 		} else {
 			//Face Right
-			anim.SetTrigger(SpriteRightHash);
+			anim.SetFloat("direction", 1);
+			//if (stateInfo.fullPathHash != SpriteStateRight) {anim.SetTrigger(SpriteRightHash); }
 		}
 
-		// if (rigidBody.velocity == Vector2.zero) {
-		// 	anim.speed = 0;
-		// } else {
-		// 	anim.speed = 1;
-		// }
-		// if (mousePos.x < transform.position.x)
-		// 	spriteRenderer.flipX = true;
-		// else
-		// 	spriteRenderer.flipX = false;
+		//If Player is static, stop animation
+		if (rigidBody.velocity == Vector2.zero) {
+			anim.SetBool("Movement", false);
+		} else {
+			anim.SetBool("Movement", true);
+		}
 	}
 
 	private void MovePlayer(){
-		Vector2 sumForces = Vector2.zero;
-
-		sumForces = Input.GetAxis("Vertical") * Vector2.up + Input.GetAxis("Horizontal") * Vector2.right;
+		Vector2 sumForces = Input.GetAxis("Vertical") * Vector2.up + Input.GetAxis("Horizontal") * Vector2.right;
 		sumForces.Normalize();
 
 		rigidBody.AddForce(sumForces * moveScale, ForceMode2D.Impulse);
@@ -106,6 +105,7 @@ public class Player : MonoBehaviour {
 			float diff = rigidBody.velocity.magnitude - maxVelocity;
 			rigidBody.AddForce(rigidBody.velocity.normalized * diff);
 		}
+		//Debug.Log(transform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D other){

@@ -21,6 +21,8 @@ public class BoardCreator2 : MonoBehaviour
 	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
 	private GameObject player;
 
+	public GameObject[] players;
+
 	private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
 	private Room[] rooms;                                     // All the rooms that are created for this board.
 	private Corridor[] corridors;                             // All the corridors that connect the rooms.
@@ -32,7 +34,11 @@ public class BoardCreator2 : MonoBehaviour
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 
-		SetupTilesArray ();
+		SetupTilesArray ();	
+		players = GameObject.FindGameObjectsWithTag("Player");
+		Debug.Log(GameObject.FindGameObjectsWithTag("Player").Length);
+		player = GameObject.FindGameObjectWithTag("Player");
+		Debug.Log(player.transform.position);
 
 		CreateRoomsAndCorridors ();
 
@@ -42,7 +48,7 @@ public class BoardCreator2 : MonoBehaviour
 		InstantiateTiles ();
 		InstantiateOuterWalls ();
 
-		player = GameObject.FindGameObjectWithTag("Player");
+
 	}
 
 
@@ -73,10 +79,13 @@ public class BoardCreator2 : MonoBehaviour
 			rooms [i] = new Room ();
 			rooms [i].SetupRoom (roomWidth, roomHeight, columns, rows);
 
-			if (i == rooms.Length *.5f)
+			if (i == 0)
 			{
 				Vector3 playerPos = new Vector3 (rooms[i].xPos, rooms[i].yPos, 0);
-				Instantiate(player, playerPos, Quaternion.identity);
+				Debug.Log(playerPos);
+				player.transform.position = playerPos;
+				Debug.Log(player.transform.position);
+				//Instantiate(player, playerPos, Quaternion.identity);
 			}
 		}
 			
