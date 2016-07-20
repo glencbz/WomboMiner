@@ -19,7 +19,7 @@ public class BoardCreator2 : MonoBehaviour
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
 	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
-	public GameObject player;
+	private GameObject player;
 
 	private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
 	private Room[] rooms;                                     // All the rooms that are created for this board.
@@ -41,6 +41,8 @@ public class BoardCreator2 : MonoBehaviour
 
 		InstantiateTiles ();
 		InstantiateOuterWalls ();
+
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
 

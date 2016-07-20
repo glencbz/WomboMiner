@@ -14,6 +14,17 @@ public class Player : MonoBehaviour {
 
 	private HashSet<Item> itemsUnderfoot;
 
+	private Animator anim;
+
+	int SpriteUpHash = Animator.StringToHash("up");
+	int SpriteDownHash = Animator.StringToHash("down");
+	int SpriteLeftHash = Animator.StringToHash("left");
+	int SpriteRightHash = Animator.StringToHash("right");
+
+	int SpriteStateUp = Animator.StringToHash("player_move_back");
+	int SpriteStateDown = Animator.StringToHash("Base.player_move_front");
+	int SpriteStateLeft = Animator.StringToHash("player_move_left");
+	int SpriteStateRight = Animator.StringToHash("player_move_right");
 	public Weapon[] heldWeapons;
 	public int weaponToReplace = 0;
 
@@ -27,11 +38,14 @@ public class Player : MonoBehaviour {
 		collider2D = this.GetComponent<Collider2D>();
 		itemsUnderfoot = new HashSet<Item>();
 		heldWeapons = new Weapon[2];
+		anim = GetComponent<Animator>();
+		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+		Debug.Log(stateInfo.nameHash);
 	}
 
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		FlipPlayer(mousePos);
+		UpdateSprite(mousePos);
 		MovePlayer();
 		if (Input.GetMouseButtonDown(0)){
 			FireWeapon(heldWeapons[0], mousePos);
@@ -51,11 +65,34 @@ public class Player : MonoBehaviour {
 		weapon.FireBullet(mousePos);
 	}
 
-	private void FlipPlayer(Vector3 mousePos){
-		if (mousePos.x < transform.position.x)
-			spriteRenderer.flipX = true;
-		else
-			spriteRenderer.flipX = false;
+	private void UpdateSprite(Vector3 mousePos){
+		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+		float angle = Vector2.Angle(Vector2.up, transform.position - mousePos);
+
+		if (angle < 45) {
+			//Face Down
+			if (stateInfo.fullPathHash != SpriteStateDown) {anim.SetTrigger (SpriteDownHash);}
+			
+		} else if (angle > 135) {
+			//Face Up
+			if (stateInfo.fullPathHash != SpriteStateUp) {anim.SetTrigger (SpriteUpHash); };
+		} else if (mousePos.x < transform.position.x) {
+			//Face Left
+			anim.SetTrigger(SpriteLeftHash);
+		} else {
+			//Face Right
+			anim.SetTrigger(SpriteRightHash);
+		}
+
+		// if (rigidBody.velocity == Vector2.zero) {
+		// 	anim.speed = 0;
+		// } else {
+		// 	anim.speed = 1;
+		// }
+		// if (mousePos.x < transform.position.x)
+		// 	spriteRenderer.flipX = true;
+		// else
+		// 	spriteRenderer.flipX = false;
 	}
 
 	private void MovePlayer(){
