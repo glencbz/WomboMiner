@@ -15,21 +15,11 @@ public class Player : MonoBehaviour {
 	private HashSet<Item> itemsUnderfoot;
 
 	private Animator anim;
-
-	int SpriteUpHash = Animator.StringToHash("up");
-	int SpriteDownHash = Animator.StringToHash("down");
-	int SpriteLeftHash = Animator.StringToHash("left");
-	int SpriteRightHash = Animator.StringToHash("right");
-
-	int SpriteStateUp = Animator.StringToHash("Base.player_move_back");
-	int SpriteStateDown = Animator.StringToHash("Base.player_move_front");
-	int SpriteStateLeft = Animator.StringToHash("Base.player_move_left");
-	int SpriteStateRight = Animator.StringToHash("Base.player_move_right");
 	public Weapon[] heldWeapons;
 	public int weaponToReplace = 0;
 
-	public float maxHealth;
-	public float currHealth;
+	public int maxHealth = 20;
+	public int currHealth = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -73,7 +63,6 @@ public class Player : MonoBehaviour {
 			//Face Down
 			anim.SetFloat("direction", 2);
 			//if (stateInfo.fullPathHash != SpriteStateDown) {anim.SetTrigger (SpriteDownHash); }
-			
 		} else if (angle > 135) {
 			//Face Up
 			anim.SetFloat("direction", 0);

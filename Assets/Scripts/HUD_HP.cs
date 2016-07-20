@@ -9,10 +9,15 @@ public class HUD_HP : MonoBehaviour {
 	public int maxHP = 10;
 	public int hp = 10;
 
+	GameObject player;
 	private List<GameObject> hearts;
 	public GameObject heartContainer;
 	// Use this for initialization
 	void Start () {
+		player = GameObject.FindGameObjectWithTag("Player");
+		maxHP = player.GetComponent<Player>().maxHealth;
+		hp = player.GetComponent<Player>().currHealth;
+
 		//Init hearts equivalent to maxHP 
 		hearts = new List<GameObject>();
 		initContainers();
