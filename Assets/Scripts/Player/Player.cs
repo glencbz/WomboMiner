@@ -20,9 +20,8 @@ public class Player : MonoBehaviour {
 
 	public int maxHealth = 20;
 	public int currHealth = 10;
-
 	[HideInInspector]
-	public GameObject leftHand, rightHand;
+	public Hands hands;
 
 	private Vector2[] WEAPON_OFFSET_DOWN = {new Vector2(-0.28f, -0.22f), new Vector2(0.28f, -0.22f)};
 	private Vector2[] WEAPON_OFFSET_UP = {new Vector2(-0.29f, -0.12f), new Vector2(0.29f, -0.12f)};
@@ -37,16 +36,21 @@ public class Player : MonoBehaviour {
 		collider2D = this.GetComponent<Collider2D>();
 		itemsUnderfoot = new HashSet<Item>();
 		heldWeapons = new Weapon[2];
+		hands = GetComponentInChildren<Hands>();
 		anim = GetComponent<Animator>();
 		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-		// leftHand = this.transform.GetChild(1).gameObject;
-		// rightHand = this.transform.GetChild(2).gameObject;
 	}
 
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		UpdateSprite(mousePos);
+		
+
+		//INPUT LAYER
+
+		//Move Player mapped to joysticks
 		MovePlayer();
+		//Left / Right Mouse Clicks
 		if (Input.GetMouseButtonDown(0)){
 			FireWeapon(heldWeapons[0], mousePos);
 		}
@@ -54,9 +58,9 @@ public class Player : MonoBehaviour {
 		if (Input.GetMouseButtonDown(1)){
 			FireWeapon(heldWeapons[1], mousePos);
 		}
-
-		if(Input.GetKeyDown(KeyCode.E)) PickupItems(1);
-		if(Input.GetKeyDown(KeyCode.Q)) PickupItems(0);	
+		//Other Functionality
+		if(Input.GetKeyDown(KeyCode.Q)) PickupItems(hands.left);
+		if(Input.GetKeyDown(KeyCode.E)) PickupItems(hands.right);	
 	}
 
 	private void FireWeapon(Weapon weapon, Vector3 mousePos){
@@ -67,7 +71,11 @@ public class Player : MonoBehaviour {
 
 	private void UpdateSprite(Vector3 mousePos){
 		//AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-		float angle = Vector2.Angle(Vector2.up, transform.position - mousePos);
+		Vector3 relativePos = mousePos - transform.position;
+		float angle = Vector2.Angle(Vector2.right, relativePos);
+		if (relativePos.y < 0) {
+			angle = 360 - angle;
+		}
 		int dir;
 
 		//Check for movement
@@ -78,57 +86,20 @@ public class Player : MonoBehaviour {
 		}
 
 		//Find Direction
-		if (angle < 45) {								//Face Down
-			dir = 2;
-		} else if (angle > 135) {						//Face Up
+		if (angle > 45 && angle <= 135) {
 			dir = 0;
-		} else if (mousePos.x < transform.position.x) {	//Face Left
+		} else if (angle > 135 && angle <= 225) {
 			dir = 3;
-		} else {										//Face Right
+		} else if (angle > 225 && angle <= 315) {
+			dir = 2;
+		} else {
 			dir = 1;
 		}
 
+		//Update Sprites
 		anim.SetFloat("direction", dir);
-		updateWeaponSprite(dir, mousePos);
 	}
 
-	private void updateWeaponSprite(int dir, Vector2 mousePos) {
-		// switch(dir) {
-		// 	case 0:
-		// 		leftHand.transform.localPosition = WEAPON_OFFSET_UP[0];
-		// 		rightHand.transform.localPosition = WEAPON_OFFSET_UP[1];
-		// 		leftHand.GetComponent<SpriteRenderer>().flipX = false;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipX = false;
-		// 		leftHand.GetComponent<SpriteRenderer>().flipY = true;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipY = true;
-		// 		break;
-		// 	case 1:
-		// 		leftHand.transform.localPosition = WEAPON_OFFSET_RIGHT[0];
-		// 		rightHand.transform.localPosition = WEAPON_OFFSET_RIGHT[1];
-		// 		leftHand.GetComponent<SpriteRenderer>().flipX = false;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipX = false;
-		// 		leftHand.GetComponent<SpriteRenderer>().flipY = false;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipY = false;
-		// 		break;	
-		// 	case 2:
-		// 		leftHand.transform.localPosition = WEAPON_OFFSET_DOWN[0];
-		// 		rightHand.transform.localPosition = WEAPON_OFFSET_DOWN[1];
-		// 		leftHand.GetComponent<SpriteRenderer>().flipX = false;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipX = true;
-		// 		leftHand.GetComponent<SpriteRenderer>().flipY = false;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipY = false;
-		// 		break;
-		// 	case 3:
-		// 		leftHand.transform.localPosition = WEAPON_OFFSET_LEFT[0];
-		// 		rightHand.transform.localPosition = WEAPON_OFFSET_LEFT[1];
-		// 		leftHand.GetComponent<SpriteRenderer>().flipX = true;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipX = true;
-		// 		leftHand.GetComponent<SpriteRenderer>().flipY = false;
-		// 		rightHand.GetComponent<SpriteRenderer>().flipY = false;
-		// 		break;
-		// }
-
-	}
 	private void MovePlayer(){
 		Vector2 sumForces = Input.GetAxis("Vertical") * Vector2.up + Input.GetAxis("Horizontal") * Vector2.right;
 		sumForces.Normalize();
@@ -151,7 +122,7 @@ public class Player : MonoBehaviour {
 		itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
 	}
 
-	private void PickupItems(int hand){
+	private void PickupItems(Hand hand){
 		foreach (Item item in itemsUnderfoot)
 			item.Pickup(hand);
 	}

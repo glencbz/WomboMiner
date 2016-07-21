@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class hands_movement : MonoBehaviour {
+public class Hands : MonoBehaviour {
 
 	// Use this for initialization
-	private GameObject left, right;
-
+	[HideInInspector]
+	public Hand left, right;
 	public float maxAngle = 90;
 	public float radiusA = 2;//This is the horizontal axis and should be larger
 	public float radiusB = 1;
 	
 	void Start () {
-		left = transform.GetChild(0).gameObject;
-		right = transform.GetChild(1).gameObject;
+		left = transform.GetChild(0).GetComponent<Hand>();
+		right = transform.GetChild(1).GetComponent<Hand>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		//If hands has no weapons, show default hands
+		left.checkEmpty();
+		right.checkEmpty();
 		updateHands(mousePos);
 	}
+
 
 	public void updateHands(Vector3 mousePos) {
 		Vector3 relativePos = mousePos - transform.position;
@@ -30,6 +34,7 @@ public class hands_movement : MonoBehaviour {
 		updateDrawOrder(angle);
 		Vector2[] pos = HandsAt(angle);
 		left.transform.localPosition = pos[0];
+		//left.GetComponent<Weapon>().updateSprite(angle);
 		right.transform.localPosition = pos[1];
 	}
 	//Returns a point on the ellipse given an angle. Zero starts from right and goes anticlock
