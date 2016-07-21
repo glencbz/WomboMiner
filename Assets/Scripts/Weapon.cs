@@ -7,6 +7,7 @@ public class Weapon : Item {
 	public float cooldown;
 	public float scaleSize = .2f;
 	public Vector2 offset;
+	public Vector2 gunpoint = Vector2.zero;
 	private Quaternion rotation;
 	public Sprite itemImage; //Image to display when on ground
 	public Sprite horizontalImage; //Image to display when in hand (face left/right)
@@ -18,29 +19,26 @@ public class Weapon : Item {
 	public float cooldownStatus = 0;
 
 	private Player player;
+	private SpriteRenderer sr;
 
 	void Start () {
 		base.Start();
-		// player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
-		// transform.SetParent(player.transform, false);
-		// transform.position += (Vector3) offset;
-		// transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
-		// transform.localScale *= scaleSize;
+		sr = GetComponent<SpriteRenderer>();
 	}
-
+	
+	//Pickup method for Player to call when picking up item. Drops weapon in hand first before picking up.
 	public override bool Pickup (Hand hand) {
-		Debug.Log("ATTEMPT PICK UP");
-		//Drop weapon in hand first
-		bool dropped = hand.Drop();
-		if (dropped) {
-			//Attach weapon to hand
-			transform.SetParent(hand.transform, false);
-			transform.localPosition = Vector3.zero;
+		//Equip in hand
+		bool equipped = hand.Equip(this);
+		if (equipped) {
 			//Disable Item Collider
 			this.ToggleCollider(false);
+			sr.sortingLayerName = "Player";
+			return true;
+		} else {
+			return false;
 		}
-		return true;
+		
 	}
 
 
@@ -61,8 +59,9 @@ public class Weapon : Item {
 			if (cooldownStatus < 0) { cooldownStatus = 0; }
 		}
 	}
-
+	//Method for firing a bullet.
 	public virtual void FireBullet(Vector3 direction){
+		Debug.Log("Shoot");
 		if (cooldownStatus <= 0){
 			cooldownStatus = cooldown;
 			GenerateBullet(direction);	
@@ -70,12 +69,29 @@ public class Weapon : Item {
 	}
 
 	protected virtual void GenerateBullet(Vector3 mousePos){
-		Bullet newBullet = Instantiate(bullet);
+		Bullet newBullet = (Bullet) Instantiate(bullet, transform.position + new Vector3(gunpoint.x, gunpoint.y, 0), Quaternion.identity);
 		newBullet.InitialFire(transform, mousePos);
 	}
 
 	public virtual void updateSprite(float angle) {
-		if (!pointAtMouse) {return;}
 		transform.localEulerAngles = new Vector3(0, 0, angle - arrowhead);
+		
+		if (angle > 45 && angle <= 135) {//UP
+			sr.sprite = verticalImage;
+			sr.flipY = false;
+			sr.sortingOrder = 4;
+		} else if (angle > 135 && angle <= 225) {//LEFT
+			sr.sprite = horizontalImage;
+			sr.flipY = true;
+			sr.sortingOrder = 6;
+		} else if (angle > 225 && angle <= 315) {//DOWN
+			sr.sprite = verticalImage;
+			sr.flipY = false;
+			sr.sortingOrder = 7;
+		} else {//RIGHT
+			sr.sprite = horizontalImage;
+			sr.flipY = false;
+			sr.sortingOrder = 4;
+		}
 	}
 }

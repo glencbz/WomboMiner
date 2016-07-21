@@ -52,11 +52,11 @@ public class Player : MonoBehaviour {
 		MovePlayer();
 		//Left / Right Mouse Clicks
 		if (Input.GetMouseButtonDown(0)){
-			FireWeapon(heldWeapons[0], mousePos);
+			FireWeapon(hands.left.weapon, mousePos);
 		}
 
 		if (Input.GetMouseButtonDown(1)){
-			FireWeapon(heldWeapons[1], mousePos);
+			FireWeapon(hands.right.weapon, mousePos);
 		}
 		//Other Functionality
 		if(Input.GetKeyDown(KeyCode.Q)) PickupItems(hands.left);
@@ -124,6 +124,6 @@ public class Player : MonoBehaviour {
 
 	private void PickupItems(Hand hand){
 		foreach (Item item in itemsUnderfoot)
-			item.Pickup(hand);
+			item.Pickup(hand); //Item will handle the logic to swap item
 	}
 }

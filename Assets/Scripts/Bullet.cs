@@ -18,20 +18,12 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!rigidBody)
-			rigidBody = this.GetComponent<Rigidbody2D>();
-		if (!collider2D){
-			collider2D = this.GetComponent<Collider2D>();
-			collider2D.isTrigger = true;				
-		}
+
 	}
 
 	public virtual void InitialFire(Transform parent, Vector3 mousePos){
-		transform.SetParent(parent, false);
-		Debug.Log(transform.localPosition);
-		Debug.Log(mousePos);
 		Vector2 initialDirection = mousePos - transform.position;
-		rigidBody.AddForce(initialDirection.normalized * speed);
+		rigidBody.velocity = initialDirection.normalized * speed;
 	}
 
 	protected virtual void FireBehaviour(){

@@ -11,7 +11,6 @@ abstract public class Item : MonoBehaviour {
 
 		collider2D = GetComponent<Collider2D>();
 		collider2D.isTrigger = true;
-		Debug.Log("STARTED ITEM");
 	}
 		
 	//Pickup method called by Player when attempting to pickup. Returns true when pickup is successful

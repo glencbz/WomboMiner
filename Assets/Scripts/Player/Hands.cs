@@ -36,6 +36,8 @@ public class Hands : MonoBehaviour {
 		left.transform.localPosition = pos[0];
 		//left.GetComponent<Weapon>().updateSprite(angle);
 		right.transform.localPosition = pos[1];
+		left.updateSprite(angle);
+		right.updateSprite(angle);
 	}
 	//Returns a point on the ellipse given an angle. Zero starts from right and goes anticlock
 	public Vector2 PointAt(float deg) {
@@ -59,19 +61,19 @@ public class Hands : MonoBehaviour {
 	}
 
 	public void updateDrawOrder(float angle) {
-		if (angle > 45 && angle <= 135) {
+		if (angle > 45 && angle <= 135) {//UP
 			//Draw below body, below weapons
 			left.GetComponent<SpriteRenderer>().sortingOrder = 3;
 			right.GetComponent<SpriteRenderer>().sortingOrder = 3;
-		} else if (angle > 135 && angle <= 225) {
+		} else if (angle > 135 && angle <= 225) {//LEFT
 			//Left above right, left gun is sandwiched
 			left.GetComponent<SpriteRenderer>().sortingOrder = 4;
 			right.GetComponent<SpriteRenderer>().sortingOrder = 2;
-		} else if (angle > 225 && angle <= 315) {
+		} else if (angle > 225 && angle <= 315) {//DOWN
 			//Hands above body
 			left.GetComponent<SpriteRenderer>().sortingOrder = 6;
 			right.GetComponent<SpriteRenderer>().sortingOrder = 6;			
-		} else {
+		} else {//RIGHT
 			left.GetComponent<SpriteRenderer>().sortingOrder = 2;
 			right.GetComponent<SpriteRenderer>().sortingOrder = 4;
 		}
