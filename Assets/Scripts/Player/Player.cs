@@ -123,7 +123,19 @@ public class Player : MonoBehaviour {
 	}
 
 	private void PickupItems(Hand hand){
-		foreach (Item item in itemsUnderfoot)
-			item.Pickup(hand); //Item will handle the logic to swap item
+		Item result = null;
+		//Attempt to pick up item from pool. Breaks upon success
+		foreach (Item item in itemsUnderfoot) {
+			bool picked = item.Pickup(hand); //Item will handle the logic to swap item
+			if (picked) {
+				result = item;
+				break;
+			} 
+		}
+		//Remove picked-up item from pool
+		if (result) {
+			itemsUnderfoot.Remove(result);
+		}
+
 	}
 }

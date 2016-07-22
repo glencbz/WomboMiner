@@ -49,6 +49,10 @@ public class Weapon : Item {
 		transform.parent = null;
 		//Enable Item Collider
 		this.ToggleCollider(true);
+		sr.sprite = itemImage;
+		sr.sortingLayerName = "Default";
+		//reset rotation
+		transform.rotation = Quaternion.identity;
 		return true;
 	}
 
@@ -61,7 +65,6 @@ public class Weapon : Item {
 	}
 	//Method for firing a bullet.
 	public virtual void FireBullet(Vector3 direction){
-		Debug.Log("Shoot");
 		if (cooldownStatus <= 0){
 			cooldownStatus = cooldown;
 			GenerateBullet(direction);	
@@ -69,7 +72,7 @@ public class Weapon : Item {
 	}
 
 	protected virtual void GenerateBullet(Vector3 mousePos){
-		Bullet newBullet = (Bullet) Instantiate(bullet, transform.position + new Vector3(gunpoint.x, gunpoint.y, 0), Quaternion.identity);
+		Bullet newBullet = (Bullet) Instantiate(bullet, transform.position + new Vector3(gunpoint.x, gunpoint.y, 0), transform.rotation);
 		newBullet.InitialFire(transform, mousePos);
 	}
 
