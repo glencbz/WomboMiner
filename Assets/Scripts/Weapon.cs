@@ -7,13 +7,12 @@ public class Weapon : Item {
 	public float cooldown;
 	public float scaleSize = .2f;
 	public Vector2 offset;
-
 	public Vector2 gunpoint = Vector2.zero;
 	public Sprite itemImage; //Image to display when on ground
 	public Sprite horizontalImage; //Image to display when in hand (face left/right)
 	public Sprite verticalImage;//Image to display when in hand (face up/down)
 	public float arrowhead = 90;
-	public bool pointAtMouse = true;
+	public bool pointAtMouse = true;//TODO: stop rotating if not pointAtMouse
 
 	[HideInInspector]
 	public float cooldownStatus = 0;
@@ -83,19 +82,20 @@ public class Weapon : Item {
 		if (angle > 45 && angle <= 135) {//UP
 			sr.sprite = verticalImage;
 			sr.flipY = false;
-			sr.sortingOrder = 4;
+			//sr.sortingOrder = 4;
 		} else if (angle > 135 && angle <= 225) {//LEFT
 			sr.sprite = horizontalImage;
 			sr.flipY = true;
-			sr.sortingOrder = 6;
+			//sr.sortingOrder = 6;
 		} else if (angle > 225 && angle <= 315) {//DOWN
 			sr.sprite = verticalImage;
 			sr.flipY = false;
-			sr.sortingOrder = 7;
+			//sr.sortingOrder = 7;
 		} else {//RIGHT
 			sr.sprite = horizontalImage;
 			sr.flipY = false;
-			sr.sortingOrder = 4;
+			//sr.sortingOrder = 4;
 		}
+		sr.sortingOrder = transform.parent.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
 	}
 }
