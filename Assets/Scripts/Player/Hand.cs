@@ -6,16 +6,6 @@ public class Hand : MonoBehaviour {
 
 	public Weapon weapon = null;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	public bool checkEmpty() {
 		if (!weapon) {
 			GetComponent<SpriteRenderer>().enabled = true;
@@ -27,7 +17,12 @@ public class Hand : MonoBehaviour {
 	}
 
 	public bool Drop() {
-		if (weapon) return weapon.Drop();
+		if (weapon)  {
+			bool dropped = weapon.Drop();
+			if (dropped) weapon = null;
+			else return false;
+			return true;
+		}
 		else return true;
 	}
 
