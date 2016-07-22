@@ -2,16 +2,26 @@
 using System.Collections;
 
 public class Hand : MonoBehaviour {
-
-
 	public Weapon weapon = null;
-
 	public bool checkEmpty() {
 		if (!weapon) {
 			GetComponent<SpriteRenderer>().enabled = true;
 			return true;
 		} else {
 			GetComponent<SpriteRenderer>().enabled = false;
+			return false;
+		}
+	}
+	
+	public bool Equip(Weapon w) {
+		bool dropped = Drop();
+		if (dropped) {
+			this.weapon = w;
+			w.gameObject.transform.SetParent(this.transform, false);
+			w.gameObject.transform.localPosition = Vector3.zero;
+			checkEmpty();
+			return true;
+		} else {
 			return false;
 		}
 	}
@@ -31,16 +41,5 @@ public class Hand : MonoBehaviour {
 		else weapon.updateSprite(angle);
 	}
 
-	public bool Equip(Weapon w) {
-		bool dropped = Drop();
-		if (dropped) {
-			this.weapon = w;
-			w.gameObject.transform.SetParent(this.transform, false);
-			w.gameObject.transform.localPosition = Vector3.zero;
-			checkEmpty();
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 }

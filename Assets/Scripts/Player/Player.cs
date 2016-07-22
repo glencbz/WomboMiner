@@ -3,30 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
-
 	public float maxMoveForce = 1;
 	public float moveScale = 50;
 	public float bulletScale = 200;
 	public float maxVelocity = 10;
+	public int maxHealth = 20;
+	public int currHealth = 10;
+
+	//Private Entities
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
 	private SpriteRenderer spriteRenderer;
-
+	private Animator anim;
 	private HashSet<Item> itemsUnderfoot;
 
-	private Animator anim;
-	public Weapon[] heldWeapons;
-	public int weaponToReplace = 0;
-
-	public int maxHealth = 20;
-	public int currHealth = 10;
 	[HideInInspector]
 	public Hands hands;
-
-	private Vector2[] WEAPON_OFFSET_DOWN = {new Vector2(-0.28f, -0.22f), new Vector2(0.28f, -0.22f)};
-	private Vector2[] WEAPON_OFFSET_UP = {new Vector2(-0.29f, -0.12f), new Vector2(0.29f, -0.12f)};
-	private Vector2[] WEAPON_OFFSET_LEFT = {new Vector2(-0.21f, -0.21f), new Vector2(-0.26f, -0.13f)};
-	private Vector2[] WEAPON_OFFSET_RIGHT = {new Vector2(0.27f, -0.12f), new Vector2(0.23f, -0.2f)};
 
 
 	// Use this for initialization
@@ -35,7 +27,6 @@ public class Player : MonoBehaviour {
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		collider2D = this.GetComponent<Collider2D>();
 		itemsUnderfoot = new HashSet<Item>();
-		heldWeapons = new Weapon[2];
 		hands = GetComponentInChildren<Hands>();
 		anim = GetComponent<Animator>();
 		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);

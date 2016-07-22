@@ -7,8 +7,8 @@ public class Weapon : Item {
 	public float cooldown;
 	public float scaleSize = .2f;
 	public Vector2 offset;
+
 	public Vector2 gunpoint = Vector2.zero;
-	private Quaternion rotation;
 	public Sprite itemImage; //Image to display when on ground
 	public Sprite horizontalImage; //Image to display when in hand (face left/right)
 	public Sprite verticalImage;//Image to display when in hand (face up/down)
@@ -23,7 +23,7 @@ public class Weapon : Item {
 
 	void Start () {
 		base.Start();
-		sr = GetComponent<SpriteRenderer>();
+		sr = GetComponentInChildren<SpriteRenderer>();
 	}
 	
 	//Pickup method for Player to call when picking up item. Drops weapon in hand first before picking up.
@@ -62,6 +62,7 @@ public class Weapon : Item {
 			cooldownStatus -= Time.deltaTime;
 			if (cooldownStatus < 0) { cooldownStatus = 0; }
 		}
+
 	}
 	//Method for firing a bullet.
 	public virtual void FireBullet(Vector3 direction){

@@ -26,10 +26,16 @@ public class Bullet : MonoBehaviour {
 		rigidBody.velocity = initialDirection.normalized * speed;
 	}
 
+	//Bullet Update Method. Override for custom behaviour per frame
 	protected virtual void FireBehaviour(){
 		
 	}
 	protected virtual void OnTriggerEnter2D(){
 		
+	}
+
+	//Bullet hitscan Method. Used for physical swings where we want controlled instances of damage.
+	public virtual void hitScan() {
+
 	}
 }
