@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
 	public float speed = 100;
+	public int damage = 1;
 
 	void Awake () {
 		rigidBody = this.GetComponent<Rigidbody2D>();
@@ -30,8 +31,11 @@ public class Bullet : MonoBehaviour {
 	protected virtual void FireBehaviour(){
 		
 	}
-	protected virtual void OnTriggerEnter2D(){
-		
+
+	protected virtual void OnTriggerEnter2D(Collider2D other){
+		if (other.tag == "Enemy") {
+			other.GetComponent<Enemy>().takeDamage(damage);
+		}
 	}
 
 	//Bullet hitscan Method. Used for physical swings where we want controlled instances of damage.
