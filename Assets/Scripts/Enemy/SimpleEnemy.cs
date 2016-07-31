@@ -16,6 +16,6 @@ public class SimpleEnemy : Enemy {
 
 	public override void contactPlayer(Collider2D other) {
 		Debug.Log("TOUCHED");
-		other.GetComponent<Player>().currHealth -= touch_damage;
+		other.GetComponent<Player>().takeDamage(3);
 	}
 }

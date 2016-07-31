@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour {
 	protected virtual void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Enemy") {
 			other.GetComponent<Enemy>().takeDamage(damage);
+			//TODO: Destroy self
 		}
 	}
 
