@@ -104,13 +104,18 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		Item itemUnder = other.gameObject.GetComponent<Item>();
-//		Debug.Log(itemUnder);
-		itemsUnderfoot.Add(itemUnder);
+		if (other.tag == "Item") {
+			Item itemUnder = other.gameObject.GetComponent<Item>();
+			itemsUnderfoot.Add(itemUnder);
+		}
+
 	}
 
 	void OnTriggerExit2D(Collider2D other){
-		itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
+		if (other.tag == "Item") {
+			itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
+		}
+		
 	}
 
 	private void PickupItems(Hand hand){
