@@ -130,7 +130,6 @@ public class Player : MonoBehaviour {
 		if (other.tag == "Item") {
 			itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
 		}
-		
 	}
 
 	private void PickupItems(Hand hand){
