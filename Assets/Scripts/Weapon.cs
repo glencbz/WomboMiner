@@ -73,6 +73,7 @@ public class Weapon : Item {
 
 	protected virtual void GenerateBullet(Vector3 mousePos){
 		Bullet newBullet = (Bullet) Instantiate(bullet, transform.position + new Vector3(gunpoint.x, gunpoint.y, 0), transform.rotation);
+		newBullet.source = "Player";
 		newBullet.InitialFire(transform, mousePos);
 	}
 

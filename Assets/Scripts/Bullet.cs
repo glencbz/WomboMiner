@@ -1,11 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bullet : MonoBehaviour {
+/*
+Base class for Bullet
+Requires:
+	Rigidbody2D
+	Collider2D
 
+For Melee Weapon, this is the hitbox. Use hitscan for damage.
+For Ranged Weapon, this is the projectile. Use OnTriggerEnter2D for damage.
+	
+
+*/
+public class Bullet : MonoBehaviour {
+	
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
 	public float speed = 100;
+	public string source;
 	public int damage = 1;
 
 	void Awake () {
@@ -33,9 +45,18 @@ public class Bullet : MonoBehaviour {
 	}
 
 	protected virtual void OnTriggerEnter2D(Collider2D other){
-		if (other.tag == "Enemy") {
-			other.GetComponent<Enemy>().takeDamage(damage);
-			//TODO: Destroy self
+		//Environment Resolution
+		switch(other.tag) {
+			case "Wall":
+				Destroy(gameObject);
+				return;
+			case "Player":
+			case "Enemy":
+				if (other.tag != source) {
+					other.GetComponent<Creature>().takeDamage(damage);
+					Destroy(gameObject);
+				}
+				break;
 		}
 	}
 

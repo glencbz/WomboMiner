@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Weapon_Hand : Weapon {
+public class Fist : Weapon {
 
 	protected override void GenerateBullet(Vector3 mousePos){
 		Bullet newBullet = GetComponentInChildren<Bullet>();

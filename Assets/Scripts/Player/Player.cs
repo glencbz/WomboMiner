@@ -2,22 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour {
-	public float maxMoveForce = 1;
-	public float moveScale = 50;
-	public float bulletScale = 200;
-	public float maxVelocity = 10;
-	public int maxHealth = 20;
-	public int currHealth = 10;
-
+public class Player : Creature {
 	public float invul_frame = 0.5f;
 	private bool invul_flag = false;
 	private float invul_timer;
 
 	//Private Entities
-	private Rigidbody2D rigidBody;
-	private Collider2D collider2D;
-	private SpriteRenderer spriteRenderer;
+
 	private Animator anim;
 	private HashSet<Item> itemsUnderfoot;
 
@@ -29,7 +20,6 @@ public class Player : MonoBehaviour {
 	void Start () {
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
-		collider2D = this.GetComponent<Collider2D>();
 		itemsUnderfoot = new HashSet<Item>();
 		hands = GetComponentInChildren<Hands>();
 		anim = GetComponent<Animator>();
@@ -149,7 +139,7 @@ public class Player : MonoBehaviour {
 
 	}
 
-	public void takeDamage(int dmg) {
+	public override void takeDamage(int dmg) {
 		//Take damage only if not in invul frame
 		if (!invul_flag) {
 			currHealth -= dmg;
