@@ -13,6 +13,7 @@ public class SimpleHitBox : Bullet {
 		others = new HashSet<Collider2D>();
 	}
 	public override void hitScan() {
+		//Remove all invalid colliders first before iterating
 		others.RemoveWhere(c => !c);
 		foreach (Collider2D c in others) {
 			if (c.tag == "Enemy") {
