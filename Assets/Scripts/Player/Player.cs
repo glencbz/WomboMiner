@@ -10,6 +10,10 @@ public class Player : MonoBehaviour {
 	public int maxHealth = 20;
 	public int currHealth = 10;
 
+	public float invul_frame = 0.5f;
+	private bool invul_flag = false;
+	private float invul_timer;
+
 	//Private Entities
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
@@ -35,6 +39,17 @@ public class Player : MonoBehaviour {
 	void Update () {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		UpdateSprite(mousePos);
+
+		//TIME LAYER
+
+		//Invulnerability frame time cooldown.
+		if (invul_flag) {
+			invul_timer -= Time.deltaTime;
+			if (invul_timer <= 0) {
+				invul_flag = false;
+			}
+		}
+
 		
 
 		//INPUT LAYER
@@ -104,13 +119,17 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		Item itemUnder = other.gameObject.GetComponent<Item>();
-//		Debug.Log(itemUnder);
-		itemsUnderfoot.Add(itemUnder);
+		if (other.tag == "Item") {
+			Item itemUnder = other.gameObject.GetComponent<Item>();
+			itemsUnderfoot.Add(itemUnder);
+		}
+
 	}
 
 	void OnTriggerExit2D(Collider2D other){
-		itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
+		if (other.tag == "Item") {
+			itemsUnderfoot.Remove(other.gameObject.GetComponent<Item>());
+		}
 	}
 
 	private void PickupItems(Hand hand){
@@ -126,6 +145,18 @@ public class Player : MonoBehaviour {
 		//Remove picked-up item from pool
 		if (result) {
 			itemsUnderfoot.Remove(result);
+		}
+
+	}
+
+	public void takeDamage(int dmg) {
+		//Take damage only if not in invul frame
+		if (!invul_flag) {
+			currHealth -= dmg;
+			GetComponent<takeDamageFlash>().flash(invul_frame);
+			//Damage triggers invul_frame
+			invul_flag = true;
+			invul_timer = invul_frame;
 		}
 
 	}

@@ -1,16 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SimpleHitBox : Bullet {
 
 	private bool hit = false;
-	public override void hitScan() {
-		hit = true;
+
+	private HashSet<Collider2D> others;
+
+	void Start() {
+		others = new HashSet<Collider2D>();
 	}
-	void OnTriggerStay2D(Collider2D other) {
-		if (hit) {
-			//Deal dmg
+	public override void hitScan() {
+		foreach (Collider2D c in others) {
+			if (c.tag == "Enemy") {
+				c.GetComponent<Enemy>().takeDamage(damage);
+			}
 		}
-		hit = false;
+	}
+
+	protected override void OnTriggerEnter2D(Collider2D other) {
+		others.Add(other);
+	}
+
+	void OnTriggerExit2D(Collider2D other) {
+		others.Remove(other);
 	}
 }

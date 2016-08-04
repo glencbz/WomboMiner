@@ -24,6 +24,8 @@ public class HUD_HP : MonoBehaviour {
 	}
 
 	public void FixedUpdate() {
+		//Update HUD data with Player data
+		updateData();
 		//Clamp to maxHP
 		if (hp > maxHP) {
 			hp = maxHP;
@@ -39,6 +41,14 @@ public class HUD_HP : MonoBehaviour {
 			} else {
 				hearts[i].GetComponent<heartFillScript>().fill(1 + (fillPoint / HP_per_heart));
 			}
+		}
+	}
+
+	void updateData() {
+		maxHP = player.GetComponent<Player>().maxHealth;
+		hp = player.GetComponent<Player>().currHealth;
+		if (maxHP != hearts.Count * HP_per_heart) {
+			initContainers();
 		}
 	}
 
