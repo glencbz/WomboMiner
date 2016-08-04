@@ -11,4 +11,6 @@ public abstract class Creature : MonoBehaviour {
 	protected SpriteRenderer spriteRenderer;
 
 	public abstract void takeDamage(int dmg);
+	public abstract void die();
+
 }

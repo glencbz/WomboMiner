@@ -19,8 +19,15 @@ public class Enemy : Creature {
 
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
+		if (currHealth <= 0) {
+			this.die();
+		}
 	}
 
+	public override void die() {
+		Debug.Log("Enemy killed");
+		Destroy(gameObject);
+	}
 	//Override to interact with player
 	public virtual void contactPlayer(Collider2D other) {
 

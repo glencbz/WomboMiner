@@ -149,5 +149,13 @@ public class Player : Creature {
 			invul_timer = invul_frame;
 		}
 
+		if (currHealth <= 0) {
+			this.die();
+		}
+
+	}
+
+	public override void die() {
+		Debug.Log("Player DIED!");
 	}
 }
