@@ -7,11 +7,13 @@ public class SimpleHitBox : Bullet {
 	private bool hit = false;
 
 	private HashSet<Collider2D> others;
+	private Collider2D[] marked;
 
 	void Start() {
 		others = new HashSet<Collider2D>();
 	}
 	public override void hitScan() {
+		others.RemoveWhere(c => !c);
 		foreach (Collider2D c in others) {
 			if (c.tag == "Enemy") {
 				c.GetComponent<Enemy>().takeDamage(damage);

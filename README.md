@@ -6,7 +6,7 @@ Enemy
 
 - Enemy fires bullet towards Player
 - Enemy bullet damages Player
-- Enemy collision damages Player
+- ~~Enemy collision damages Player~~
 - Enemy moves towards Player
 - Enemy death resolution (dies, chance of loot)
 
@@ -17,7 +17,7 @@ Boss
 
 Weapons
 
-- Weapon bullet damages Enemy
+- ~~Weapon bullet damages Enemy~~
 - More Combo Weapons
 
 Player 

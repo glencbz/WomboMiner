@@ -123,6 +123,7 @@ public class Player : Creature {
 	}
 
 	private void PickupItems(Hand hand){
+		itemsUnderfoot.RemoveWhere(i => !i);
 		Item result = null;
 		//Attempt to pick up item from pool. Breaks upon success
 		foreach (Item item in itemsUnderfoot) {
