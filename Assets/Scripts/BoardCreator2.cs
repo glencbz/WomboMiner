@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BoardCreator : MonoBehaviour
+public class BoardCreator2 : MonoBehaviour
 {
 	// The type of tile that will be laid in a specific position.
 	public enum TileType
@@ -10,19 +10,22 @@ public class BoardCreator : MonoBehaviour
 	}
 
 
-	public int columns = 100;                                 // The number of columns on the board (how wide it will be).
-	public int rows = 100;                                    // The number of rows on the board (how tall it will be).
+	public int columns = 200;                                 // The number of columns on the board (how wide it will be).
+	public int rows = 200;                                    // The number of rows on the board (how tall it will be).
 	public IntRange numRooms = new IntRange (15, 20);         // The range of the number of rooms there can be.
-	public IntRange roomWidth = new IntRange (3, 10);         // The range of widths rooms can have.
-	public IntRange roomHeight = new IntRange (3, 10);        // The range of heights rooms can have.
+	public IntRange roomWidth = new IntRange (20, 20);         // The range of widths rooms can have.
+	public IntRange roomHeight = new IntRange (20, 20);        // The range of heights rooms can have.
 	public IntRange corridorLength = new IntRange (6, 10);    // The range of lengths corridors between rooms can have.
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
 	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
-	public GameObject player;
+	private GameObject player;
+
+	public GameObject[] players;
 
 	private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
-	private Room[] rooms;                                     // All the rooms that are created for this board.
+	private Room[] rooms;
+	private Room[] currentRooms;
 	private Corridor[] corridors;                             // All the corridors that connect the rooms.
 	private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
 
@@ -32,7 +35,9 @@ public class BoardCreator : MonoBehaviour
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 
-		SetupTilesArray ();
+		SetupTilesArray ();	
+		player = GameObject.FindGameObjectWithTag("Player");
+
 
 		CreateRoomsAndCorridors ();
 
@@ -41,6 +46,8 @@ public class BoardCreator : MonoBehaviour
 
 		InstantiateTiles ();
 		InstantiateOuterWalls ();
+
+
 	}
 
 
@@ -64,42 +71,52 @@ public class BoardCreator : MonoBehaviour
 		rooms = new Room[numRooms.Random];
 
 		// There should be one less corridor than there is rooms.
-		corridors = new Corridor[rooms.Length - 1];
+		corridors = new Corridor[rooms.Length - 1];			
 
 		// Create the first room and corridor.
 		rooms[0] = new Room ();
-		corridors[0] = new Corridor ();
 
 		// Setup the first room, there is no previous corridor so we do not use one.
 		rooms[0].SetupRoom(roomWidth, roomHeight, columns, rows);
 
-		// Setup the first corridor using the first room.
-		corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
 
-		for (int i = 1; i < rooms.Length; i++)
-		{
-			// Create a room.
-			rooms[i] = new Room ();
+		Vector3 playerPos = new Vector3 (rooms[0].xPos, rooms[0].yPos, 0);
+		player.transform.position = playerPos;
 
-			// Setup the room based on the previous corridor.
-			rooms[i].SetupRoom (roomWidth, roomHeight, columns, rows, corridors[i - 1]);
-
-			// If we haven't reached the end of the corridors array...
-			if (i < corridors.Length)
-			{
-				// ... create a corridor.
-				corridors[i] = new Corridor ();
-
-				// Setup the corridor based on the room that was just created.
-				corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
+		for (int i = 1; i < rooms.Length; i++) {
+			currentRooms = new Room[i];
+			for (int j = 0; j< currentRooms.Length; j++){
+				currentRooms [j] = rooms [j];
 			}
-
-			if (i == rooms.Length *.5f)
-			{
-				Vector3 playerPos = new Vector3 (rooms[i].xPos, rooms[i].yPos, 0);
-				Instantiate(player, playerPos, Quaternion.identity);
-			}
+			rooms [i] = new Room ();
+			rooms [i].SetupRoom (roomWidth, roomHeight, columns, rows, currentRooms,corridors);
+//			Debug.Log (new Vector2 (corridors [i - 1].startXPos, corridors [i - 1].startYPos));
 		}
+
+
+//		// Setup the first corridor using the first room.
+//		corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
+
+//		for (int i = 1; i < rooms.Length; i++)
+//		{
+//			// Create a room.
+//			rooms[i] = new Room ();
+//
+//			// Setup the room based on the previous corridor.
+//			rooms[i].SetupRoom (roomWidth, roomHeight, columns, rows, corridors[i - 1]);
+//
+//			// If we haven't reached the end of the corridors array...
+//			if (i < corridors.Length)
+//			{
+//				// ... create a corridor.
+//				corridors[i] = new Corridor ();
+//
+//				// Setup the corridor based on the room that was just created.
+//				corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
+//			}
+//
+//
+//		}
 
 	}
 
@@ -120,7 +137,6 @@ public class BoardCreator : MonoBehaviour
 				for (int k = 0; k < currentRoom.roomHeight; k++)
 				{
 					int yCoord = currentRoom.yPos + k;
-
 					// The coordinates in the jagged array are based on the room's position and it's width and height.
 					tiles[xCoord][yCoord] = TileType.Floor;
 				}
@@ -135,14 +151,13 @@ public class BoardCreator : MonoBehaviour
 		for (int i = 0; i < corridors.Length; i++)
 		{
 			Corridor currentCorridor = corridors[i];
-
+			Debug.Log (currentCorridor.corridorLength);
 			// and go through it's length.
 			for (int j = 0; j < currentCorridor.corridorLength; j++)
 			{
 				// Start the coordinates at the start of the corridor.
 				int xCoord = currentCorridor.startXPos;
 				int yCoord = currentCorridor.startYPos;
-
 				// Depending on the direction, add or subtract from the appropriate
 				// coordinate based on how far through the length the loop is.
 				switch (currentCorridor.direction)
@@ -154,10 +169,10 @@ public class BoardCreator : MonoBehaviour
 					xCoord += j;
 					break;
 				case Direction.South:
-					yCoord -= j;
+					yCoord += j;
 					break;
 				case Direction.West:
-					xCoord -= j;
+					xCoord += j;
 					break;
 				}
 
