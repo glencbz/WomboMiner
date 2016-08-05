@@ -13,5 +13,11 @@ abstract public class Item : MonoBehaviour {
 		collider2D.isTrigger = true;
 	}
 		
-	abstract public void Pickup();
+	//Pickup method called by Player when attempting to pickup. Returns true when pickup is successful
+	abstract public bool Pickup(Hand hand);
+
+	public void ToggleCollider(bool b) {
+		collider2D.enabled = b;
+	}
+
 }
