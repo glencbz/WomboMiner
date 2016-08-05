@@ -26,9 +26,12 @@ public class Gravitas : Weapon {
 		Debug.Log(hits.Length);
 		foreach(RaycastHit2D hit in hits) {
 			if (hit.collider.tag == "Enemy") {
-				Vector2 dir = (hit.centroid - (Vector2) hit.transform.position).normalized;
-				Debug.DrawRay(hit.transform.position, dir, Color.red, 200);
-				hit.rigidbody.AddForce(dir * magnitude, ForceMode2D.Impulse);
+
+				Vector2 dir = ((Vector2) hit.transform.position - hit.centroid).normalized;
+				Vector2 projection = Vector2.Dot(dir, initialDirection.normalized) * initialDirection.normalized;
+				Vector2 perp = projection - dir;
+				Debug.DrawRay(hit.transform.position, perp, Color.red, 200);
+				hit.rigidbody.AddForce(perp * magnitude, ForceMode2D.Impulse);
 			}
 		}
 	}
