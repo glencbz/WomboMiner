@@ -14,7 +14,7 @@ namespace Completed
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
 		
-		
+		public GameObject options;
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
@@ -48,7 +48,9 @@ namespace Completed
 			
 			//Get a component reference to the attached BoardManager script
 			boardScript = GetComponent<BoardManager>();
-			
+
+			options = GameObject.Find("Options Menu");
+			options.SetActive(false);
 			//Call the InitGame function to initialize the first level 
 			InitGame();
 		}
@@ -56,6 +58,9 @@ namespace Completed
 		//This is called each time a scene is loaded.
 		void OnLevelWasLoaded(int index)
 		{
+			Debug.Log("CALLED");
+			options = GameObject.Find("Options Menu");
+			//options.SetActive(false);
 			//Add one to our level number.
 			level++;
 			//Call InitGame to initialize our level.
@@ -105,6 +110,15 @@ namespace Completed
 		//Update is called every frame.
 		void Update()
 		{
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				if (options.activeSelf) {
+					options.SetActive(false);
+				} else {
+					options.SetActive(true);
+				}
+			}
+
+
 			//Check that playersTurn or enemiesMoving or doingSetup are not currently true.
 			if(playersTurn || enemiesMoving || doingSetup)
 				
@@ -113,6 +127,8 @@ namespace Completed
 			
 			//Start moving enemies.
 			StartCoroutine (MoveEnemies ());
+
+
 		}
 		
 		//Call this to add the passed in Enemy to the List of Enemy objects.
