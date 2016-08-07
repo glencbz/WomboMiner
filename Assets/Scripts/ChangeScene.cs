@@ -2,7 +2,13 @@
 using System.Collections;
 
 public class ChangeScene : MonoBehaviour {
-public void nextScene(string scene){
+
+	public GameObject loadingScreen = null;
+	public void nextScene(string scene){
+		UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+	}
+
+	public void nextScene(int scene){
 		UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
 	}
 }
