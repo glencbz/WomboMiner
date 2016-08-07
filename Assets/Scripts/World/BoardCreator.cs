@@ -15,7 +15,8 @@ public class BoardCreator : MonoBehaviour
 	public IntRange numRooms = new IntRange (15, 20);         // The range of the number of rooms there can be.
 	public IntRange roomWidth = new IntRange (20, 20);         // The range of widths rooms can have.
 	public IntRange roomHeight = new IntRange (20, 20);        // The range of heights rooms can have.
-	public IntRange corridorLength = new IntRange (6, 10);    // The range of lengths corridors between rooms can have.
+	public IntRange bossRoomWidth = new IntRange (30, 30);         // The range of widths boss room can have.
+	public IntRange bossRoomHeight = new IntRange (30, 30);        // The range of heights boss room can have.
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
 	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
@@ -68,9 +69,10 @@ public class BoardCreator : MonoBehaviour
 	void CreateRoomsAndCorridors ()
 	{
 		// Create the rooms array with a random size.
-		rooms = new Room[numRooms.Random];
+		int normRoom = numRooms.Random;
+		rooms = new Room[normRoom+1];
 
-		// There should be one less corridor than there is rooms.
+		// There should be one less corridor than there is rooms, excluding boss room for now.
 		corridors = new Corridor[rooms.Length - 1];			
 
 		// Create the first room and corridor.
@@ -83,40 +85,16 @@ public class BoardCreator : MonoBehaviour
 		Vector3 playerPos = new Vector3 (rooms[0].xPos, rooms[0].yPos, 0);
 		player.transform.position = playerPos;
 
-		for (int i = 1; i < rooms.Length; i++) {
+		for (int i = 1; i < normRoom; i++) {
 			currentRooms = new Room[i];
 			for (int j = 0; j< currentRooms.Length; j++){
 				currentRooms [j] = rooms [j];
 			}
 			rooms [i] = new Room ();
 			rooms [i].SetupRoom (roomWidth, roomHeight, columns, rows, currentRooms,corridors);
-//			Debug.Log (new Vector2 (corridors [i - 1].startXPos, corridors [i - 1].startYPos));
 		}
-
-
-//		// Setup the first corridor using the first room.
-//		corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
-
-//		for (int i = 1; i < rooms.Length; i++)
-//		{
-//			// Create a room.
-//			rooms[i] = new Room ();
-//
-//			// Setup the room based on the previous corridor.
-//			rooms[i].SetupRoom (roomWidth, roomHeight, columns, rows, corridors[i - 1]);
-//
-//			// If we haven't reached the end of the corridors array...
-//			if (i < corridors.Length)
-//			{
-//				// ... create a corridor.
-//				corridors[i] = new Corridor ();
-//
-//				// Setup the corridor based on the room that was just created.
-//				corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
-//			}
-//
-//
-//		}
+		rooms [normRoom] = new Room ();
+		rooms [normRoom].SetupBossRoom (bossRoomWidth, bossRoomHeight, columns, rows, currentRooms,corridors);
 
 	}
 
