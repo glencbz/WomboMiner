@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BoardCreator2 : MonoBehaviour
+public class BoardCreator : MonoBehaviour
 {
 	// The type of tile that will be laid in a specific position.
 	public enum TileType

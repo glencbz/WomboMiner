@@ -20,4 +20,9 @@ public class OptionsMenu : MonoBehaviour {
 		int sceneNum = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 		UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNum);
 	}
+
+	public void ExitGame() {
+		int start = UnityEngine.SceneManagement.SceneManager.GetSceneByName("Main Menu").buildIndex;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(start);
+	}
 }

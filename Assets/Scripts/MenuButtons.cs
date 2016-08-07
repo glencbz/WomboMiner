@@ -28,4 +28,8 @@ public class MenuButtons : MonoBehaviour {
 	public void CloseOptionMenu(){
 		optionMenu.enabled = false;
 	}
+
+	public void Exit() {
+		Application.Quit();
+	}
 }
