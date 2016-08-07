@@ -4,6 +4,8 @@ using System.Collections;
 public class Enemy : Creature {
 	//Private Entities
 	private Animator anim;
+	public float lootChance;
+
 	// Use this for initialization
 	void Start () {
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -28,6 +30,12 @@ public class Enemy : Creature {
 		Debug.Log("Enemy killed");
 		Destroy(gameObject);
 	}
+
+	public void testDropLoot(){
+		if (Random.value <= lootChance)
+			GameObject.FindGameObjectWithTag("LootPool").GetComponent<WeaponPool>().DropEnemyLoot(transform.position);
+	}
+
 	//Override to interact with player
 	public virtual void contactPlayer(Collider2D other) {
 
