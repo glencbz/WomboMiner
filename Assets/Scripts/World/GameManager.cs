@@ -49,7 +49,10 @@ namespace Completed
 			//Get a component reference to the attached BoardManager script
 			boardScript = GetComponent<BoardManager>();
 
-			options = GameObject.Find("Options Menu");
+			if (options == null) {
+				options = GameObject.Find("Options Menu");
+			}
+			Debug.Log(options);
 			options.SetActive(false);
 			//Call the InitGame function to initialize the first level 
 			InitGame();
@@ -74,13 +77,13 @@ namespace Completed
 			doingSetup = true;
 			
 			//Get a reference to our image LevelImage by finding it by name.
-			levelImage = GameObject.Find("LevelImage");
+			levelImage = GameObject.Find("Opening Screen");
 			
 			//Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
 			levelText = GameObject.Find("LevelText").GetComponent<Text>();
 			
 			//Set the text of levelText to the string "Day" and append the current level number.
-			levelText.text = "Day " + level;
+			levelText.text = "Level " + level;
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);
@@ -102,7 +105,6 @@ namespace Completed
 		{
 			//Disable the levelImage gameObject.
 			levelImage.SetActive(false);
-			
 			//Set doingSetup to false allowing player to move again.
 			doingSetup = false;
 		}

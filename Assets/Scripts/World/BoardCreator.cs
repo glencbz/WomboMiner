@@ -151,7 +151,7 @@ public class BoardCreator : MonoBehaviour
 		for (int i = 0; i < corridors.Length; i++)
 		{
 			Corridor currentCorridor = corridors[i];
-			Debug.Log (currentCorridor.corridorLength);
+			//Debug.Log (currentCorridor.corridorLength);
 			// and go through it's length.
 			for (int j = 0; j < currentCorridor.corridorLength; j++)
 			{
