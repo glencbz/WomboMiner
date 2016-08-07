@@ -72,7 +72,7 @@ public class BoardCreator : MonoBehaviour
 		int normRoom = numRooms.Random;
 		rooms = new Room[normRoom+1];
 
-		// There should be one less corridor than there is rooms, excluding boss room for now.
+		// There should be one less corridor than there is rooms.
 		corridors = new Corridor[rooms.Length - 1];			
 
 		// Create the first room and corridor.
