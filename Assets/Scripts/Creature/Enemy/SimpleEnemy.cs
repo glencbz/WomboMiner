@@ -3,15 +3,10 @@ using System.Collections;
 
 public class SimpleEnemy : Enemy {
 	public int touch_damage;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		base.Start ();
 	}
 
 	public override void contactPlayer(Collider2D other) {
