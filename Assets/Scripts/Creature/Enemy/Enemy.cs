@@ -2,17 +2,26 @@
 using System.Collections;
 
 public class Enemy : Creature {
-	//Private Entities
-	private Animator anim;
 	public float lootChance;
 	public float aggroDistance = 5.0f;
 
+	[HideInInspector]
+	// anchor position where enemy will return to if player runs away
+	public Vector2 anchorPosition;
+
+	//Private Entities
+	private Animator anim;
+
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
-		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+		// temporary comment out to fix bug
+//		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+		this.anchorPosition = this.transform.position;
 	}
 	
 	// Update is called once per frame
