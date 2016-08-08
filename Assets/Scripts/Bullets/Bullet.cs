@@ -49,6 +49,7 @@ public class Bullet : MonoBehaviour {
 		switch(other.tag) {
 			case "Wall":
 				Destroy(gameObject);
+				other.GetComponent<Wall>().DamageWall(1);
 				return;
 			case "Player":
 			case "Enemy":
