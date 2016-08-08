@@ -10,29 +10,30 @@ using System.Collections.Generic;
  * Inspector Variables:
  * 
  * Player: The player GameObject where the enemy will try to attack
- * MOVE_SPEED: enemy move speed
- * ENEMY_AGGRO_THRESHOLD: distance enemy will start to attack player
  * LayerMask set to BlockingLayer, or the layer objects are present that the enemy is supposed to avoid 
  * 
  **/
 public class EnemyMove : MonoBehaviour {
 
 	public GameObject player;
-	public float MOVE_SPEED = 0.05f;
-	public float ENEMY_AGGRO_THRESHOLD = 7.0f;
 
 	// set to BlockingLayer in the inspector plz
 	public LayerMask layerMask;
 
 	// how deep to do graph search
 	private int GRAPH_SEARCH_LIMIT = 10;
+	private float moveSpeed;
+	private float aggroDistance;
 
 	void Start () {
+		Enemy currentEnemy = GetComponent<Enemy> ();
+		this.moveSpeed = currentEnemy.moveScale;
+		this.aggroDistance = currentEnemy.aggroDistance;
 	}
 
 	bool PlayerIsNear() {
 		float distance = Vector2.Distance (this.transform.position, this.player.transform.position);
-		return distance <= ENEMY_AGGRO_THRESHOLD;
+		return distance <= this.aggroDistance;
 	}
 
 	bool ClearPathToPlayer() {
@@ -52,7 +53,7 @@ public class EnemyMove : MonoBehaviour {
 	}
 
 	void MoveTowards(Vector2 position) {
-		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.MOVE_SPEED);
+		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.moveSpeed);
 	}
 
 	void MoveToPlayer() {
