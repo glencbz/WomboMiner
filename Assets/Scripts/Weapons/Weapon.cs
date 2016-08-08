@@ -13,6 +13,7 @@ public class Weapon : Item {
 	public Sprite verticalImage;//Image to display when in hand (face up/down)
 	public float arrowhead = 90;
 	public bool pointAtMouse = true;//TODO: stop rotating if not pointAtMouse
+	public bool isEnemySource = false;
 
 	[HideInInspector]
 	public float cooldownStatus = 0;
@@ -22,7 +23,11 @@ public class Weapon : Item {
 
 	void Start () {
 		base.Start();
-		sr = GetComponentInChildren<SpriteRenderer>();
+		sr = GetComponentInChildren<SpriteRenderer>();	
+	
+		if (isEnemySource) {
+			sr.enabled = false;
+		}
 	}
 	
 	//Pickup method for Player to call when picking up item. Drops weapon in hand first before picking up.
@@ -66,6 +71,7 @@ public class Weapon : Item {
 	//Method for firing a bullet.
 	public virtual void FireBullet(Vector3 direction){
 		if (cooldownStatus <= 0){
+
 			cooldownStatus = cooldown;
 			GenerateBullet(direction);	
 		}
@@ -73,7 +79,14 @@ public class Weapon : Item {
 
 	protected virtual void GenerateBullet(Vector3 mousePos){
 		Bullet newBullet = (Bullet) Instantiate(bullet, transform.position + new Vector3(gunpoint.x, gunpoint.y, 0), transform.rotation);
-		newBullet.source = "Player";
+
+		if (isEnemySource) {
+			newBullet.source = "Enemy";
+		} else {
+			newBullet.source = "Player";			
+		}
+
+
 		newBullet.InitialFire(transform, mousePos);
 	}
 
