@@ -5,6 +5,7 @@ public class Enemy : Creature {
 	//Private Entities
 	private Animator anim;
 	public float lootChance;
+	public float aggroDistance = 5.0f;
 
 	// Use this for initialization
 	void Start () {
