@@ -50,8 +50,6 @@ public class GameManager : MonoBehaviour
 		if (options == null) {
 			options = GameObject.Find("Options Menu");
 		}
-		Debug.Log(options);
-		options.SetActive(false);
 		//Call the InitGame function to initialize the first level 
 		if (isDungeon) {
 			InitGame();
@@ -118,10 +116,11 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			if (options.activeSelf) {
-				options.SetActive(false);
+			Canvas c = options.GetComponent<Canvas>();
+			if (c.enabled) {
+				c.enabled = false;
 			} else {
-				options.SetActive(true);
+				c.enabled = true;
 			}
 		}
 

@@ -14,7 +14,7 @@ public class OptionsMenu : MonoBehaviour {
 	}
 
 	public void ResumeGame() {
-		this.gameObject.SetActive(false);
+		this.gameObject.GetComponent<Canvas>().enabled = false;
 	}
 	public void RestartGame() {
 		int sceneNum = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
@@ -22,7 +22,7 @@ public class OptionsMenu : MonoBehaviour {
 	}
 
 	public void ExitGame() {
-		int start = UnityEngine.SceneManagement.SceneManager.GetSceneByName("Main Menu").buildIndex;
-		UnityEngine.SceneManagement.SceneManager.LoadScene(start);
+		GameManager.instance.isDungeon = false;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 	}
 }
