@@ -24,47 +24,55 @@ public class EnemyMove : MonoBehaviour {
 	private int GRAPH_SEARCH_LIMIT = 10;
 	private float moveSpeed;
 	private float aggroDistance;
+	private Vector2 anchorPosition;
 
 	void Start () {
 		Enemy currentEnemy = GetComponent<Enemy> ();
 		this.moveSpeed = currentEnemy.moveScale;
 		this.aggroDistance = currentEnemy.aggroDistance;
+		this.anchorPosition = currentEnemy.anchorPosition;
 	}
 
 	bool PlayerIsNear() {
 		float distance = Vector2.Distance (this.transform.position, this.player.transform.position);
 		return distance <= this.aggroDistance;
 	}
-
-	bool ClearPathToPlayer() {
-		Vector2 dirToObject = this.player.transform.position - this.transform.position;
+		
+	bool ClearPathToLocation(Vector2 position) {
+		Vector2 dirToObject = position - (Vector2)this.transform.position;
 		RaycastHit2D hit = Physics2D.Raycast (this.transform.position, dirToObject, Mathf.Infinity, layerMask.value);
 		// nothing hit means there's a clear path because the player is not on the blocking layer
 		return hit.collider == null;
-	}
-
-	// Update is called once per frame
-	void Update () {
-		this.MoveToPlayer ();
-	}
-
-	void MoveTowardsPlayerDirectly() {
-		this.MoveTowards (this.player.transform.position);
 	}
 
 	void MoveTowards(Vector2 position) {
 		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.moveSpeed);
 	}
 
-	void MoveToPlayer() {
-		// check if player is near (aggro)
+	// Update is called once per frame
+	void Update () {
+		// check if player is near (aggro), if not return to anchor position
 		if (!this.PlayerIsNear()) {
+			this.MoveToAnchor ();
 			return;
 		}
+			
+		this.MoveToPlayer ();
+	}
+		
+	void MoveToAnchor() {
+		this.MoveToLocation (this.anchorPosition);
+	}
 
+	void MoveToPlayer() {
+		this.MoveToLocation (this.player.transform.position);
+	}
+
+	void MoveToLocation(Vector2 position) {
 		// if not thing in the way, just move to the player
-		if (this.ClearPathToPlayer()) {
-			this.MoveTowardsPlayerDirectly ();
+		// else we have to do graph search
+		if (this.ClearPathToLocation(position)) {
+			this.MoveTowards(position);
 			return;
 		}
 
@@ -72,7 +80,7 @@ public class EnemyMove : MonoBehaviour {
 		HashSet<Vector2> obstacles = this.GetObstacles();
 
 		// do bfs and find a path towards the player
-		Graph graph = new Graph (EnemyMove.RoundVector(this.transform.position), EnemyMove.RoundVector(this.player.transform.position), obstacles);
+		Graph graph = new Graph (EnemyMove.RoundVector(this.transform.position), EnemyMove.RoundVector(position), obstacles);
 		List<Vector2> shortestPath = graph.ShortestPath (GRAPH_SEARCH_LIMIT);
 
 		if (shortestPath.Count < 1) {
