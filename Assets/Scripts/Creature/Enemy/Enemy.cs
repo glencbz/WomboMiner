@@ -22,6 +22,8 @@ public class Enemy : Creature {
 	// how deep to do graph search
 	private int GRAPH_SEARCH_LIMIT = 20;
 
+	private float cameraSize;
+
 	private Vector2 nextPatrolPosition;
 
 	// caching variables
@@ -30,11 +32,15 @@ public class Enemy : Creature {
 	// sub destination on our route to the destination (no obstacles on the way)
 	private Vector2 previousSubDestination;
 
+	// states
 	protected bool isAggroed = false;
+	protected bool isActive = false;
 
 
 	// Use this for initialization
 	protected void Start () {
+		cameraSize = 2f * Camera.main.orthographicSize;
+
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
@@ -50,6 +56,16 @@ public class Enemy : Creature {
 	}
 
 	protected void Update () {
+		if (this.PlayerIsTooFar()) {
+			this.isActive = false;
+		} else {
+			this.isActive = true;
+		}
+
+		if (!this.isActive) {
+			return;
+		}
+
 		if (this.PlayerIsNear()) {
 			this.isAggroed = true;
 			this.MoveToPlayer ();
@@ -101,6 +117,10 @@ public class Enemy : Creature {
 	bool PlayerIsNear() {
 		float distance = Vector2.Distance (this.transform.position, this.player.transform.position);
 		return distance <= this.aggroDistance;
+	}
+
+	bool PlayerIsTooFar() {
+		return Vector2.Distance (this.transform.position, this.player.transform.position) > cameraSize;
 	}
 
 	bool ClearPathToLocation(Vector2 position) {
