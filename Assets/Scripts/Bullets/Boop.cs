@@ -14,6 +14,7 @@ public class Boop : Bullet {
 		speed = 0;
 	}
 
+	//TODO: make boop cone-shaped
 	protected virtual void OnTriggerEnter2D(Collider2D other){
 		//Environment Resolution
 		Debug.Log(other.gameObject);
@@ -31,9 +32,5 @@ public class Boop : Bullet {
 				}
 				break;
 		}
-	}
-
-	protected void DestroySelf(){
-		Destroy(gameObject);
 	}
 }

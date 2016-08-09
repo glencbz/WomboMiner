@@ -65,4 +65,8 @@ public class Bullet : MonoBehaviour {
 	public virtual void hitScan() {
 
 	}
+
+	protected void DestroySelf(){
+		Destroy(gameObject);
+	}
 }

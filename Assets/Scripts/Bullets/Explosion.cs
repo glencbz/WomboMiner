@@ -16,15 +16,8 @@ public class Explosion : Bullet {
 
 	public float duration = 0.5f;
 
-	void Awake(){
-		base.Awake();
-		StartCoroutine("KillSelf");
-	}
-
-	protected IEnumerator KillSelf(){
-		yield return new WaitForSeconds(duration);
-		Debug.Log("Killing self");
-		Destroy(gameObject);
+	void Start(){
+		Invoke("DestroySelf", duration);
 	}
 
 	protected override void OnTriggerEnter2D(Collider2D other){
