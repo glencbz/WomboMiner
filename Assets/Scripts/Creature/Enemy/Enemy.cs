@@ -57,5 +57,10 @@ public class Enemy : Creature {
 		}
 	}
 
+	//If Player remains in contact, continue to trigger
+	protected virtual void OnTriggerStay2D(Collider2D other) {
+		OnTriggerEnter2D(other);
+	}
+
 
 }
