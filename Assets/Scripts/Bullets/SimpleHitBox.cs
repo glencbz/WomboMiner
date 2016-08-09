@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class SimpleHitBox : Bullet {
 
-	private bool hit = false;
+	protected bool hit = false;
 
-	private HashSet<Collider2D> others;
-	private Collider2D[] marked;
+	protected HashSet<Collider2D> others;
+	protected Collider2D[] marked;
 
 	void Start() {
 		others = new HashSet<Collider2D>();

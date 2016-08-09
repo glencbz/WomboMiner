@@ -69,6 +69,7 @@ public class Weapon : Item {
 
 	}
 	//Method for firing a bullet.
+	//CAN YOU FIRE?
 	public virtual void FireBullet(Vector3 direction){
 		if (cooldownStatus <= 0){
 
@@ -77,6 +78,7 @@ public class Weapon : Item {
 		}
 	}
 
+	//HOW DO YOU FIRE?
 	protected virtual void GenerateBullet(Vector3 mousePos){
 		Bullet newBullet = (Bullet) Instantiate(bullet, transform.position + new Vector3(gunpoint.x, gunpoint.y, 0), transform.rotation);
 

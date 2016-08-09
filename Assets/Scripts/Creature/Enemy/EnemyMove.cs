@@ -15,7 +15,8 @@ using System.Collections.Generic;
  **/
 public class EnemyMove : MonoBehaviour {
 
-	public GameObject player;
+	[SerializeField]
+	private GameObject player;
 
 	// set to BlockingLayer in the inspector plz
 	public LayerMask layerMask;
@@ -30,6 +31,7 @@ public class EnemyMove : MonoBehaviour {
 	private Vector2 nextPatrolPosition;
 
 	void Start () {
+		player = GameObject.Find("Player");
 		Enemy currentEnemy = GetComponent<Enemy> ();
 		this.moveSpeed = currentEnemy.moveScale;
 		this.aggroDistance = currentEnemy.aggroDistance;
