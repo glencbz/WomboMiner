@@ -157,6 +157,6 @@ public class Player : Creature {
 	}
 
 	public override void die() {
-		Debug.Log("Player DIED!");
+		//Debug.Log("Player DIED!");
 	}
 }

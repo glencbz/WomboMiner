@@ -26,7 +26,6 @@ public class ShootyEnemy : Enemy {
 	}
 
 	public override void contactPlayer(Collider2D other) {
-		Debug.Log("TOUCHED");
 		other.GetComponent<Player>().takeDamage(3);
 	}
 }
