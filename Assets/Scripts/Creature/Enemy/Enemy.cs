@@ -48,6 +48,19 @@ public class Enemy : Creature {
 		this.nextPatrolPosition = this.transform.position;
 	}
 
+	protected void Update () {
+		if (this.PlayerIsNear()) {
+			this.MoveToPlayer ();
+			return;
+		}
+
+		if (!this.AtNextPatrolPosition()) {
+			this.MoveToLocation (this.nextPatrolPosition);
+		} else {
+			this.nextPatrolPosition = this.NewPatrolPoint ();
+		}
+	}
+
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
 		if (currHealth <= 0) {
@@ -115,19 +128,6 @@ public class Enemy : Creature {
 		this.previousSubDestination = RoundVector(position);
 	}
 
-	protected void Update () {
-		if (this.PlayerIsNear()) {
-			this.MoveToPlayer ();
-			return;
-		}
-
-		if (!this.AtNextPatrolPosition()) {
-			this.MoveToLocation (this.nextPatrolPosition);
-		} else {
-			this.nextPatrolPosition = this.NewPatrolPoint ();
-		}
-	}
-
 	void MoveToPlayer() {
 		this.MoveToLocation (this.player.transform.position);
 	}
@@ -189,34 +189,14 @@ public class Enemy : Creature {
 		return new Vector2 (Mathf.Round (inp.x), Mathf.Round (inp.y));
 	}
 
-	float DistanceBetweenObjects(GameObject firstObject, GameObject secondObject) {
-
-		Vector2 firstPosition = firstObject.transform.position;
-		Vector2 secondPosition = secondObject.transform.position;
-
-		Vector2 dirToObject = firstPosition - secondPosition;
-
-		RaycastHit2D hit = Physics2D.Raycast (firstPosition, dirToObject, Mathf.Infinity, this.obstacleLayer.value);
-
-		if (hit.collider == null) {
-			throw new UnityException("RAY SHOULD ALWAYS HIT SOMETHING WTF");
-		}
-
-		if (hit.collider.gameObject == secondObject) {
-			return Vector2.Distance (firstPosition, secondPosition);
-		}
-		return -1;
-	}
-
 	Vector2 NewPatrolPoint() {
 		Vector2 newPoint;
 
 		do {
 			newPoint = Random.insideUnitCircle * this.patrolRadius + (Vector2)this.anchorPosition;
-		} while (!this.ClearPathToLocation(newPoint));
+		} while (!this.ClearPathToLocation (newPoint));
 
 		return newPoint;
 	}
-
 }
 
