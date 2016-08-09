@@ -57,6 +57,8 @@ public class HUD_HP : MonoBehaviour {
 		foreach(GameObject heart in hearts) {
 				Destroy(heart);
 		}
+
+		float offset = this.GetComponent<RectTransform>().rect.width / 12;
 		for (int i=0;i<(maxHP / HP_per_heart);i++) {
 			GameObject heart = Instantiate(heartContainer);
 			hearts.Add(heart);
@@ -64,7 +66,7 @@ public class HUD_HP : MonoBehaviour {
 			//heart.GetComponent<RectTransform>().localPosition = new Vector3(30*i,0,0);
 			//Set heart position
 			RectTransform rt = heart.GetComponent<RectTransform>();
-			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 15+30*i,rt.rect.width);
+			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, offset*(i+1),rt.rect.width);
 			rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, this.GetComponent<RectTransform>().rect.height / 4,rt.rect.height);
 		}
 
