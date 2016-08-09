@@ -54,7 +54,7 @@ public class Weapon : Item {
 		//Enable Item Collider
 		this.ToggleCollider(true);
 		sr.sprite = itemImage;
-		sr.sortingLayerName = "Default";
+		sr.sortingLayerName = "Items";
 		//reset rotation
 		transform.rotation = Quaternion.identity;
 		return true;
