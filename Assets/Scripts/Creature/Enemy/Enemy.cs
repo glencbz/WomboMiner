@@ -33,7 +33,6 @@ public class Enemy : Creature {
 
 	// Use this for initialization
 	protected void Start () {
-		Debug.Log (this.moveScale);
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
