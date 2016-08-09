@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour {
 	public string source;
 	public int damage = 1;
 
-	void Awake () {
+	protected void Awake () {
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		collider2D = this.GetComponent<Collider2D>();
 		collider2D.isTrigger = true;
