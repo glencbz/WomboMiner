@@ -21,7 +21,7 @@ public class EnemyMove : MonoBehaviour {
 	public LayerMask layerMask;
 
 	// how deep to do graph search
-	private int GRAPH_SEARCH_LIMIT = 10;
+	private int GRAPH_SEARCH_LIMIT = 20;
 	private float moveSpeed;
 	private float aggroDistance;
 	private Vector2 anchorPosition;
@@ -104,26 +104,14 @@ public class EnemyMove : MonoBehaviour {
 	}
 
 	HashSet<Vector2> GetObstacles() {
-		GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>() ;
+		GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
 
 		HashSet<Vector2> obstacles = new HashSet<Vector2> ();
 
-		foreach(GameObject anObject in allObjects) {
-			// ignore self and the player
-			if (anObject == this.gameObject || anObject == this.player) {
-				continue;
-			}
-
-			// ignore objects that are not in the blocking layer
-
-			// do math log to convert LayerMask.value to integer
-			// http://answers.unity3d.com/questions/644123/layermask-can-someone-explain-why-is-256-8.html
-			if (anObject.layer != Mathf.Log(this.layerMask.value, 2)) {
-				continue;
-			}
-
-			obstacles.Add(EnemyMove.RoundVector(anObject.transform.position));
+		foreach(GameObject wall in walls) {
+			obstacles.Add (wall.transform.position);
 		}
+
 		return obstacles;
 	}
 
