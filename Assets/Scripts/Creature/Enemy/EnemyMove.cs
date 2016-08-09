@@ -27,8 +27,13 @@ public class EnemyMove : MonoBehaviour {
 	private float aggroDistance;
 	private Vector2 anchorPosition;
 	private float patrolRadius;
-
 	private Vector2 nextPatrolPosition;
+
+	// caching variables
+	// where we previously want to go (might have obstacles on the way)
+	private Vector2 previousDestination;
+	// sub destination on our route to the destination (no obstacles on the way)
+	private Vector2 previousSubDestination;
 
 	void Start () {
 		player = GameObject.Find("Player");
@@ -70,6 +75,9 @@ public class EnemyMove : MonoBehaviour {
 
 	void MoveTowards(Vector2 position) {
 		GetComponent<Rigidbody2D>().AddForce (this.moveScale * (position - (Vector2)this.transform.position).normalized);
+
+		// cache where we are going for caching optimization in MoveToLocation
+		this.previousSubDestination = RoundVector(position);
 	}
 		
 	void Update () {
@@ -90,6 +98,18 @@ public class EnemyMove : MonoBehaviour {
 	}
 
 	void MoveToLocation(Vector2 position) {
+		// caching optimization
+
+		// if our desired destinationis the same as the previous frame and,
+		// we are not at the desired sub destination yet,
+		// just continue moving to the previous sub destination
+		if (RoundVector(position) == this.previousDestination && RoundVector(this.transform.position) != this.previousSubDestination) {
+			this.MoveTowards (this.previousSubDestination);
+			return;
+		}
+
+		this.previousDestination = RoundVector(position);
+
 		// if not thing in the way, just move to the player
 		// else we have to do graph search
 		if (this.ClearPathToLocation(position)) {
@@ -114,7 +134,7 @@ public class EnemyMove : MonoBehaviour {
 			// also another workaround for where the player walks into a wall and no path can be found to the player
 			return;
 		}
-
+			
 		this.MoveTowards (shortestPath [0]);
 	}
 
