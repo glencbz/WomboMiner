@@ -13,7 +13,7 @@ public class Enemy : Creature {
 	private Animator anim;
 
 	[SerializeField]
-	private GameObject player;
+	protected GameObject player;
 
 	// set to BlockingLayer in the inspector plz
 	public LayerMask obstacleLayer;
@@ -29,6 +29,8 @@ public class Enemy : Creature {
 	private Vector2 previousDestination;
 	// sub destination on our route to the destination (no obstacles on the way)
 	private Vector2 previousSubDestination;
+
+	protected bool isAggroed = false;
 
 
 	// Use this for initialization
@@ -49,10 +51,12 @@ public class Enemy : Creature {
 
 	protected void Update () {
 		if (this.PlayerIsNear()) {
+			this.isAggroed = true;
 			this.MoveToPlayer ();
 			return;
 		}
 
+		this.isAggroed = false;
 		if (!this.AtNextPatrolPosition()) {
 			this.MoveToLocation (this.nextPatrolPosition);
 		} else {
