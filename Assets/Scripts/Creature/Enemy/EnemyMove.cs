@@ -25,19 +25,26 @@ public class EnemyMove : MonoBehaviour {
 	private float moveSpeed;
 	private float aggroDistance;
 	private Vector2 anchorPosition;
+	private float patrolRadius;
+
+	private Vector2 nextPatrolPosition;
 
 	void Start () {
 		Enemy currentEnemy = GetComponent<Enemy> ();
 		this.moveSpeed = currentEnemy.moveScale;
 		this.aggroDistance = currentEnemy.aggroDistance;
-		this.anchorPosition = currentEnemy.anchorPosition;
+		this.anchorPosition = this.transform.position;
+		this.patrolRadius = currentEnemy.patrolRadius;
+
+		// initialise nextPatrolPosition to current position, so update will know that it is time to assign a new position
+		this.nextPatrolPosition = this.transform.position;
 	}
 
 	bool PlayerIsNear() {
 		float distance = Vector2.Distance (this.transform.position, this.player.transform.position);
 		return distance <= this.aggroDistance;
 	}
-		
+
 	bool ClearPathToLocation(Vector2 position) {
 		Vector2 dirToObject = position - (Vector2)this.transform.position;
 		RaycastHit2D hit = Physics2D.Raycast (this.transform.position, dirToObject, Mathf.Infinity, layerMask.value);
@@ -45,23 +52,25 @@ public class EnemyMove : MonoBehaviour {
 		return hit.collider == null;
 	}
 
+	bool AtNextPatrolPosition() {
+		return Vector2.Distance (this.transform.position, this.nextPatrolPosition) < 1.0f;
+	}
+
 	void MoveTowards(Vector2 position) {
 		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.moveSpeed);
 	}
-
-	// Update is called once per frame
+		
 	void Update () {
-		// check if player is near (aggro), if not return to anchor position
-		if (!this.PlayerIsNear()) {
-			this.MoveToAnchor ();
+		if (this.PlayerIsNear()) {
+			this.MoveToPlayer ();
 			return;
 		}
-			
-		this.MoveToPlayer ();
-	}
-		
-	void MoveToAnchor() {
-		this.MoveToLocation (this.anchorPosition);
+
+		if (!this.AtNextPatrolPosition()) {
+			this.MoveToLocation (this.nextPatrolPosition);
+		} else {
+			this.nextPatrolPosition = this.NewPatrolPoint ();
+		}
 	}
 
 	void MoveToPlayer() {
@@ -139,6 +148,10 @@ public class EnemyMove : MonoBehaviour {
 			return Vector2.Distance (firstPosition, secondPosition);
 		}
 		return -1;
+	}
+
+	Vector2 NewPatrolPoint() {
+		return Random.insideUnitCircle * this.patrolRadius + (Vector2)this.anchorPosition;
 	}
 }
 

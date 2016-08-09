@@ -8,7 +8,7 @@ public class ShootyEnemy : Enemy {
 	public Bullet bullet;
 
 	// Use this for initialization
-	void Start () {
+	new void Start () {
 		base.Start ();
 	}
 

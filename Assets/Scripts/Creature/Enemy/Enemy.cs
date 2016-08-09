@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : Creature {
 	public float lootChance;
 	public float aggroDistance = 5.0f;
+	public float patrolRadius = 3.0f;
 
 	[HideInInspector]
 	// anchor position where enemy will return to if player runs away
@@ -20,8 +21,6 @@ public class Enemy : Creature {
 
 		// temporary comment out to fix bug
 //		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-
-		this.anchorPosition = this.transform.position;
 	}
 	
 	// Update is called once per frame
