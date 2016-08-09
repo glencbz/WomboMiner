@@ -1,0 +1,283 @@
+fileFormatVersion: 2
+guid: 7bd4f8bbf633c8045bcd56cf6330f3c6
+timeCreated: 1470647012
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: gemm_0
+    21300002: gemm_1
+    21300004: gemm_2
+    21300006: gemm_3
+    21300008: gemm_4
+    21300010: gemm_5
+    21300012: gemm_6
+    21300014: gemm_7
+    21300016: gemm_8
+    21300018: gemm_9
+    21300020: gemm_10
+    21300022: gemm_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 64
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: gemm_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: gemm_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 31, y: -32}
+        - {x: 32, y: -30}
+        - {x: 32, y: 32}
+    - name: gemm_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 31}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 31}
+    - name: gemm_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -11}
+        - {x: -29, y: -32}
+        - {x: 29, y: -32}
+        - {x: 29, y: 10}
+        - {x: 15, y: 32}
+      - - {x: -27, y: -24}
+        - {x: -25, y: -26}
+        - {x: -22, y: -25}
+        - {x: -22, y: -22}
+        - {x: -24, y: -20}
+        - {x: -27, y: -21}
+    - name: gemm_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 32}
+        - {x: -31, y: 31}
+        - {x: -31, y: -12}
+        - {x: -18, y: -32}
+        - {x: 27, y: -32}
+        - {x: 27, y: 9}
+        - {x: 21, y: 32}
+    - name: gemm_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: 10}
+        - {x: -25, y: -12}
+        - {x: -9, y: -30}
+        - {x: 21, y: -30}
+        - {x: 26, y: -21}
+        - {x: 26, y: 32}
+    - name: gemm_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 27, y: 32}
+        - {x: 15, y: 32}
+        - {x: 16, y: 29}
+        - {x: 21, y: 29}
+        - {x: 19, y: 29}
+        - {x: -10, y: 32}
+        - {x: -22, y: 32}
+        - {x: -27, y: 18}
+        - {x: -27, y: -29}
+        - {x: -20, y: -31}
+        - {x: 17, y: -31}
+        - {x: 31, y: -10}
+        - {x: 32, y: -2}
+        - {x: 32, y: 29}
+    - name: gemm_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 32}
+        - {x: -25, y: 26}
+        - {x: -28, y: 1}
+        - {x: -28, y: -32}
+        - {x: 19, y: -32}
+        - {x: 26, y: -30}
+        - {x: 30, y: -12}
+        - {x: 30, y: 30}
+        - {x: 24, y: 32}
+    - name: gemm_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12, y: 32}
+        - {x: -14, y: 31}
+        - {x: -30, y: 7}
+        - {x: -30, y: -32}
+        - {x: 17, y: -32}
+        - {x: 31, y: 9}
+        - {x: 31, y: 32}
+    - name: gemm_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 31}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 31}
+    - name: gemm_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+    - name: gemm_11
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 29}
+        - {x: 27, y: 32}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

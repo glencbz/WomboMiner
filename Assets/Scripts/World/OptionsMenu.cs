@@ -2,19 +2,30 @@
 using System.Collections;
 
 public class OptionsMenu : MonoBehaviour {
-
+	private Canvas c;
+	private Canvas hud;
 	// Use this for initialization
 	void Start () {
 		//gameObject.SetActive(false);
+		c = this.gameObject.GetComponent<Canvas>();
+		hud = GameObject.Find("HUD").GetComponent<Canvas>();
+
+		c.enabled = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	public void Toggle() {
+		if (c.enabled) {
+			c.enabled = false;
+			hud.enabled = true;
+		} else {
+			c.enabled = true;
+			hud.enabled = false;
+		}
 
 	}
 
 	public void ResumeGame() {
-		this.gameObject.SetActive(false);
+		Toggle();
 	}
 	public void RestartGame() {
 		int sceneNum = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
@@ -22,7 +33,7 @@ public class OptionsMenu : MonoBehaviour {
 	}
 
 	public void ExitGame() {
-		int start = UnityEngine.SceneManagement.SceneManager.GetSceneByName("Main Menu").buildIndex;
-		UnityEngine.SceneManagement.SceneManager.LoadScene(start);
+		GameManager.instance.isDungeon = false;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 	}
 }

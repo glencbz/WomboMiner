@@ -15,10 +15,14 @@ public class BoardCreator : MonoBehaviour
 	public IntRange numRooms = new IntRange (15, 20);         // The range of the number of rooms there can be.
 	public IntRange roomWidth = new IntRange (20, 20);         // The range of widths rooms can have.
 	public IntRange roomHeight = new IntRange (20, 20);        // The range of heights rooms can have.
-	public IntRange corridorLength = new IntRange (6, 10);    // The range of lengths corridors between rooms can have.
+	public IntRange bossRoomWidth = new IntRange (30, 30);         // The range of widths boss room can have.
+	public IntRange bossRoomHeight = new IntRange (30, 30);        // The range of heights boss room can have.
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
-	public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
+	public GameObject[] outerWallTiles;
+	public GameObject[] enemyTiles;
+	public GameObject[] weaponTiles;
+	public int enemyCount;
 	private GameObject player;
 
 	public GameObject[] players;
@@ -46,6 +50,8 @@ public class BoardCreator : MonoBehaviour
 
 		InstantiateTiles ();
 		InstantiateOuterWalls ();
+		InstantiateEnemies ();
+		InstantiateWeapons ();
 
 
 	}
@@ -68,7 +74,8 @@ public class BoardCreator : MonoBehaviour
 	void CreateRoomsAndCorridors ()
 	{
 		// Create the rooms array with a random size.
-		rooms = new Room[numRooms.Random];
+		int normRoom = numRooms.Random;
+		rooms = new Room[normRoom+1];
 
 		// There should be one less corridor than there is rooms.
 		corridors = new Corridor[rooms.Length - 1];			
@@ -83,40 +90,16 @@ public class BoardCreator : MonoBehaviour
 		Vector3 playerPos = new Vector3 (rooms[0].xPos, rooms[0].yPos, 0);
 		player.transform.position = playerPos;
 
-		for (int i = 1; i < rooms.Length; i++) {
+		for (int i = 1; i < normRoom; i++) {
 			currentRooms = new Room[i];
 			for (int j = 0; j< currentRooms.Length; j++){
 				currentRooms [j] = rooms [j];
 			}
 			rooms [i] = new Room ();
 			rooms [i].SetupRoom (roomWidth, roomHeight, columns, rows, currentRooms,corridors);
-//			Debug.Log (new Vector2 (corridors [i - 1].startXPos, corridors [i - 1].startYPos));
 		}
-
-
-//		// Setup the first corridor using the first room.
-//		corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
-
-//		for (int i = 1; i < rooms.Length; i++)
-//		{
-//			// Create a room.
-//			rooms[i] = new Room ();
-//
-//			// Setup the room based on the previous corridor.
-//			rooms[i].SetupRoom (roomWidth, roomHeight, columns, rows, corridors[i - 1]);
-//
-//			// If we haven't reached the end of the corridors array...
-//			if (i < corridors.Length)
-//			{
-//				// ... create a corridor.
-//				corridors[i] = new Corridor ();
-//
-//				// Setup the corridor based on the room that was just created.
-//				corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
-//			}
-//
-//
-//		}
+		rooms [normRoom] = new Room ();
+		rooms [normRoom].SetupBossRoom (bossRoomWidth, bossRoomHeight, columns, rows, currentRooms,corridors);
 
 	}
 
@@ -268,4 +251,87 @@ public class BoardCreator : MonoBehaviour
 		// Set the tile's parent to the board holder.
 		tileInstance.transform.parent = boardHolder.transform;
 	}
+
+
+	void InstantiateEnemies () {
+		for (int i = 0; i < enemyCount; i++) {
+			//Randomly choose a room
+			int roomIndex = Random.Range (0, rooms.Length - 1);
+			Room chosenRoom = rooms [roomIndex];
+
+			//Get max range for spawning
+			int maxX = chosenRoom.xPos + chosenRoom.roomWidth;
+			int maxY = chosenRoom.yPos + chosenRoom.roomHeight;
+
+			//Choose enemy
+			GameObject tileChoice = enemyTiles[Random.Range (0, enemyTiles.Length)];
+
+			//Randomly choose spawn position within range
+			int posX = Random.Range (chosenRoom.xPos, maxX);
+			int posY = Random.Range (chosenRoom.yPos, maxY);
+			Vector2 randomPosition = new Vector2 (posX, posY);
+
+			//Instantiate enemy
+			Instantiate (tileChoice, randomPosition, Quaternion.identity);
+		}
+	}
+
+
+	void InstantiateWeapons () {
+
+		Room chosenRoom = rooms [0];
+
+		for (int i = 0; i < weaponTiles.Length; i++) {
+
+
+			GameObject weapon = weaponTiles [i];
+
+			//Get max range for spawning
+			int maxX = chosenRoom.xPos + chosenRoom.roomWidth;
+			int maxY = chosenRoom.yPos + chosenRoom.roomHeight;
+
+			//Randomly choose spawn position within range
+			int posX = Random.Range (chosenRoom.xPos, maxX);
+			int posY = Random.Range (chosenRoom.yPos, maxY);
+			Vector2 randomPosition = new Vector2 (posX, posY);
+
+			//Instantiate enemy
+			Instantiate (weapon, randomPosition, Quaternion.identity);
+		}
+	}
+//	//LayoutObjectAtRandom accepts an array of game objects to choose from along with a minimum and maximum range for the number of objects to create.
+//	void LayoutObjectAtRandom (GameObject[] tileArray, int minimum, int maximum)
+//	{
+//		//Choose a random number of objects to instantiate within the minimum and maximum limits
+//		int objectCount = Random.Range (minimum, maximum+1);
+//
+//		//Instantiate objects until the randomly chosen limit objectCount is reached
+//		for(int i = 0; i < objectCount; i++)
+//		{
+//			//Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
+//			Vector3 randomPosition = RandomPosition();
+//
+//			//Choose a random tile from tileArray and assign it to tileChoice
+//			GameObject tileChoice = tileArray[Random.Range (0, tileArray.Length)];
+//
+//			//Instantiate tileChoice at the position returned by RandomPosition with no change in rotation
+//			Instantiate(tileChoice, randomPosition, Quaternion.identity);
+//		}
+//	}
+
+//	//RandomPosition returns a random position from our list gridPositions.
+//	Vector3 RandomPosition ()
+//	{
+//		//Declare an integer randomIndex, set it's value to a random number between 0 and the count of items in our List gridPositions.
+//		int randomIndex = Random.Range (0, gridPositions.Count);
+//
+//		//Declare a variable of type Vector3 called randomPosition, set it's value to the entry at randomIndex from our List gridPositions.
+//		Vector3 randomPosition = gridPositions[randomIndex];
+//
+//		//Remove the entry at randomIndex from the list so that it can't be re-used.
+//		gridPositions.RemoveAt (randomIndex);
+//
+//		//Return the randomly selected Vector3 position.
+//		return randomPosition;
+//	}
 }
