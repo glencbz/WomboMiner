@@ -47,11 +47,11 @@ public class Player : Creature {
 		//Move Player mapped to joysticks
 		MovePlayer();
 		//Left / Right Mouse Clicks
-		if (Input.GetMouseButtonDown(0)){
+		if (Input.GetMouseButton(0)){
 			FireWeapon(hands.left.weapon, mousePos);
 		}
 
-		if (Input.GetMouseButtonDown(1)){
+		if (Input.GetMouseButton(1)){
 			FireWeapon(hands.right.weapon, mousePos);
 		}
 		//Other Functionality
