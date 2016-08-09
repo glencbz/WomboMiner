@@ -21,6 +21,7 @@ public class WeaponPool : MonoBehaviour {
 	
 	}
 
+	// Calculates a loot drop for a killed enemy
 	public void DropEnemyLoot(Vector3 position){
 		int tier = CalculateTier(enemyTierProbs);
 		int roll = Random.Range(0, tieredWeapons[tier].Length);
