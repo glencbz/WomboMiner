@@ -51,7 +51,17 @@ public class EnemyMove : MonoBehaviour {
 		Vector2 dirToObject = position - (Vector2)this.transform.position;
 		RaycastHit2D hit = Physics2D.Raycast (this.transform.position, dirToObject, Mathf.Infinity, layerMask.value);
 		// nothing hit means there's a clear path because the player is not on the blocking layer
-		return hit.collider == null;
+
+		if (hit.collider == null) {
+			return true;
+		}
+
+		// some blocking layer is hit
+		Vector2 hitPoint = hit.transform.position;
+
+
+		// we check the thing we hit, and if its further than the position we want to move to, there is a clear path to where we want to go
+		return Vector2.Distance (this.transform.position, position) < Vector2.Distance (this.transform.position, hitPoint);
 	}
 
 	bool AtNextPatrolPosition() {
@@ -87,6 +97,7 @@ public class EnemyMove : MonoBehaviour {
 			return;
 		}
 
+		Debug.Log (this.gameObject + " doing search");
 		// get list of coordinates for blocking objects
 		HashSet<Vector2> obstacles = this.GetObstacles();
 
@@ -99,6 +110,8 @@ public class EnemyMove : MonoBehaviour {
 			// ClearPathToPlayer() thinks that there is no clear path, and we end up with a shortest path of length 0
 
 			// to replicate, remove this conditional and move the player close to the the enemy, then move around/through the enemy erratically
+
+			// also another workaround for where the player walks into a wall and no path can be found to the player
 			return;
 		}
 
@@ -154,6 +167,11 @@ class Graph {
 
 	public List<Vector2> ShortestPath(int levelLimit) {
 		Node endNode = this.BreadthFirstSearch (levelLimit);
+
+		// no path found, return empty list
+		if (endNode == null) {
+			return new List<Vector2>();
+		}
 		return endNode.GetPath ();
 	}
 
