@@ -154,7 +154,13 @@ public class EnemyMove : MonoBehaviour {
 	}
 
 	Vector2 NewPatrolPoint() {
-		return Random.insideUnitCircle * this.patrolRadius + (Vector2)this.anchorPosition;
+		Vector2 newPoint;
+
+		do {
+			newPoint = Random.insideUnitCircle * this.patrolRadius + (Vector2)this.anchorPosition;
+		} while (!this.ClearPathToLocation(newPoint));
+
+		return newPoint;
 	}
 }
 
