@@ -15,6 +15,7 @@ public class ShootyEnemy : Enemy {
 
 	// Update is called once per frame
 	void Update () {
+		base.Update ();
 		weapon.FireBullet (player.transform.position);
 	}
 
