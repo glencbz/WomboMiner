@@ -9,12 +9,9 @@ public class SimpleEnemy : Enemy {
 		base.Start ();
 	}
 
-	void Update() {
+	new void Update() {
 		base.Update ();
 
-		if (!this.isActive) {
-			return;
-		}
 	}
 
 	public override void contactPlayer(Collider2D other) {

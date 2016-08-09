@@ -272,7 +272,9 @@ public class BoardCreator : MonoBehaviour
 			Vector2 randomPosition = new Vector2 (posX, posY);
 
 			//Instantiate enemy
-			Instantiate (tileChoice, randomPosition, Quaternion.identity);
+			GameObject enemy = (GameObject)Instantiate (tileChoice, randomPosition, Quaternion.identity);
+			// disable enemy ai on start for performance
+			enemy.GetComponent<Enemy> ().enabled = false;
 		}
 	}
 
