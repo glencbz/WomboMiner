@@ -4,9 +4,17 @@ using System.Collections;
 public class SimpleEnemy : Enemy {
 	public int touch_damage;
 	
-	// Update is called once per frame
-	void Update () {
+	// Use this for initialization
+	new void Start () {
 		base.Start ();
+	}
+
+	void Update() {
+		base.Update ();
+
+		if (!this.isActive) {
+			return;
+		}
 	}
 
 	public override void contactPlayer(Collider2D other) {
