@@ -5,8 +5,8 @@ public class Weapon : Item {
 
 	public Bullet bullet;
 	public float cooldown;
-	public float scaleSize = .2f;
-//	public Vector2 offset;
+	//Size of weapon and bullet
+	public float size = 1f;
 	public Vector2 gunpoint = Vector2.zero;
 	public Sprite itemImage; //Image to display when on ground
 	public Sprite horizontalImage; //Image to display when in hand (face left/right)
