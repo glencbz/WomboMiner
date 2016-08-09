@@ -34,7 +34,6 @@ public class Enemy : Creature {
 
 	// states
 	protected bool isAggroed = false;
-	protected bool isActive = false;
 
 
 	// Use this for initialization
@@ -56,16 +55,6 @@ public class Enemy : Creature {
 	}
 
 	protected void Update () {
-		if (this.PlayerIsTooFar()) {
-			this.isActive = false;
-		} else {
-			this.isActive = true;
-		}
-
-		if (!this.isActive) {
-			return;
-		}
-
 		if (this.PlayerIsNear()) {
 			this.isAggroed = true;
 			this.MoveToPlayer ();
@@ -79,7 +68,7 @@ public class Enemy : Creature {
 			this.nextPatrolPosition = this.NewPatrolPoint ();
 		}
 	}
-
+		
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
 		if (currHealth <= 0) {

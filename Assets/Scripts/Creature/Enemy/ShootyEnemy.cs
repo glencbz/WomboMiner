@@ -15,10 +15,6 @@ public class ShootyEnemy : Enemy {
 	void Update () {
 		base.Update ();
 
-		if (!this.isActive) {
-			return;
-		}
-
 		if (this.isAggroed) {
 			weapon.FireBullet (this.player.transform.position);			
 		}
