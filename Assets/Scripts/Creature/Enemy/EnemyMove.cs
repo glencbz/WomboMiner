@@ -23,7 +23,7 @@ public class EnemyMove : MonoBehaviour {
 
 	// how deep to do graph search
 	private int GRAPH_SEARCH_LIMIT = 20;
-	private float moveSpeed;
+	private float moveScale;
 	private float aggroDistance;
 	private Vector2 anchorPosition;
 	private float patrolRadius;
@@ -33,7 +33,7 @@ public class EnemyMove : MonoBehaviour {
 	void Start () {
 		player = GameObject.Find("Player");
 		Enemy currentEnemy = GetComponent<Enemy> ();
-		this.moveSpeed = currentEnemy.moveScale;
+		this.moveScale = currentEnemy.moveScale;
 		this.aggroDistance = currentEnemy.aggroDistance;
 		this.anchorPosition = this.transform.position;
 		this.patrolRadius = currentEnemy.patrolRadius;
@@ -59,7 +59,7 @@ public class EnemyMove : MonoBehaviour {
 	}
 
 	void MoveTowards(Vector2 position) {
-		this.transform.position = Vector2.MoveTowards(this.transform.position, position, this.moveSpeed);
+		GetComponent<Rigidbody2D>().AddForce (this.moveScale * (position - (Vector2)this.transform.position).normalized);
 	}
 		
 	void Update () {
