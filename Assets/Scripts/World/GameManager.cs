@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
 	private Canvas deathScreen;
 	private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 	private Text scoreText;
+	private Text deathScore;
 	private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
 	private int score;
 
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour {
 		this.scoreText = GameObject.Find ("ScoreText").GetComponent<Text> ();
 
 		deathScreen = GameObject.Find ("DeathScreen").GetComponent<Canvas>();
+		deathScore = GameObject.Find ("DeathScore").GetComponent<Text> ();
 		deathScreen.enabled = false;
 
 		levelImage.GetComponent<Canvas>().enabled = true;
@@ -85,6 +87,7 @@ public class GameManager : MonoBehaviour {
 	public void GameOver() {
 		levelText.text = "GAME OVER";
 		deathScreen.enabled = true;
+		deathScore.text = "Your Score: " + this.score.ToString ();
 	}
 
 	public void GoBackToMainMenu() {
