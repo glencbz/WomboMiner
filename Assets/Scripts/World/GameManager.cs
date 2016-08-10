@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 		levelText.text = "Level " + level;
 		
 		//Set levelImage to active blocking player's view of the game board during setup.
-		levelImage.SetActive(true);
+		levelImage.GetComponent<Canvas>().enabled = true;
 		
 		//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 		Invoke("HideLevelImage", levelStartDelay);
