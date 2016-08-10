@@ -5,7 +5,7 @@ using System.Collections.Generic;
 // player should be set to Default layer, and obstacleLayer should be set to BlockingLayer in inspector
 
 public class Enemy : Creature {
-	public float lootChance;
+	public float lootChance = 1f;
 	public float aggroDistance = 5.0f;
 	public float patrolRadius = 3.0f;
 	public int touch_damage = 1;
@@ -87,11 +87,16 @@ public class Enemy : Creature {
 	public override void die() {
 		Destroy(gameObject);
 		GameManager.instance.OnEnemyKilled (this.killScore);
+		TestDropLoot();
 	}
 
-	public void testDropLoot(){
-		if (Random.value <= lootChance)
-			GameObject.FindGameObjectWithTag("LootPool").GetComponent<WeaponPool>().DropEnemyLoot(transform.position);
+	public void TestDropLoot(){
+		float roll = Random.value;
+		Debug.Log(roll);
+		if (roll <= lootChance){
+			GameObject.FindGameObjectWithTag("WeaponPool").GetComponent<WeaponPool>().DropEnemyLoot(transform.position);	
+			Debug.Log("loooooot drop");
+		}
 	}
 
 	//Override to interact with player

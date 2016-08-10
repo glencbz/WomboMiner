@@ -20,7 +20,6 @@ public class HUD_Ability : MonoBehaviour {
 		} else {
 			abilityA.sprite = player.hands.left.weapon.itemImage;
 			cooldownA.fillAmount = player.hands.left.weapon.cooldownStatus / player.hands.left.weapon.cooldown;
-			Debug.Log(player.hands.left.weapon.cooldown);
 		}
 
 		if (player.hands.right.checkEmpty()) {
