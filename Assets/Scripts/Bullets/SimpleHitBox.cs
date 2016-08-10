@@ -18,6 +18,7 @@ public class SimpleHitBox : Bullet {
 		foreach (Collider2D c in others) {
 			if (c.tag == "Enemy") {
 				c.GetComponent<Enemy>().takeDamage(damage);
+				ApplyKnockback(c);
 			}
 		}
 	}
