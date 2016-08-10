@@ -63,16 +63,16 @@ public class GameManager : MonoBehaviour {
 		deathScreen = GameObject.Find ("DeathScreen").GetComponent<Canvas>();
 		deathScreen.enabled = false;
 
-		levelText.text = "SURVIVE";
-
 		levelImage.GetComponent<Canvas>().enabled = true;
 
 		//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 		Invoke("HideLevelImage", levelStartDelay);
 
 		if (!this.isSurvival) {
+			levelText.text = "GOOD LUCK";
 			this.GetComponent<BoardCreator> ().Setup ();	
 		} else {
+			levelText.text = "SURVIVE";
 			this.GetComponent<SurvivalBoardCreator> ().Setup ();
 		}
 	}
