@@ -10,6 +10,8 @@ public class Enemy : Creature {
 	public float patrolRadius = 3.0f;
 	public int touch_damage = 1;
 	public float knockback = 200;
+	// reward when killing monster
+	public int killScore = 100;
 
 	//Private Entities
 	private Animator anim;
@@ -81,8 +83,8 @@ public class Enemy : Creature {
 	}
 
 	public override void die() {
-		Debug.Log("Enemy killed");
 		Destroy(gameObject);
+		GameManager.instance.OnEnemyKilled (this.killScore);
 	}
 
 	public void testDropLoot(){

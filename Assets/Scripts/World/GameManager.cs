@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour {
 	private Text levelText;									//Text to display current level number.
 	private Canvas deathScreen;
 	private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
+	private Text scoreText;
 	private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
+	private int score;
 
 	void Awake() {
 		if (instance == null) {
@@ -36,6 +38,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update() {
+		if (!isDungeon) {
+			return;
+		}
+			
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			options.GetComponent<OptionsMenu>().Toggle();
 		}
@@ -49,8 +55,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void InitGame() {
+		this.score = 0;
 		levelImage = GameObject.Find("Opening Screen");
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
+		this.scoreText = GameObject.Find ("ScoreText").GetComponent<Text> ();
 
 		deathScreen = GameObject.Find ("DeathScreen").GetComponent<Canvas>();
 		deathScreen.enabled = false;
@@ -82,5 +90,10 @@ public class GameManager : MonoBehaviour {
 	public void GoBackToMainMenu() {
 		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 		GameManager.instance.isDungeon = false;
+	}
+
+	public void OnEnemyKilled(int enemyScore) {
+		this.score += enemyScore;
+		this.scoreText.text = this.score.ToString();
 	}
 }
