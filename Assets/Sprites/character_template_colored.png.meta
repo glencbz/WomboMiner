@@ -1,0 +1,346 @@
+fileFormatVersion: 2
+guid: 32bd2d5dc9b3c47bcb119009b7d5af40
+timeCreated: 1470860416
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: character_template_colored_0
+    21300002: character_template_colored_1
+    21300004: character_template_colored_2
+    21300006: character_template_colored_3
+    21300008: character_template_colored_4
+    21300010: character_template_colored_5
+    21300012: character_template_colored_6
+    21300014: character_template_colored_7
+    21300016: character_template_colored_8
+    21300018: character_template_colored_9
+    21300020: character_template_colored_10
+    21300022: character_template_colored_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 64
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: character_template_colored_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 201
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13, y: 33.5}
+        - {x: -22, y: 30.5}
+        - {x: -26, y: 7.5}
+        - {x: -26, y: 4.5}
+        - {x: -13, y: -33.5}
+        - {x: 20, y: -33.5}
+        - {x: 25, y: -1.5}
+        - {x: 25, y: 30.5}
+        - {x: 20, y: 33.5}
+      - - {x: -27, y: -18.5}
+        - {x: -25, y: -20.5}
+        - {x: -22, y: -19.5}
+        - {x: -22, y: -13.5}
+        - {x: -24, y: -11.5}
+        - {x: -27, y: -12.5}
+    - name: character_template_colored_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 201
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 33.5}
+        - {x: -26, y: 14.5}
+        - {x: -26, y: -5.5}
+        - {x: -16, y: -33.5}
+        - {x: 21, y: -33.5}
+        - {x: 24, y: -11.5}
+        - {x: 24, y: 25.5}
+        - {x: 14, y: 33.5}
+    - name: character_template_colored_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 201
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13, y: 33.5}
+        - {x: -20, y: 33.5}
+        - {x: -26, y: 22.5}
+        - {x: -26, y: -16.5}
+        - {x: -19, y: -32.5}
+        - {x: -17, y: -33.5}
+        - {x: 25, y: -33.5}
+        - {x: 25, y: 22.5}
+        - {x: 23, y: 25.5}
+      - - {x: -26, y: -18.5}
+        - {x: -23, y: -21.5}
+        - {x: -20, y: -20.5}
+        - {x: -20, y: -15.5}
+        - {x: -23, y: -12.5}
+        - {x: -26, y: -13.5}
+      - - {x: 21, y: -14.5}
+        - {x: 23, y: -16.5}
+        - {x: 26, y: -15.5}
+        - {x: 26, y: -11.5}
+        - {x: 24, y: -9.5}
+        - {x: 21, y: -10.5}
+    - name: character_template_colored_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 134
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 33.5}
+        - {x: -23, y: 25.5}
+        - {x: -23, y: -33.5}
+        - {x: 16, y: -33.5}
+        - {x: 23, y: -14.5}
+        - {x: 23, y: 31.5}
+        - {x: 17, y: 33.5}
+    - name: character_template_colored_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 134
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 33.5}
+        - {x: -23, y: -18.5}
+        - {x: -12, y: -33.5}
+        - {x: 9, y: -33.5}
+        - {x: 22, y: -8.5}
+        - {x: 22, y: 23.5}
+        - {x: 18, y: 33.5}
+    - name: character_template_colored_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 134
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12, y: 33.5}
+        - {x: -23, y: 30.5}
+        - {x: -23, y: -15.5}
+        - {x: -13, y: -33.5}
+        - {x: 19, y: -33.5}
+        - {x: 23, y: -22.5}
+        - {x: 23, y: 29.5}
+        - {x: 19, y: 33.5}
+      - - {x: -27, y: -10.5}
+        - {x: -24, y: -14.5}
+        - {x: -21, y: -13.5}
+        - {x: -21, y: -10.5}
+        - {x: -24, y: -6.5}
+        - {x: -27, y: -7.5}
+    - name: character_template_colored_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 67
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 33.5}
+        - {x: -23, y: 31.5}
+        - {x: -23, y: -23.5}
+        - {x: -19, y: -33.5}
+        - {x: 15, y: -33.5}
+        - {x: 22, y: -15.5}
+        - {x: 22, y: 33.5}
+    - name: character_template_colored_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 67
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15, y: 33.5}
+        - {x: -23, y: 26.5}
+        - {x: -23, y: 4.5}
+        - {x: -12, y: -33.5}
+        - {x: 10, y: -33.5}
+        - {x: 22, y: -13.5}
+        - {x: 22, y: 24.5}
+        - {x: 20, y: 33.5}
+    - name: character_template_colored_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 67
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: 33.5}
+        - {x: -23, y: 33.5}
+        - {x: -23, y: -11.5}
+        - {x: -19, y: -33.5}
+        - {x: 14, y: -33.5}
+        - {x: 23, y: -19.5}
+        - {x: 23, y: 19.5}
+    - name: character_template_colored_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 33.5}
+        - {x: -22, y: 26.5}
+        - {x: -22, y: -21.5}
+        - {x: -16, y: -33.5}
+        - {x: 16, y: -33.5}
+        - {x: 22, y: -29.5}
+        - {x: 22, y: 33.5}
+      - - {x: 17, y: -12.5}
+        - {x: 20, y: -11.5}
+        - {x: 20, y: -8.5}
+        - {x: 17, y: -7.5}
+        - {x: 15, y: -9.5}
+      - - {x: 20, y: -7.5}
+        - {x: 23, y: -6.5}
+        - {x: 23, y: -3.5}
+        - {x: 20, y: -2.5}
+        - {x: 18, y: -4.5}
+    - name: character_template_colored_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 33.5}
+        - {x: -22, y: -29.5}
+        - {x: -21, y: -33.5}
+        - {x: 20, y: -33.5}
+        - {x: 22, y: -23.5}
+        - {x: 22, y: 32.5}
+        - {x: 17, y: 33.5}
+      - - {x: -18, y: -10.5}
+        - {x: -15, y: -9.5}
+        - {x: -15, y: -6.5}
+        - {x: -18, y: -5.5}
+        - {x: -20, y: -7.5}
+    - name: character_template_colored_11
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: -5.5}
+        - {x: 22, y: -3.5}
+        - {x: 22, y: 31.5}
+        - {x: 19, y: 33.5}
+        - {x: -20, y: 33.5}
+        - {x: -22, y: 28.5}
+        - {x: -22, y: -22.5}
+        - {x: -12, y: -33.5}
+        - {x: 13, y: -33.5}
+        - {x: 22, y: -10.5}
+        - {x: 22, y: -5.5}
+      - - {x: 21, y: -12.5}
+        - {x: 23, y: -14.5}
+        - {x: 26, y: -13.5}
+        - {x: 26, y: -10.5}
+        - {x: 24, y: -8.5}
+        - {x: 21, y: -9.5}
+      - - {x: -18, y: -11.5}
+        - {x: -15, y: -10.5}
+        - {x: -15, y: -7.5}
+        - {x: -18, y: -6.5}
+        - {x: -20, y: -8.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
