@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardCreator : MonoBehaviour
@@ -78,7 +79,7 @@ public class BoardCreator : MonoBehaviour
 	{
 		// Create the rooms array with a random size.
 		int normRoom = numRooms.Random;
-		rooms = new Room[normRoom+1];
+		rooms = new Room[normRoom];
 
 		// There should be one less corridor than there is rooms.
 		corridors = new Corridor[rooms.Length - 1];			
@@ -101,8 +102,8 @@ public class BoardCreator : MonoBehaviour
 			rooms [i] = new Room ();
 			rooms [i].SetupRoom (roomWidth, roomHeight, columns, rows, currentRooms,corridors);
 		}
-		rooms [normRoom] = new Room ();
-		rooms [normRoom].SetupBossRoom (bossRoomWidth, bossRoomHeight, columns, rows, currentRooms,corridors);
+//		rooms [normRoom] = new Room ();
+//		rooms [normRoom].SetupBossRoom (bossRoomWidth, bossRoomHeight, columns, rows, currentRooms,corridors);
 
 	}
 
@@ -257,9 +258,30 @@ public class BoardCreator : MonoBehaviour
 
 
 	void InstantiateEnemies () {
+
+		List<int> roomChoices = new List<int>();
+
+		int minimumEnemies = enemyCount / (rooms.Length-1);
+
+		int currentIndex = 0;
+		for (int i =1; i< rooms.Length; i++) {
+			
+			for (int j=0; j<minimumEnemies; j++) {
+				roomChoices.Add(i);
+			}
+			currentIndex += minimumEnemies;
+		}
+
+		int remainingEnemiesCount = enemyCount - (minimumEnemies * (rooms.Length - 1));
+		for (int i=0; i<remainingEnemiesCount;i++) {
+			roomChoices.Add(Random.Range (1,rooms.Length-1));
+		}
+			
+
 		for (int i = 0; i < enemyCount; i++) {
 			//Randomly choose a room
-			int roomIndex = Random.Range (0, rooms.Length - 1);
+			int roomIndex = roomChoices[Random.Range (0, roomChoices.Count-1)];
+			roomChoices.Remove (roomIndex);
 			Room chosenRoom = rooms [roomIndex];
 
 			//Get max range for spawning
@@ -304,39 +326,5 @@ public class BoardCreator : MonoBehaviour
 			Instantiate (weapon, randomPosition, Quaternion.identity);
 		}
 	}
-//	//LayoutObjectAtRandom accepts an array of game objects to choose from along with a minimum and maximum range for the number of objects to create.
-//	void LayoutObjectAtRandom (GameObject[] tileArray, int minimum, int maximum)
-//	{
-//		//Choose a random number of objects to instantiate within the minimum and maximum limits
-//		int objectCount = Random.Range (minimum, maximum+1);
-//
-//		//Instantiate objects until the randomly chosen limit objectCount is reached
-//		for(int i = 0; i < objectCount; i++)
-//		{
-//			//Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
-//			Vector3 randomPosition = RandomPosition();
-//
-//			//Choose a random tile from tileArray and assign it to tileChoice
-//			GameObject tileChoice = tileArray[Random.Range (0, tileArray.Length)];
-//
-//			//Instantiate tileChoice at the position returned by RandomPosition with no change in rotation
-//			Instantiate(tileChoice, randomPosition, Quaternion.identity);
-//		}
-//	}
 
-//	//RandomPosition returns a random position from our list gridPositions.
-//	Vector3 RandomPosition ()
-//	{
-//		//Declare an integer randomIndex, set it's value to a random number between 0 and the count of items in our List gridPositions.
-//		int randomIndex = Random.Range (0, gridPositions.Count);
-//
-//		//Declare a variable of type Vector3 called randomPosition, set it's value to the entry at randomIndex from our List gridPositions.
-//		Vector3 randomPosition = gridPositions[randomIndex];
-//
-//		//Remove the entry at randomIndex from the list so that it can't be re-used.
-//		gridPositions.RemoveAt (randomIndex);
-//
-//		//Return the randomly selected Vector3 position.
-//		return randomPosition;
-//	}
 }
