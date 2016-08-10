@@ -18,6 +18,7 @@ public class Player : Creature {
 
 	// Use this for initialization
 	void Start () {
+		base.Start();
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		itemsUnderfoot = new HashSet<Item>();
@@ -27,6 +28,7 @@ public class Player : Creature {
 	}
 
 	void Update () {
+		base.Update();
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		UpdateSprite(mousePos);
 
@@ -123,6 +125,7 @@ public class Player : Creature {
 	}
 
 	private void PickupItems(Hand hand){
+		Debug.Log(itemsUnderfoot.Count);
 		itemsUnderfoot.RemoveWhere(i => !i);
 		Item result = null;
 		//Attempt to pick up item from pool. Breaks upon success
@@ -144,7 +147,7 @@ public class Player : Creature {
 		//Take damage only if not in invul frame
 		if (!invul_flag) {
 			currHealth -= dmg;
-			GetComponent<takeDamageFlash>().flash(invul_frame);
+			flash(invul_frame);
 			//Damage triggers invul_frame
 			invul_flag = true;
 			invul_timer = invul_frame;

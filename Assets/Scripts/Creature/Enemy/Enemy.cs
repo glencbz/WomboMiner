@@ -38,11 +38,13 @@ public class Enemy : Creature {
 
 	// Use this for initialization
 	protected void Start () {
+		base.Start();
 		cameraSize = 2f * Camera.main.orthographicSize;
 
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		rigidBody = this.GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		
 
 		// temporary comment out to fix bug
 //		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -55,6 +57,7 @@ public class Enemy : Creature {
 	}
 
 	protected void Update () {
+		base.Update();
 		if (this.PlayerIsNear()) {
 			this.isAggroed = true;
 			this.MoveToPlayer ();
@@ -67,10 +70,13 @@ public class Enemy : Creature {
 		} else {
 			this.nextPatrolPosition = this.NewPatrolPoint ();
 		}
+
+
 	}
-		
+
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
+		flash(flash_duration);
 		if (currHealth <= 0) {
 			this.die();
 		}
