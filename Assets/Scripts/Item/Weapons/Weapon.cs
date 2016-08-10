@@ -18,8 +18,9 @@ public class Weapon : Item {
 	public float arrowhead = 90;
 	public bool pointAtMouse = true;//TODO: stop rotating if not pointAtMouse
 	public bool isEnemySource = false;
-
-
+	public float timeOnFloor = 0f;
+	public float maxTimeOnFloor = 10f;
+	public bool onFloor = true;
 
 	protected Player player;
 	protected SpriteRenderer sr;
@@ -41,11 +42,11 @@ public class Weapon : Item {
 			//Disable Item Collider
 			this.ToggleCollider(false);
 			sr.sortingLayerName = "Player";
+			onFloor = false;
 			return true;
 		} else {
 			return false;
 		}
-		
 	}
 
 
@@ -69,6 +70,10 @@ public class Weapon : Item {
 			cooldownStatus -= Time.deltaTime;
 			if (cooldownStatus < 0) { cooldownStatus = 0; }
 		}
+		if (onFloor)
+			timeOnFloor += Time.deltaTime;
+		if (timeOnFloor >= maxTimeOnFloor);
+			Destroy(gameObject);
 	}
 	//Method for firing a bullet.
 	//CAN YOU FIRE?

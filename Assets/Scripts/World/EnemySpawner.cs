@@ -16,6 +16,11 @@ public class EnemySpawner : MonoBehaviour
 	public float period = 10f;
 	public float wavePeriod = .8f;
 	public float spawnStatus = 0;
+
+	public float timeToNextWave = 30f;
+	public float timeSpentInWave = 0f;
+	public float waveDuration = 30f;
+
 	public bool inWave = false;
 
 	public float probability = 0.2f;
@@ -41,6 +46,19 @@ public class EnemySpawner : MonoBehaviour
 			return;
 		}
 		spawnStatus -= Time.deltaTime;
+		timeToNextWave -= Time.deltaTime;
+
+		if (timeToNextWave <= 0)
+			inWave = true;
+
+		if (inWave)
+			timeSpentInWave += Time.deltaTime;
+
+		if (timeSpentInWave >= waveDuration){
+			inWave = false;
+			timeToNextWave = waveDuration;
+		}
+		
 		if (spawnStatus <= 0) {
 			SpawnEnemy();
 			if (!inWave)

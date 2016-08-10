@@ -19,7 +19,7 @@ public class Enemy : Creature {
 	private Animator anim;
 	[SerializeField]
 	protected GameObject player;
-	private SpriteRenderer spriteRenderer;
+//	private SpriteRenderer spriteRenderer;
 
 	// set to BlockingLayer in the inspector plz
 	public LayerMask obstacleLayer;
