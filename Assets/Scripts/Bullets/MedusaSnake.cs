@@ -12,8 +12,10 @@ public class MedusaSnake : Bullet {
 		Debug.Log(other.tag);
 		switch(other.tag) {
 			case "Wall":
+				Debug.Log("Smack wall");
 				Destroy(gameObject);
 				other.GetComponent<Wall>().DamageWall(1);
+				
 				return;
 			case "Player":
 			case "Enemy":
@@ -26,6 +28,7 @@ public class MedusaSnake : Bullet {
 						other.gameObject.GetComponent<SpriteRenderer>().material.color =  Color.grey;
 						Wall w = other.gameObject.AddComponent<Wall>();
 						w.hp = 4;
+						w.destructible = true;
 						other.gameObject.tag = "Wall";
 						other.gameObject.layer = 8;
 					} else {
