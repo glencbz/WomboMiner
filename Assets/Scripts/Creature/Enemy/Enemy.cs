@@ -76,7 +76,9 @@ public class Enemy : Creature {
 
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
-		flash(flash_duration);
+		if (dmg > 0) {
+			flash(flash_duration);
+		}
 		if (currHealth <= 0) {
 			this.die();
 		}
