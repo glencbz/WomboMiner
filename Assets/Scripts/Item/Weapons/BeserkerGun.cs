@@ -14,6 +14,7 @@ public class BeserkerGun : Weapon {
 	private Player player;
 
 	void Start(){
+		base.Start();
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 		rawCooldown = cooldown;
 	}

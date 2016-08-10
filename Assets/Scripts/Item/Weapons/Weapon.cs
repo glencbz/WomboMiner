@@ -21,8 +21,8 @@ public class Weapon : Item {
 
 
 
-	private Player player;
-	private SpriteRenderer sr;
+	protected Player player;
+	protected SpriteRenderer sr;
 
 	protected void Start () {
 		base.Start();
