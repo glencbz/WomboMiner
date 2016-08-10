@@ -21,6 +21,8 @@ public class Enemy : Creature {
 	// set to BlockingLayer in the inspector plz
 	public LayerMask obstacleLayer;
 
+	public AudioClip hurtSound;
+
 	private Vector2 anchorPosition;
 	// how deep to do graph search
 	private int GRAPH_SEARCH_LIMIT = 20;
@@ -77,6 +79,7 @@ public class Enemy : Creature {
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
 		if (dmg > 0) {
+			SoundManager.instance.PlaySingle (hurtSound);
 			flash(flash_duration);
 		}
 		if (currHealth <= 0) {
