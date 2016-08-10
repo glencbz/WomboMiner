@@ -34,8 +34,12 @@ public class BoardCreator : MonoBehaviour
 	private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
 
 
-	private void Start ()
-	{
+	void Awake () {
+		// awake is called everytime the scene is loaded if the parent gameObject is not destroyed
+		this.Setup ();
+	}
+
+	void Setup() {
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 
@@ -52,7 +56,6 @@ public class BoardCreator : MonoBehaviour
 		InstantiateOuterWalls ();
 		InstantiateEnemies ();
 		InstantiateWeapons ();
-
 
 	}
 

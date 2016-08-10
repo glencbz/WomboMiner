@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
 	//This is called each time a scene is loaded.
 	void OnLevelWasLoaded(int index)
 	{
-		Debug.Log("CALLED");
 		options = GameObject.Find("Options Menu");
 
 		//Call InitGame to initialize our level.
