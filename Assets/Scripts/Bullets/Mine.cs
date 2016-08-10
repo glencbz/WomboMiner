@@ -15,20 +15,35 @@ public class Mine : SimpleHitBox {
 			armed = true;
 			gameObject.GetComponent<SpriteRenderer>().sprite = armedSprite;
 			if (others.Count > 0) {
-				asplode();
+				foreach(Collider2D c in others) {
+					testCollision(c.tag);
+				}
+				
 			}
 		}
 	}
 
 	void asplode() {
-		Instantiate(explosion, transform.position, Quaternion.identity);
+		GameObject e = (GameObject) Instantiate(explosion, transform.position, Quaternion.identity);
+		e.GetComponent<Explosion>().source = source;
 		Destroy(gameObject);
+	}
+
+	void testCollision(string tag) {
+		switch(tag) {
+			case "Player":
+			case "Enemy":
+				if (tag != source) 
+					asplode();
+				break;
+		}
 	}
 
 	protected override void OnTriggerEnter2D(Collider2D other) {
 		base.OnTriggerEnter2D(other);
 		if (armed) {
-			asplode();
+			testCollision(other.tag);
+			
 		}
 	}
 
