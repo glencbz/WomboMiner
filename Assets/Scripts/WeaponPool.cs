@@ -11,13 +11,15 @@ public class WeaponPool : MonoBehaviour {
 
 
 	// See https://docs.unity3d.com/ScriptReference/Resources.html on how to create resources folders
-	public string[] weaponPaths = {"Tier1", "Tier2", "Tier3"};
+	public string[] weaponPaths = {"Tier3", "Tier2", "Tier1"};
 	
 	void Start () {
 		tieredWeapons = new List<Weapon[]>();
 		foreach (string path in weaponPaths){
 			var loadedObjects = Resources.LoadAll(path, typeof(GameObject)).Cast<GameObject>().ToArray();
 			Weapon[] weaponTier = new Weapon[loadedObjects.Length];
+			foreach (var thing in loadedObjects)
+				Debug.Log(thing);
 			for (int i = 0; i < loadedObjects.Length; i++)
 				weaponTier[i] = loadedObjects[i].GetComponent<Weapon>();
 			tieredWeapons.Add(weaponTier);	

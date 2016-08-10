@@ -13,8 +13,8 @@ public class EnemySpawner : MonoBehaviour
 	private IntRange yGenerator;
 	private IntRange enemyGenerator;
 
-	public float period = 1;
-	public float wavePeriod = .2f;
+	public float period = 10f;
+	public float wavePeriod = .8f;
 	public float spawnStatus = 0;
 	public bool inWave = false;
 
