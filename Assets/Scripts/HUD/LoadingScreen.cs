@@ -27,9 +27,15 @@ public class LoadingScreen : MonoBehaviour {
 	public void LoadScene(int num) {
 		loading = true;
 		c.enabled = true;
-		// if is dungeon, set is dungeon to true
-		if (num == 1) {
+		// Assumes that every scene that is not 0 is a dungeon
+		if (num != 0) {
 			GameManager.instance.isDungeon = true;
+		}
+
+		if (num == 2) {
+			GameManager.instance.isSurvival = true;
+		} else {
+			GameManager.instance.isSurvival = false;
 		}
 
 		StartCoroutine(load(num));

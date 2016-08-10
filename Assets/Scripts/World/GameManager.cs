@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 	
 	public bool isDungeon = false;
+	public bool isSurvival = false;
 	public GameObject options;
 	private Text levelText;									//Text to display current level number.
 	private Canvas deathScreen;
@@ -61,7 +62,11 @@ public class GameManager : MonoBehaviour {
 		//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 		Invoke("HideLevelImage", levelStartDelay);
 
-		this.GetComponent<BoardCreator> ().Setup ();
+		if (!this.isSurvival) {
+			this.GetComponent<BoardCreator> ().Setup ();	
+		} else {
+			this.GetComponent<SurvivalBoardCreator> ().Setup ();
+		}
 	}
 
 	void HideLevelImage() {

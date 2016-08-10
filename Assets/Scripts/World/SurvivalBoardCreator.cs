@@ -2,51 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardCreator2 : MonoBehaviour
+public class SurvivalBoardCreator : MonoBehaviour
 {
 	// The type of tile that will be laid in a specific position.
 	public enum TileType
 	{
 		Wall, Floor,
 	}
-
-	public int enemyCount;
-	public float probability;
+		
 	public int columns = 200;                                 // The number of columns on the board (how wide it will be).
 	public int rows = 200;                                    // The number of rows on the board (how tall it will be).
 	public IntRange numRooms = new IntRange (15, 20);         // The range of the number of rooms there can be.
-	public IntRange roomWidth = new IntRange (20, 20);         // The range of widths rooms can have.
-	public IntRange roomHeight = new IntRange (20, 20);        // The range of heights rooms can have.
-	public IntRange bossRoomWidth = new IntRange (30, 30);         // The range of widths boss room can have.
-	public IntRange bossRoomHeight = new IntRange (30, 30);        // The range of heights boss room can have.
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
 	public GameObject[] outerWallTiles;
-	public GameObject[] enemyTiles;
 	public GameObject[] weaponTiles;
 	private GameObject player;
 
-	public GameObject[] players;
 
 	private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
-	private Room[] rooms;
-	private Room[] currentRooms;
-	private Corridor[] corridors;                             // All the corridors that connect the rooms.
 	private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
 
-
-	void Awake () {
-		// awake is called everytime the scene is loaded if the parent gameObject is not destroyed
-		this.Setup ();
-	}
-
-	void Setup() {
+	public void Setup() {
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 
 		SetupTilesArray ();	
 		player = GameObject.FindGameObjectWithTag("Player");
-
 
 //		CreateRoomsAndCorridors ();
 
@@ -55,7 +37,6 @@ public class BoardCreator2 : MonoBehaviour
 
 		InstantiateTiles ();
 		InstantiateOuterWalls ();
-//		InstantiateEnemies ();
 		InstantiateWeapons ();
 
 	}
@@ -89,7 +70,6 @@ public class BoardCreator2 : MonoBehaviour
 			{
 				// ... and instantiate a floor tile for it.
 				InstantiateFromArray (floorTiles, i, j);
-				Debug.Log (new Vector2 (i, j));
 				// If the tile type is Wall...
 				if (tiles[i][j] == TileType.Wall)
 				{
@@ -117,7 +97,6 @@ public class BoardCreator2 : MonoBehaviour
 		InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, bottomEdgeY);
 		InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, topEdgeY);
 	}
-
 
 	void InstantiateVerticalOuterWall (float xCoord, float startingY, float endingY)
 	{
@@ -165,54 +144,6 @@ public class BoardCreator2 : MonoBehaviour
 		// Set the tile's parent to the board holder.
 		tileInstance.transform.parent = boardHolder.transform;
 	}
-
-
-	void InstantiateEnemies () {
-
-		List<int> roomChoices = new List<int>();
-
-		int minimumEnemies = enemyCount / (rooms.Length-1);
-
-		int currentIndex = 0;
-		for (int i =1; i< rooms.Length; i++) {
-
-			for (int j=0; j<minimumEnemies; j++) {
-				roomChoices.Add(i);
-			}
-			currentIndex += minimumEnemies;
-		}
-
-		int remainingEnemiesCount = enemyCount - (minimumEnemies * (rooms.Length - 1));
-		for (int i=0; i<remainingEnemiesCount;i++) {
-			roomChoices.Add(Random.Range (1,rooms.Length-1));
-		}
-
-
-		for (int i = 0; i < enemyCount; i++) {
-			//Randomly choose a room
-			int roomIndex = roomChoices[Random.Range (0, roomChoices.Count-1)];
-			roomChoices.Remove (roomIndex);
-			Room chosenRoom = rooms [roomIndex];
-
-			//Get max range for spawning
-			int maxX = chosenRoom.xPos + chosenRoom.roomWidth;
-			int maxY = chosenRoom.yPos + chosenRoom.roomHeight;
-
-			//Choose enemy
-			GameObject tileChoice = enemyTiles[Random.Range (0, enemyTiles.Length)];
-
-			//Randomly choose spawn position within range
-			int posX = Random.Range (chosenRoom.xPos, maxX);
-			int posY = Random.Range (chosenRoom.yPos, maxY);
-			Vector2 randomPosition = new Vector2 (posX, posY);
-
-			//Instantiate enemy
-			GameObject enemy = (GameObject)Instantiate (tileChoice, randomPosition, Quaternion.identity);
-			// disable enemy ai on start for performance
-			enemy.GetComponent<Enemy> ().enabled = false;
-		}
-	}
-
 
 	void InstantiateWeapons () {
 
