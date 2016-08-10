@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 	public bool isDungeon = false;
 	public GameObject options;
 	private Text levelText;									//Text to display current level number.
+	private Canvas deathScreen;
 	private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 	private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
 	private int level = 1;									//Current level number, expressed in game as "Day 1".
@@ -27,16 +28,16 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		//Check if instance already exists
-		if (instance == null)
-			
+		if (instance == null) {
 			//if not, set instance to this
 			instance = this;
-		
-		//If instance already exists and it's not this:
-		else if (instance != this)
-			
+
+			//If instance already exists and it's not this:
+		} else if (instance != this) {
 			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-			Destroy(gameObject);	
+			Destroy(gameObject);				
+		}
+
 		
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad(gameObject);
@@ -50,11 +51,6 @@ public class GameManager : MonoBehaviour
 		if (options == null) {
 			options = GameObject.Find("Options Menu");
 		}
-		//Call the InitGame function to initialize the first level 
-		if (isDungeon) {
-			InitGame();
-		}
-		
 	}
 	
 	//This is called each time a scene is loaded.
@@ -62,15 +58,13 @@ public class GameManager : MonoBehaviour
 	{
 		options = GameObject.Find("Options Menu");
 
-		//Call InitGame to initialize our level.
+		//Call the InitGame function to initialize the first level 
 		if (isDungeon) {
-			//Add one to our level number.
-			level++;
 			InitGame();
 		}
-		
 	}
-	
+
+
 	//Initializes the game for each level.
 	void InitGame()
 	{
@@ -82,22 +76,23 @@ public class GameManager : MonoBehaviour
 		
 		//Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
+
+		deathScreen = GameObject.Find ("DeathScreen").GetComponent<Canvas>();
+		deathScreen.enabled = false;
 		
 		//Set the text of levelText to the string "Day" and append the current level number.
 		levelText.text = "SURVIVE";
 		
 		//Set levelImage to active blocking player's view of the game board during setup.
 		levelImage.GetComponent<Canvas>().enabled = true;
-		
+
 		//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 		Invoke("HideLevelImage", levelStartDelay);
-		
+
 		//Clear any Enemy objects in our List to prepare for next level.
 		enemies.Clear();
-		
-//			//Call the SetupScene function of the BoardManager script, pass it current level number.
-//			boardScript.SetupScene(level);
-		
+
+		this.GetComponent<BoardCreator> ().Setup ();
 	}
 	
 	
@@ -142,13 +137,13 @@ public class GameManager : MonoBehaviour
 	public void GameOver()
 	{
 		//Set levelText to display number of levels passed and game over message
-		levelText.text = "After " + level + " days, you starved.";
-		
-		//Enable black background image gameObject.
-		levelImage.SetActive(true);
-		
-		//Disable this GameManager.
-		enabled = false;
+		levelText.text = "GAME OVER";
+		deathScreen.enabled = true;
+	}
+
+	public void GoBackToMainMenu() {
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+		GameManager.instance.isDungeon = false;
 	}
 	
 	// //Coroutine to move enemies in sequence.

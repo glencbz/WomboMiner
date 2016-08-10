@@ -27,6 +27,11 @@ public class LoadingScreen : MonoBehaviour {
 	public void LoadScene(int num) {
 		loading = true;
 		c.enabled = true;
+		// if is dungeon, set is dungeon to true
+		if (num == 1) {
+			GameManager.instance.isDungeon = true;
+		}
+
 		StartCoroutine(load(num));
 
 	}

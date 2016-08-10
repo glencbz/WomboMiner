@@ -34,13 +34,7 @@ public class BoardCreator : MonoBehaviour
 	private Corridor[] corridors;                             // All the corridors that connect the rooms.
 	private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
 
-
-	void Awake () {
-		// awake is called everytime the scene is loaded if the parent gameObject is not destroyed
-		this.Setup ();
-	}
-
-	void Setup() {
+	public void Setup() {
 		// Create the board holder.
 		boardHolder = new GameObject("BoardHolder");
 
