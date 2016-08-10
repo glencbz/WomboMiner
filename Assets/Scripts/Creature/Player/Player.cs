@@ -8,7 +8,6 @@ public class Player : Creature {
 	private float invul_timer;
 
 	//Private Entities
-
 	private Animator anim;
 	private HashSet<Item> itemsUnderfoot;
 
@@ -17,17 +16,15 @@ public class Player : Creature {
 
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		base.Start();
-		spriteRenderer = this.GetComponent<SpriteRenderer>();
-		rigidBody = this.GetComponent<Rigidbody2D>();
 		itemsUnderfoot = new HashSet<Item>();
 		hands = GetComponentInChildren<Hands>();
 		anim = GetComponent<Animator>();
 		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 	}
 
-	void Update () {
+	protected void Update () {
 		base.Update();
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		UpdateSprite(mousePos);

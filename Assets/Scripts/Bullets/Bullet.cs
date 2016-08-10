@@ -65,7 +65,7 @@ public class Bullet : MonoBehaviour {
 
 	protected virtual void ApplyKnockback(Collider2D other) {
 		Vector2 knockback_dir = (other.transform.position - transform.position).normalized;
-		other.GetComponent<Rigidbody2D>().AddForce(knockback_dir * knockback, ForceMode2D.Impulse);
+		other.GetComponent<Creature>().ApplyKnockback(knockback_dir, knockback);
 	}
 
 	//Bullet hitscan Method. Used for physical swings where we want controlled instances of damage.
