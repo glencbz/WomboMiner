@@ -24,7 +24,7 @@ public class Weapon : Item {
 	private Player player;
 	private SpriteRenderer sr;
 
-	void Start () {
+	protected void Start () {
 		base.Start();
 		sr = GetComponentInChildren<SpriteRenderer>();	
 	
