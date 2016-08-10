@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour {
 		} else {
 			levelText.text = "SURVIVE";
 			this.GetComponent<SurvivalBoardCreator> ().Setup ();
+			this.GetComponent<EnemySpawner> ().onSpawner ();
 		}
 	}
 
@@ -85,9 +86,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
+
+		if(this.isSurvival) {
+			this.GetComponent<EnemySpawner> ().offSpawner ();
+		}
+
 		levelText.text = "GAME OVER";
 		deathScreen.enabled = true;
 		deathScore.text = "Your Score: " + this.score.ToString ();
+
 
 		int highScore = PlayerPrefs.GetInt ("highScore");
 		if (this.score > highScore) {

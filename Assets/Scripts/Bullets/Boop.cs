@@ -6,6 +6,7 @@ public class Boop : Bullet {
 	public float pushback = 1000f;
 	public float duration = .5f;
 	public float spread = 30f;
+	public float moveTime = 0.5f;
 	private Vector3 boopDirection;
 	private Vector3 playerInitial;
 
