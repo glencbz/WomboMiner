@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class SimpleEnemy : Enemy {
-	public int touch_damage;
 	
 	// Use this for initialization
 	new void Start () {
@@ -12,9 +11,5 @@ public class SimpleEnemy : Enemy {
 	new void Update() {
 		base.Update ();
 
-	}
-
-	public override void contactPlayer(Collider2D other) {
-		other.GetComponent<Player>().takeDamage(3);
 	}
 }

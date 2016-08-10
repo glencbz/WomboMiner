@@ -8,6 +8,8 @@ public class Enemy : Creature {
 	public float lootChance;
 	public float aggroDistance = 5.0f;
 	public float patrolRadius = 3.0f;
+	public int touch_damage = 1;
+	public float knockback = 200;
 
 	//Private Entities
 	private Animator anim;
@@ -94,7 +96,9 @@ public class Enemy : Creature {
 
 	//Override to interact with player
 	public virtual void contactPlayer(Collider2D other) {
-
+		other.GetComponent<Player>().takeDamage(touch_damage);
+		Vector2 knockback_dir = other.transform.position - transform.position;
+		other.GetComponent<Rigidbody2D>().AddForce(knockback * knockback_dir, ForceMode2D.Impulse);
 	}
 
 	//Basic Contact method
