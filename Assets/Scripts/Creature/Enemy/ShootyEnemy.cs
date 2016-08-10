@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class ShootyEnemy : Enemy {
-	public int touch_damage;
 	public Weapon weapon;
 	public Bullet bullet;
 

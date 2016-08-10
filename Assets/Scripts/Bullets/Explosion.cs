@@ -30,6 +30,7 @@ public class Explosion : Bullet {
 		case "Enemy":
 			if (other.tag != source) 
 				other.GetComponent<Creature>().takeDamage(damage);
+				ApplyKnockback(other);
 			break;
 		}
 	}

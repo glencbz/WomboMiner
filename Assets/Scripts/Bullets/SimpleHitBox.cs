@@ -18,6 +18,7 @@ public class SimpleHitBox : Bullet {
 		foreach (Collider2D c in others) {
 			if (c.tag == "Enemy") {
 				c.GetComponent<Enemy>().takeDamage(damage);
+				ApplyKnockback(c);
 			}
 		}
 	}
@@ -28,5 +29,10 @@ public class SimpleHitBox : Bullet {
 
 	void OnTriggerExit2D(Collider2D other) {
 		others.Remove(other);
+	}
+
+	protected override void ApplyKnockback(Collider2D other) {
+		Vector2 knockback_dir = (transform.position - transform.parent.position).normalized;
+		other.GetComponent<Rigidbody2D>().AddForce(knockback_dir * knockback, ForceMode2D.Impulse);
 	}
 }

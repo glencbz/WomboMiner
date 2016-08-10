@@ -8,10 +8,13 @@ public class Enemy : Creature {
 	public float lootChance;
 	public float aggroDistance = 5.0f;
 	public float patrolRadius = 3.0f;
+	public int touch_damage = 1;
+	public float knockback = 200;
+	// reward when killing monster
+	public int killScore = 100;
 
 	//Private Entities
 	private Animator anim;
-
 	[SerializeField]
 	protected GameObject player;
 
@@ -38,11 +41,10 @@ public class Enemy : Creature {
 
 	// Use this for initialization
 	protected void Start () {
+		base.Start();
 		cameraSize = 2f * Camera.main.orthographicSize;
-
-		spriteRenderer = this.GetComponent<SpriteRenderer>();
-		rigidBody = this.GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		
 
 		// temporary comment out to fix bug
 //		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -55,6 +57,7 @@ public class Enemy : Creature {
 	}
 
 	protected void Update () {
+		base.Update();
 		if (this.PlayerIsNear()) {
 			this.isAggroed = true;
 			this.MoveToPlayer ();
@@ -67,18 +70,21 @@ public class Enemy : Creature {
 		} else {
 			this.nextPatrolPosition = this.NewPatrolPoint ();
 		}
+
+
 	}
-		
+
 	public override void takeDamage(int dmg) {
 		currHealth -= dmg;
+		flash(flash_duration);
 		if (currHealth <= 0) {
 			this.die();
 		}
 	}
 
 	public override void die() {
-		Debug.Log("Enemy killed");
 		Destroy(gameObject);
+		GameManager.instance.OnEnemyKilled (this.killScore);
 	}
 
 	public void testDropLoot(){
@@ -88,7 +94,9 @@ public class Enemy : Creature {
 
 	//Override to interact with player
 	public virtual void contactPlayer(Collider2D other) {
-
+		other.GetComponent<Player>().takeDamage(touch_damage);
+		Vector2 knockback_dir = other.transform.position - transform.position;
+		other.GetComponent<Rigidbody2D>().AddForce(knockback * knockback_dir, ForceMode2D.Impulse);
 	}
 
 	//Basic Contact method

@@ -2,6 +2,14 @@
 using System.Collections;
 
 public class EnemyActiveTrigger : MonoBehaviour {
+	GameObject player;
+
+	void Start() {
+		player = GameObject.Find("Player");
+	}
+	void Update() {
+		this.transform.position = this.player.transform.position;
+	}
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag != "Enemy") {
 			return;

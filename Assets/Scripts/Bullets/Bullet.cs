@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private Collider2D collider2D;
 	public float speed = 100;
+	public float knockback = 20;
 	public string source;
 	public int damage = 1;
 
@@ -55,10 +56,16 @@ public class Bullet : MonoBehaviour {
 			case "Enemy":
 				if (other.tag != source) {
 					other.GetComponent<Creature>().takeDamage(damage);
+					ApplyKnockback(other);
 					Destroy(gameObject);
 				}
 				break;
 		}
+	}
+
+	protected virtual void ApplyKnockback(Collider2D other) {
+		Vector2 knockback_dir = (other.transform.position - transform.position).normalized;
+		other.GetComponent<Creature>().ApplyKnockback(knockback_dir, knockback);
 	}
 
 	//Bullet hitscan Method. Used for physical swings where we want controlled instances of damage.
