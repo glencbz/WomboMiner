@@ -19,7 +19,7 @@ public class Weapon : Item {
 	public bool pointAtMouse = true;//TODO: stop rotating if not pointAtMouse
 	public bool isEnemySource = false;
 	public float timeOnFloor = 0f;
-	public float maxTimeOnFloor = 10f;
+	public float maxTimeOnFloor = 60f;
 	public bool onFloor = true;
 
 	protected Player player;
@@ -31,6 +31,7 @@ public class Weapon : Item {
 	
 		if (isEnemySource) {
 			sr.enabled = false;
+			onFloor = false;
 		}
 	}
 	

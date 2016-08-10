@@ -15,6 +15,7 @@ public class Mine : SimpleHitBox {
 			armed = true;
 			gameObject.GetComponent<SpriteRenderer>().sprite = armedSprite;
 			if (others.Count > 0) {
+				others.RemoveWhere(i => !i);
 				foreach(Collider2D c in others) {
 					testCollision(c.tag);
 				}
