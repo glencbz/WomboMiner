@@ -18,12 +18,16 @@ public class EnemySpawner : MonoBehaviour
 	public float spawnStatus = 0;
 	public bool inWave = false;
 
+	public float probability = 0.2f;
+
+	private bool active = false;
+
 	// Use this for initialization
 	void Start ()
 	{
-//		SurvivalBoardCreator boardCreator = GetComponent<SurvivalBoardCreator>();
-//		xrange[1] = boardCreator.columns;
-//		yrange[1] = boardCreator.rows;
+		SurvivalBoardCreator boardCreator = GetComponent<SurvivalBoardCreator>();
+		xrange[1] = boardCreator.columns;
+		yrange[1] = boardCreator.rows;
 		xGenerator = new IntRange((int) xrange[0],(int) xrange[1]);
 		yGenerator = new IntRange((int)yrange[0],(int) yrange[1]);
 		enemyGenerator = new IntRange(0, spawnedEnemies.Length);
@@ -33,6 +37,9 @@ public class EnemySpawner : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if (!active) {
+			return;
+		}
 		spawnStatus -= Time.deltaTime;
 		if (spawnStatus <= 0) {
 			SpawnEnemy();
@@ -46,7 +53,20 @@ public class EnemySpawner : MonoBehaviour
 	private void SpawnEnemy(){
 		int xCoord = xGenerator.Random;
 		int yCoord = yGenerator.Random;
-		Instantiate(spawnedEnemies[enemyGenerator.Random], new Vector3(xCoord, yCoord, 0), Quaternion.identity);
+		float value = Random.Range (0, 1f);
+		if (value <= probability) {
+			Instantiate (spawnedEnemies [0], new Vector3 (xCoord, yCoord, 0), Quaternion.identity);
+		} else {
+			Instantiate (spawnedEnemies [1], new Vector3 (xCoord, yCoord, 0), Quaternion.identity);
+		}
+	}
+
+	public void onSpawner() {
+		active = true;
+	}
+
+	public void offSpawner() {
+		active = false;
 	}
 }
 
