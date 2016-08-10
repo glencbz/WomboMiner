@@ -66,7 +66,7 @@ public class Gravitas : Weapon {
 			var sh = p.shape;
 			sh.radius = StoppingDistance / 2;
 			var r = p.emission;
-			r.rate = new ParticleSystem.MinMaxCurve(StoppingDistance * 2) ;
+			r.rate = new ParticleSystem.MinMaxCurve(StoppingDistance * 5) ;
 			if (!p.isPlaying) {p.Play();}
 		}
 
