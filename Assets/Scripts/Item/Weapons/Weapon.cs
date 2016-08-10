@@ -72,7 +72,7 @@ public class Weapon : Item {
 		}
 		if (onFloor)
 			timeOnFloor += Time.deltaTime;
-		if (timeOnFloor >= maxTimeOnFloor);
+		if (timeOnFloor >= maxTimeOnFloor)
 			Destroy(gameObject);
 	}
 	//Method for firing a bullet.
