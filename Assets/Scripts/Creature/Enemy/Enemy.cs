@@ -13,7 +13,6 @@ public class Enemy : Creature {
 
 	//Private Entities
 	private Animator anim;
-
 	[SerializeField]
 	protected GameObject player;
 
@@ -42,9 +41,6 @@ public class Enemy : Creature {
 	protected void Start () {
 		base.Start();
 		cameraSize = 2f * Camera.main.orthographicSize;
-
-		spriteRenderer = this.GetComponent<SpriteRenderer>();
-		rigidBody = this.GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 		
 
