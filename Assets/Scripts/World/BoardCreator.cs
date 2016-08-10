@@ -10,7 +10,8 @@ public class BoardCreator : MonoBehaviour
 		Wall, Floor,
 	}
 
-
+	public int enemyCount;
+	public float probability;
 	public int columns = 200;                                 // The number of columns on the board (how wide it will be).
 	public int rows = 200;                                    // The number of rows on the board (how tall it will be).
 	public IntRange numRooms = new IntRange (15, 20);         // The range of the number of rooms there can be.
@@ -23,7 +24,6 @@ public class BoardCreator : MonoBehaviour
 	public GameObject[] outerWallTiles;
 	public GameObject[] enemyTiles;
 	public GameObject[] weaponTiles;
-	public int enemyCount;
 	private GameObject player;
 
 	public GameObject[] players;
@@ -125,7 +125,17 @@ public class BoardCreator : MonoBehaviour
 				{
 					int yCoord = currentRoom.yPos + k;
 					// The coordinates in the jagged array are based on the room's position and it's width and height.
-					tiles[xCoord][yCoord] = TileType.Floor;
+
+					if (i != 0) {
+						float value = Random.Range (0f, 1f);
+						if (value > probability) {
+							tiles [xCoord] [yCoord] = TileType.Floor;
+						} else {
+							tiles [xCoord] [yCoord] = TileType.Wall;
+						}
+					} else {
+						tiles [xCoord] [yCoord] = TileType.Floor;
+					}
 				}
 			}
 		}
