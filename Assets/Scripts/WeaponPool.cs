@@ -15,13 +15,8 @@ public class WeaponPool : MonoBehaviour {
 	
 	void Start () {
 		tieredWeapons = new List<Weapon[]>();
-		Debug.Log(tieredWeapons);
 		foreach (string path in weaponPaths){
 			var loadedObjects = Resources.LoadAll(path, typeof(GameObject)).Cast<GameObject>().ToArray();
-			foreach(var go in loadedObjects){
-				Debug.Log(go.name);
-			}
-//			GameObject[] rawResources = (GameObject[]) Resources.LoadAll(path, typeof(GameObject));
 			Weapon[] weaponTier = new Weapon[loadedObjects.Length];
 			for (int i = 0; i < loadedObjects.Length; i++)
 				weaponTier[i] = loadedObjects[i].GetComponent<Weapon>();
