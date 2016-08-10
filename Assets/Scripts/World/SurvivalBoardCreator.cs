@@ -12,6 +12,7 @@ public class SurvivalBoardCreator : MonoBehaviour
 		
 	public int columns = 200;                                 // The number of columns on the board (how wide it will be).
 	public int rows = 200;                                    // The number of rows on the board (how tall it will be).
+	public float probability = 0.05f;
 	public IntRange numRooms = new IntRange (15, 20);         // The range of the number of rooms there can be.
 	public GameObject[] floorTiles;                           // An array of floor tile prefabs.
 	public GameObject[] wallTiles;                            // An array of wall tile prefabs.
@@ -56,7 +57,12 @@ public class SurvivalBoardCreator : MonoBehaviour
 
 		for(int j=0; j<tiles.Length; j++) {
 			for (int k=0; k<tiles[j].Length; k++) {
-				tiles [j] [k] = TileType.Floor;
+				float value = Random.Range (0, 1f);
+				if (value > probability) {
+					tiles [j] [k] = TileType.Floor;
+				} else {
+					tiles [j] [k] = TileType.Wall;
+				}
 			}
 		}
 	}
