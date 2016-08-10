@@ -10,6 +10,8 @@ public class Enemy : Creature {
 	public float patrolRadius = 3.0f;
 	public int touch_damage = 1;
 	public float knockback = 200;
+	public float active;
+	public float maxActive = 2f;
 	// reward when killing monster
 	public int killScore = 100;
 
@@ -17,6 +19,7 @@ public class Enemy : Creature {
 	private Animator anim;
 	[SerializeField]
 	protected GameObject player;
+	private SpriteRenderer spriteRenderer;
 
 	// set to BlockingLayer in the inspector plz
 	public LayerMask obstacleLayer;
@@ -45,18 +48,24 @@ public class Enemy : Creature {
 		cameraSize = 2f * Camera.main.orthographicSize;
 		anim = GetComponent<Animator>();
 		
-
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		// temporary comment out to fix bug
 //		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
 		player = GameObject.Find("Player");
 		this.anchorPosition = this.transform.position;
 
+		active = maxActive;
 		// initialise nextPatrolPosition to current position, so update will know that it is time to assign a new position
 		this.nextPatrolPosition = this.transform.position;
 	}
 
 	protected void Update () {
+		if (active >= 0){
+			active -= Time.deltaTime;
+			spriteRenderer.color= new Color(255f, 255f, 255f, (maxActive - active) / maxActive);
+			return;
+		}
 		base.Update();
 		if (this.PlayerIsNear()) {
 			this.isAggroed = true;
@@ -95,12 +104,13 @@ public class Enemy : Creature {
 		Debug.Log(roll);
 		if (roll <= lootChance){
 			GameObject.FindGameObjectWithTag("WeaponPool").GetComponent<WeaponPool>().DropEnemyLoot(transform.position);	
-			Debug.Log("loooooot drop");
 		}
 	}
 
 	//Override to interact with player
 	public virtual void contactPlayer(Collider2D other) {
+		if(active > 0)
+			return;
 		other.GetComponent<Player>().takeDamage(touch_damage);
 		Vector2 knockback_dir = other.transform.position - transform.position;
 		other.GetComponent<Rigidbody2D>().AddForce(knockback * knockback_dir, ForceMode2D.Impulse);

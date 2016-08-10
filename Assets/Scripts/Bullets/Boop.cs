@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Boop : Bullet {
 
-	public float pushback = 1000f;
+	public float pushback = 10000f;
 	public float duration = .5f;
 	public float spread = 30f;
 	public float moveTime = 0.5f;
@@ -39,7 +39,7 @@ public class Boop : Bullet {
 					Debug.Log(otherCreature);
 					Vector3 forceDirection = (otherCreature.transform.position - transform.position).normalized;
 					Debug.Log(forceDirection);
-					otherCreature.GetComponent<Rigidbody2D>().AddForce(forceDirection * pushback);
+					otherCreature.GetComponent<Rigidbody2D>().AddForce(forceDirection * pushback, ForceMode2D.Impulse);
 					otherCreature.takeDamage(damage);
 				}
 				break;

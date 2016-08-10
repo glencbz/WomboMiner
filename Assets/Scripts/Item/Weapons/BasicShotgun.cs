@@ -4,7 +4,7 @@ using System.Collections;
 public class BasicShotgun : Weapon {
 
 	//shotgun spread in degrees
-	public float spread = 50f;
+	public float spread = 30f;
 	public int numShot = 5;
 
 	protected override void GenerateBullet(Vector3 mousePos){

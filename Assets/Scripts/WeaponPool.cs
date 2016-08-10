@@ -11,7 +11,7 @@ public class WeaponPool : MonoBehaviour {
 
 
 	// See https://docs.unity3d.com/ScriptReference/Resources.html on how to create resources folders
-	public string[] weaponPaths = {"Tier3", "Tier2", "Tier1"};
+	public string[] weaponPaths = {"Tier1", "Tier2", "Tier3"};
 	
 	void Start () {
 		tieredWeapons = new List<Weapon[]>();
