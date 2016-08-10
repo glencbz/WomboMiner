@@ -6,8 +6,8 @@ public class EnemySpawner : MonoBehaviour
 {
 	public Enemy[] spawnedEnemies;
 
-	private float[] xrange = {0,30};
-	private float[] yrange = {0,30};
+	public float[] xrange = {0,30};
+	public float[] yrange = {0,30};
 
 	private IntRange xGenerator;
 	private IntRange yGenerator;
@@ -21,9 +21,9 @@ public class EnemySpawner : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		SurvivalBoardCreator boardCreator = GetComponent<SurvivalBoardCreator>();
-		xrange[1] = boardCreator.columns;
-		yrange[1] = boardCreator.rows;
+//		SurvivalBoardCreator boardCreator = GetComponent<SurvivalBoardCreator>();
+//		xrange[1] = boardCreator.columns;
+//		yrange[1] = boardCreator.rows;
 		xGenerator = new IntRange((int) xrange[0],(int) xrange[1]);
 		yGenerator = new IntRange((int)yrange[0],(int) yrange[1]);
 		enemyGenerator = new IntRange(0, spawnedEnemies.Length);
