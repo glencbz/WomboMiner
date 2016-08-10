@@ -5,6 +5,10 @@ public class Weapon : Item {
 
 	public Bullet bullet;
 	public float cooldown;
+
+	//	[HideInInspector]
+	public float cooldownStatus = 0;
+
 	//Size of weapon and bullet
 	public float size = 1f;
 	public Vector2 gunpoint = Vector2.zero;
@@ -15,8 +19,7 @@ public class Weapon : Item {
 	public bool pointAtMouse = true;//TODO: stop rotating if not pointAtMouse
 	public bool isEnemySource = false;
 
-	[HideInInspector]
-	public float cooldownStatus = 0;
+
 
 	private Player player;
 	private SpriteRenderer sr;
@@ -60,13 +63,12 @@ public class Weapon : Item {
 		return true;
 	}
 
-	void Update () {
+	protected virtual void Update () {
 		//Update cooldown
 		if (cooldownStatus > 0) {
 			cooldownStatus -= Time.deltaTime;
 			if (cooldownStatus < 0) { cooldownStatus = 0; }
 		}
-
 	}
 	//Method for firing a bullet.
 	//CAN YOU FIRE?
