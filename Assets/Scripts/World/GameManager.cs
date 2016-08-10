@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
 		
 		//Set the text of levelText to the string "Day" and append the current level number.
-		levelText.text = "Level " + level;
+		levelText.text = "SURVIVE";
 		
 		//Set levelImage to active blocking player's view of the game board during setup.
 		levelImage.GetComponent<Canvas>().enabled = true;
