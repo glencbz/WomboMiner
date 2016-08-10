@@ -11,7 +11,6 @@ public class Longinus : Weapon {
 			if (cooldownStatus < 0) { 
 				cooldownStatus = 0;
 				sr.enabled = true;
-				Debug.Log(transform.parent.name);
 				transform.parent.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 			}
 		}
