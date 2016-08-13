@@ -3,6 +3,7 @@ using System.Collections;
 
 abstract public class Item : MonoBehaviour {
 
+	public string desc;
 	protected Rigidbody2D rigidBody;
 	protected Collider2D collider2D;
 
