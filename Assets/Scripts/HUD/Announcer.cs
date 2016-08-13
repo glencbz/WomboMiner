@@ -23,9 +23,18 @@ public class Announcer : MonoBehaviour {
 		description.text = desc;
 	}
 
-	//Method to show text
-	void showText() {
+	//Method to show text. Delay of 0 will not invoke switching text off
+	void showText(float delay = 0) {
 		title.enabled = true;
 		description.enabled = true;
+		if (delay != 0) {
+			Invoke("hideText", delay);
+		}
+
+	}
+
+	void hideText() {
+		title.enabled = false;
+		description.enabled = false;
 	}
  }
