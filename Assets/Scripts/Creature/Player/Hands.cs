@@ -12,7 +12,9 @@ public class Hands : MonoBehaviour {
 	
 	void Start () {
 		left = transform.GetChild(0).GetComponent<Hand>();
+		left.side = "left";
 		right = transform.GetChild(1).GetComponent<Hand>();
+		right.side = "right";
 	}
 	
 	// Update is called once per frame

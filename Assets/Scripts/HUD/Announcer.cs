@@ -7,6 +7,7 @@ public class Announcer : MonoBehaviour {
 	public Text title;
 	public Text description;
 
+
 	private bool show = false;
 	// Use this for initialization
 	void Start () {
@@ -18,13 +19,14 @@ public class Announcer : MonoBehaviour {
 	}
 	
 	//Pass the strings into the respective fields
-	void updateText(string t = "Junk", string desc = "Nothing interesting about it") {
-		title.text = t;
-		description.text = desc;
+	public void updateText(string t = "Weird Stuff", string desc = "What is this???") {
+		if (t != null) { title.text = t;}
+		if (desc != null) {description.text = desc;}
+		
 	}
 
 	//Method to show text. Delay of 0 will not invoke switching text off
-	void showText(float delay = 0) {
+	public void showText(float delay = 0) {
 		title.enabled = true;
 		description.enabled = true;
 		if (delay != 0) {
@@ -33,7 +35,7 @@ public class Announcer : MonoBehaviour {
 
 	}
 
-	void hideText() {
+	public void hideText() {
 		title.enabled = false;
 		description.enabled = false;
 	}

@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Hand : MonoBehaviour {
+	public string side;
 	public Weapon weapon = null;
 	public bool checkEmpty() {
 		if (!weapon) {
@@ -20,6 +21,8 @@ public class Hand : MonoBehaviour {
 			w.gameObject.transform.SetParent(this.transform, false);
 			w.gameObject.transform.localPosition = Vector3.zero;
 			checkEmpty();
+			HUD.Announce(side, weapon.name, weapon.desc, -1);
+			HUD.Announce("mid", weapon.name, weapon.desc, 2f);
 			return true;
 		} else {
 			return false;
