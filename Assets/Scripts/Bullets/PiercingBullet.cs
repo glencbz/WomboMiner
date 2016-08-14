@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Generic bullet that travels and does not stop. Has a limited duration
 public class PiercingBullet : Bullet {
 
 	public float duration = 2f;

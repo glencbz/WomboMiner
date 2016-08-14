@@ -1,17 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/*
-Base class for Bullet
-Requires:
-	Rigidbody2D
-	Collider2D
-
-For Melee Weapon, this is the hitbox. Use hitscan for damage.
-For Ranged Weapon, this is the projectile. Use OnTriggerEnter2D for damage.
-	
-
-*/
+// Generic explosion-type bullet that deals damage in an area of effect and does not travel
 public class Explosion : Bullet {
 
 	public float duration = 0.5f;

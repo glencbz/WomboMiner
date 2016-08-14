@@ -16,7 +16,7 @@ public class Weapon : Item {
 	public Sprite horizontalImage; //Image to display when in hand (face left/right)
 	public Sprite verticalImage;//Image to display when in hand (face up/down)
 	public float arrowhead = 90;
-	public bool pointAtMouse = true;//TODO: stop rotating if not pointAtMouse
+	public bool pointAtMouse = true;
 	public bool isEnemySource = false;
 	public float timeOnFloor = 0f;
 	public float maxTimeOnFloor = 20f;
