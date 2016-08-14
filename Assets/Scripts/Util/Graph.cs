@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Graph object to do generic graph search
+ * 
+ * Used for enemy pathfinding
+ **/
 class Graph {
 	private Node startNode;
 

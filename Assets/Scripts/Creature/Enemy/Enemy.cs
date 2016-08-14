@@ -15,22 +15,20 @@ public class Enemy : Creature {
 	// reward when killing monster
 	public int killScore = 100;
 
+	// set to BlockingLayer in the inspector plz
+	public LayerMask obstacleLayer;
+
+	public AudioClip hurtSound;
+
 	//Private Entities
 	private Animator anim;
 	[SerializeField]
 	protected GameObject player;
 //	private SpriteRenderer spriteRenderer;
 
-	// set to BlockingLayer in the inspector plz
-	public LayerMask obstacleLayer;
-
-	public AudioClip hurtSound;
-
 	private Vector2 anchorPosition;
 	// how deep to do graph search
 	private int GRAPH_SEARCH_LIMIT = 20;
-
-	private float cameraSize;
 
 	private Vector2 nextPatrolPosition;
 
@@ -47,7 +45,7 @@ public class Enemy : Creature {
 	// Use this for initialization
 	protected void Start () {
 		base.Start();
-		cameraSize = 2f * Camera.main.orthographicSize;
+
 		anim = GetComponent<Animator>();
 		
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -55,6 +53,8 @@ public class Enemy : Creature {
 //		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
 		player = GameObject.Find("Player");
+
+		// leashes the enemy to the position it spawns in
 		this.anchorPosition = this.transform.position;
 
 		active = maxActive;
@@ -68,8 +68,12 @@ public class Enemy : Creature {
 			spriteRenderer.color= new Color(255f, 255f, 255f, (maxActive - active) / maxActive);
 			return;
 		}
+
+		// call parent update to change color
 		base.Update();
+
 		if (this.PlayerIsNear()) {
+			// sets aggroed to true so subclasses will know when to fire bullets
 			this.isAggroed = true;
 			this.MoveToPlayer ();
 			return;
@@ -81,8 +85,6 @@ public class Enemy : Creature {
 		} else {
 			this.nextPatrolPosition = this.NewPatrolPoint ();
 		}
-
-
 	}
 
 	public override void takeDamage(int dmg) {
@@ -131,16 +133,12 @@ public class Enemy : Creature {
 		OnTriggerEnter2D(other);
 	}
 
-	bool PlayerIsNear() {
+	private bool PlayerIsNear() {
 		float distance = Vector2.Distance (this.transform.position, this.player.transform.position);
 		return distance <= this.aggroDistance;
 	}
 
-	bool PlayerIsTooFar() {
-		return Vector2.Distance (this.transform.position, this.player.transform.position) > cameraSize;
-	}
-
-	bool ClearPathToLocation(Vector2 position) {
+	private bool ClearPathToLocation(Vector2 position) {
 		Vector2 dirToObject = position - (Vector2)this.transform.position;
 		RaycastHit2D hit = Physics2D.Raycast (this.transform.position, dirToObject, Mathf.Infinity, this.obstacleLayer.value);
 		// nothing hit means there's a clear path because the player is not on the blocking layer
@@ -152,27 +150,28 @@ public class Enemy : Creature {
 		// some blocking layer is hit
 		Vector2 hitPoint = hit.transform.position;
 
-
 		// we check the thing we hit, and if its further than the position we want to move to, there is a clear path to where we want to go
 		return Vector2.Distance (this.transform.position, position) < Vector2.Distance (this.transform.position, hitPoint);
 	}
 
-	bool AtNextPatrolPosition() {
+	private bool AtNextPatrolPosition() {
 		return Vector2.Distance (this.transform.position, this.nextPatrolPosition) < 1.0f;
 	}
 
-	void MoveTowards(Vector2 position) {
+	private void MoveTowards(Vector2 position) {
 		GetComponent<Rigidbody2D>().AddForce (this.moveScale * (position - (Vector2)this.transform.position).normalized);
 
 		// cache where we are going for caching optimization in MoveToLocation
 		this.previousSubDestination = RoundVector(position);
 	}
 
-	void MoveToPlayer() {
+	private void MoveToPlayer() {
 		this.MoveToLocation (this.player.transform.position);
 	}
 
-	void MoveToLocation(Vector2 position) {
+	// main function that we will use for enemy movement
+	// performs caching and pathfinding
+	private void MoveToLocation(Vector2 position) {
 		// caching optimization
 
 		// if our desired destinationis the same as the previous frame and,
@@ -213,7 +212,8 @@ public class Enemy : Creature {
 		this.MoveTowards (shortestPath [0]);
 	}
 
-	HashSet<Vector2> GetObstacles() {
+	// helper method to get all obstacles to pass to graph search
+	private HashSet<Vector2> GetObstacles() {
 		GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
 
 		HashSet<Vector2> obstacles = new HashSet<Vector2> ();
@@ -225,11 +225,13 @@ public class Enemy : Creature {
 		return obstacles;
 	}
 
+	// helper method to round up position to a discrete quantity
 	private static Vector2 RoundVector(Vector2 inp) {
 		return new Vector2 (Mathf.Round (inp.x), Mathf.Round (inp.y));
 	}
 
-	Vector2 NewPatrolPoint() {
+	private Vector2 NewPatrolPoint() {
+		// finds a nearby point to patrol to
 		Vector2 newPoint;
 
 		do {
