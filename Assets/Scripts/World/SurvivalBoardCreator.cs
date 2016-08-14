@@ -157,10 +157,10 @@ public class SurvivalBoardCreator : MonoBehaviour
 
 
 			GameObject weapon = weaponTiles [i];
-			Vector2 randomPosition = new Vector2 (0, 0);
+			Vector2 weaponPosition = new Vector2 (0, 0);
 
 			//Instantiate enemy
-			Instantiate (weapon, randomPosition, Quaternion.identity);
+			Instantiate (weapon, weaponPosition, Quaternion.identity);
 		}
 	}
 

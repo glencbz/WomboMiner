@@ -7,6 +7,7 @@ public class Boop : Bullet {
 	public float duration = .5f;
 	public float spread = 30f;
 	public float moveTime = 0.5f;
+	public float boopOffset = -.2f;
 	private Vector3 boopDirection;
 	private Vector3 playerInitial;
 
@@ -18,6 +19,7 @@ public class Boop : Bullet {
 
 	public override void InitialFire(Transform parent, Vector3 mousePos){
 		speed = 0;
+		transform.position += (mousePos - transform.position).normalized * boopOffset;
 	}
 
 
