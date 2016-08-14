@@ -11,9 +11,8 @@ public class GameManager : MonoBehaviour {
 	public bool isDungeon = false;
 	public bool isSurvival = false;
 	public GameObject options;
-	private Text levelText;									//Text to display current level number.
 	private Canvas deathScreen;
-	private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
+	private GameObject openingScreen;
 	private Text scoreText;
 	private Text deathScore;
 	private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
@@ -57,32 +56,28 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame() {
 		this.score = 0;
-		levelImage = GameObject.Find("Opening Screen");
-		levelText = GameObject.Find("LevelText").GetComponent<Text>();
+		openingScreen = GameObject.Find("Opening Screen");
+
 		this.scoreText = GameObject.Find ("ScoreText").GetComponent<Text> ();
 
 		deathScreen = GameObject.Find ("DeathScreen").GetComponent<Canvas>();
 		deathScore = GameObject.Find ("DeathScore").GetComponent<Text> ();
 		deathScreen.enabled = false;
 
-		levelImage.GetComponent<Canvas>().enabled = true;
-
 		//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
-		Invoke("HideLevelImage", levelStartDelay);
+		Invoke("HideOpeningScreen", levelStartDelay);
 
 		if (!this.isSurvival) {
-			levelText.text = "GOOD LUCK";
 			this.GetComponent<BoardCreator> ().Setup ();	
 		} else {
-			levelText.text = "SURVIVE";
 			this.GetComponent<SurvivalBoardCreator> ().Setup ();
 			this.GetComponent<EnemySpawner> ().onSpawner ();
 		}
 	}
 
-	void HideLevelImage() {
+	void HideOpeningScreen() {
 		// hide the overlay for SURVIVE or CLASSIC
-		levelImage.SetActive(false);
+		openingScreen.SetActive(false);
 	}
 
 	public void GameOver() {
@@ -91,7 +86,6 @@ public class GameManager : MonoBehaviour {
 			this.GetComponent<EnemySpawner> ().offSpawner ();
 		}
 
-		levelText.text = "GAME OVER";
 		deathScreen.enabled = true;
 		deathScore.text = "Your Score: " + this.score.ToString ();
 
