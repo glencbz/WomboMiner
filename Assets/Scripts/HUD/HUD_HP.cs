@@ -4,17 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class HUD_HP : MonoBehaviour {
-
+	/*
+	HUD HP module. Reads values from Player object and displays it on top right corner of screen.
+	Refreshes on every frame.
+	*/
 	public int HP_per_heart = 2;
 	public int maxHP = 10;
 	public int hp = 10;
-	[SerializeField]
 	private int MAX_CONTAINERS = 10;
 
 	GameObject player;
 	private int current_containers = 0;
 	public GameObject heartContainer;
-	// Use this for initialization
+
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		maxHP = player.GetComponent<Player>().maxHealth;
@@ -43,6 +45,7 @@ public class HUD_HP : MonoBehaviour {
 		}
 	}
 
+	//Update HUD values with Player's most recent values
 	void updateData() {
 		maxHP = player.GetComponent<Player>().maxHealth;
 		hp = player.GetComponent<Player>().currHealth;

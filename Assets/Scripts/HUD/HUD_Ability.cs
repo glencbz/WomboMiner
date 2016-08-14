@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class HUD_Ability : MonoBehaviour {
+	/*
+	HUD Ability Module. Reads and displays Weapon and cooldown at bottom corners of screen.
+	*/
 	public Player player;
 	public Image abilityA, abilityB;
 	public Image cooldownA, cooldownB;
@@ -14,7 +17,8 @@ public class HUD_Ability : MonoBehaviour {
 		abilityB = transform.GetChild(1).GetComponent<Image>();
 		cooldownA = abilityA.transform.GetChild(0).GetComponent<Image>();
 		cooldownB = abilityB.transform.GetChild(0).GetComponent<Image>();
-
+		
+		//We grab a reference to the empty sprite
 		nothingEquipped = cooldownA.sprite;
 	}
 

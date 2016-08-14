@@ -3,9 +3,12 @@ using System.Collections;
 
 public class MedusaSnake : Bullet {
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public GameObject WallReference;
+	private Wall reference;
+
+	protected void Awake() {
+		base.Awake();
+		reference = WallReference.GetComponent<Wall>();
 	}
 
 	protected override void OnTriggerEnter2D(Collider2D other) {
@@ -29,6 +32,8 @@ public class MedusaSnake : Bullet {
 						Wall w = other.gameObject.AddComponent<Wall>();
 						w.hp = 4;
 						w.destructible = true;
+						w.hitSounds = reference.hitSounds;
+						w.breakSound = reference.breakSound;
 						other.gameObject.tag = "Wall";
 						other.gameObject.layer = 8;
 					} else {

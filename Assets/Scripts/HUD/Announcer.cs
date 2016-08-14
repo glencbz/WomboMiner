@@ -3,7 +3,12 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Announcer : MonoBehaviour {
-
+	/*
+	A wall of text consisting of a Title and Description.
+	Use updateText to change the respective text fields.
+	showText shows the text for a certain amount of time. Use delay = 0 to show it indefinitely.
+	use hideText to hide the text after showing it indefinitely.
+	*/
 	public Text title;
 	public Text description;
 
