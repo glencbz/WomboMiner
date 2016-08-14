@@ -80,8 +80,38 @@ public class GameManager : MonoBehaviour {
 		openingScreen.SetActive(false);
 	}
 
-	public void GameOver() {
+	public void PauseGame () {
+		Time.timeScale = 0;
 
+		// removes forces from enemy and player objects
+		Object[] objects = FindObjectsOfType (typeof(GameObject));
+		foreach (GameObject gameObject in objects) {
+			if (gameObject.tag != "Enemy" && gameObject.tag != "Player") {
+				continue;
+			}
+				
+			Rigidbody2D objectRigidBody = gameObject.GetComponent<Rigidbody2D> ();
+			objectRigidBody.isKinematic = true;
+		}
+	}
+
+	public void ResumeGame() {
+		Time.timeScale = 1.0f;
+
+		// enables enemy and player objects to receive forces
+		Object[] objects = FindObjectsOfType (typeof(GameObject));
+		foreach (GameObject gameObject in objects) {
+			if (gameObject.tag != "Enemy" && gameObject.tag != "Player") {
+				continue;
+			}
+				
+			Rigidbody2D objectRigidBody = gameObject.GetComponent<Rigidbody2D> ();
+			objectRigidBody.isKinematic = false;
+		}
+	}
+
+	public void GameOver() {
+		this.PauseGame ();
 		if(this.isSurvival) {
 			this.GetComponent<EnemySpawner> ().offSpawner ();
 		}
@@ -96,13 +126,20 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void GoBackToMainMenu() {
-		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-		GameManager.instance.isDungeon = false;
-	}
-
 	public void OnEnemyKilled(int enemyScore) {
 		this.score += enemyScore;
 		this.scoreText.text = this.score.ToString();
+	}
+
+	public void RestartGame() {
+		this.ResumeGame ();
+		int sceneNum = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNum);
+	}
+
+	public void ExitGame() {
+		this.ResumeGame ();
+		GameManager.instance.isDungeon = false;
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 	}
 }

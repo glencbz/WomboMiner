@@ -15,9 +15,14 @@ public class OptionsMenu : MonoBehaviour {
 
 	public void Toggle() {
 		if (c.enabled) {
+			// resume
+			GameManager.instance.ResumeGame();
 			c.enabled = false;
 			hud.enabled = true;
+
 		} else {
+			// pause
+			GameManager.instance.PauseGame();
 			c.enabled = true;
 			hud.enabled = false;
 		}
@@ -28,12 +33,10 @@ public class OptionsMenu : MonoBehaviour {
 		Toggle();
 	}
 	public void RestartGame() {
-		int sceneNum = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-		UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNum);
+		GameManager.instance.RestartGame ();
 	}
 
 	public void ExitGame() {
-		GameManager.instance.isDungeon = false;
-		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+		GameManager.instance.ExitGame ();
 	}
 }

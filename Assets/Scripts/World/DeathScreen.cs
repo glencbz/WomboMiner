@@ -4,6 +4,6 @@ using System.Collections;
 public class DeathScreen : MonoBehaviour {
 
 	public void ExitToMainMenu() {
-		GameManager.instance.GoBackToMainMenu ();
+		GameManager.instance.ExitGame ();
 	}
 }
