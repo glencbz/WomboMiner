@@ -6,16 +6,14 @@ public class Player : Creature {
 	public float invul_frame = 0.5f;
 	private bool invul_flag = false;
 	private float invul_timer;
+	[HideInInspector]
+	public Hands hands;
 
 	//Private Entities
 	private Animator anim;
 	private HashSet<Item> itemsUnderfoot;
 
-	[HideInInspector]
-	public Hands hands;
 
-
-	// Use this for initialization
 	protected void Start () {
 		base.Start();
 		itemsUnderfoot = new HashSet<Item>();
@@ -30,7 +28,6 @@ public class Player : Creature {
 		UpdateSprite(mousePos);
 
 		//TIME LAYER
-
 		//Invulnerability frame time cooldown.
 		if (invul_flag) {
 			invul_timer -= Time.deltaTime;
@@ -39,10 +36,7 @@ public class Player : Creature {
 			}
 		}
 
-		
-
 		//INPUT LAYER
-
 		//Move Player mapped to joysticks
 		MovePlayer();
 		//Left / Right Mouse Clicks
